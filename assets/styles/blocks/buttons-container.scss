@@ -1,0 +1,14 @@
+.buttons-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 20px;
+  font-size: 16px;
+}
+
+.buttons-container--column {
+  grid-template-columns: auto;
+}
+
+.buttons-container--top-auto {
+  margin-top: auto;
+}

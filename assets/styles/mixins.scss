@@ -1,0 +1,46 @@
+@mixin button(
+  $color: $primary-color,
+  $transparent: false,
+  $radius: 2px
+) {
+  height: 50px;
+  border: 1px solid $color;
+  border-radius: $radius;
+  font-weight: 600;
+  color: #fff;
+  fill: #fff;
+
+  @if $transparent {
+    background-color: inherit;
+    fill: $color;
+    color: $color;
+
+    &:hover, &:active {
+      color: #fff;
+      fill: #fff;
+    }
+  } @else {
+    background-color: $color;
+  }
+
+  &:hover {
+    background-color: lighten($color, 8%);
+    border-color: lighten($color, 8%);
+  }
+
+  &:active {
+    background-color: darken($color, 6%);
+    border-color: darken($color, 6%);
+  }
+}
+
+@mixin noScrollbar() {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    background: transparent;
+  }
+}

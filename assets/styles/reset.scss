@@ -1,0 +1,93 @@
+*, *::after, *::before {
+  box-sizing: inherit;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #fff;
+  font-family: $Open-Sans;
+  letter-spacing: 0.32px;
+  color: $gray2;
+}
+
+main {
+  padding-bottom: 80px;
+}
+
+input, textarea {
+  background-color: transparent;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+
+  &::placeholder {
+    color: $gray4;
+  }
+}
+
+input {
+  outline: 0;
+
+  &[type=text]::-ms-clear,
+  &[type=text]::-ms-reveal {
+    display: none;
+    width : 0;
+    height: 0;
+  }
+
+  &[type="search"]::-webkit-search-decoration,
+  &[type="search"]::-webkit-search-cancel-button,
+  &[type="search"]::-webkit-search-results-button,
+  &[type="search"]::-webkit-search-results-decoration {
+    display: none;
+  }
+}
+
+textarea {
+  outline: 0;
+  resize: none;
+}
+
+ul {
+  list-style-type: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  display: block;
+  font-family: inherit;
+  font-size: inherit;
+  text-transform: inherit;
+  letter-spacing: inherit;
+}
+
+fieldset {
+  border: 0;
+}
+
+legend {
+  float: left;
+}
+
+svg {
+  line-height: 0;
+}
+
+img {
+  display: block;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: inherit;
+}

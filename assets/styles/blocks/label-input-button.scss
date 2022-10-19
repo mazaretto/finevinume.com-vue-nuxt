@@ -1,0 +1,25 @@
+.label-input-button {
+  display: grid;
+  grid-template-columns: auto 1fr;
+}
+
+.label-input-button--checked {
+  border-color: $primary-color;
+}
+
+.label-input-button--modal {
+  margin-left: 90px;
+}
+
+.label-input-button__text {
+  align-self: center;
+  margin-left: 10px;
+}
+
+.label-input-button__text--error {
+  color: $red;
+}
+
+.button-input-label--error {
+  color: $red;
+}

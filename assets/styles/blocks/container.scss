@@ -1,0 +1,30 @@
+.container {
+  width: 1180px;
+  margin: 0 auto;
+
+  @media screen and (max-width: 1280px) {
+    width: 92.1875%;
+    min-width: 720px;
+  }
+
+  @media screen and (max-width: 767px) {
+    width: 93.75%;
+    min-width: auto;
+  }
+
+  @media screen and (max-width: 600px) {
+    width: calc(100% - 40px);
+  }
+}
+
+.container--narrow {
+  padding: 0 $container-padding;
+
+  @media screen and (max-width: 1024px) {
+    padding: 0 24px;
+  }
+
+  @media screen and (max-width: 600px) {
+    padding: 0 20px;
+  }
+}

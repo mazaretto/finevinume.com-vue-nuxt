@@ -1,0 +1,15 @@
+.textarea {
+  width: 100%;
+  border-radius: 2px;
+  border: 1px solid $gray5;
+  padding: $input-padding;
+}
+
+.textarea--modal {
+  height: 175px;
+  border-radius: 0;
+  padding: {
+    top: 10px;
+    bottom: 10px;
+  }
+}
