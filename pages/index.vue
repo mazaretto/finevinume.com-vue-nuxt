@@ -100,7 +100,7 @@
 export default {
   async asyncData ({ $axios, error }) {
     try {
-      const response = await $axios.$get('http://asd777.ru/api/products')
+      const response = await $axios.$get('//app.finevinume.com/api/products')
 
       return {
         products: response.data
