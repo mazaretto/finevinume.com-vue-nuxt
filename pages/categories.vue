@@ -16,7 +16,7 @@
 export default {
   async asyncData ({ $axios, error }) {
     try {
-      const response = await $axios.$get('products')
+      const response = await $axios.$get('/products')
 
       return {
         products: response.data
