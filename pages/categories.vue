@@ -16,7 +16,7 @@
 export default {
   async asyncData ({ $axios, error }) {
     try {
-      const response = await $axios.$get('/products')
+      const response = await $axios.$get('https://app.finevinume.com/api/products')
 
       return {
         products: response.data
@@ -39,7 +39,6 @@ export default {
 
 .categories-products {
   margin-top: 25px;
-
   @media screen and (max-width: 600px) {
     margin-top: 0;
   }

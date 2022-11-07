@@ -282,8 +282,8 @@ export default {
   },
   async asyncData ({ $axios, params, error, store }) {
     try {
-      const product = await $axios.$get(`https://app.finevinume.com/public/api/products/${params.id}`)
-      const reviews = await $axios.$get(`https://app.finevinume.com/public/api/reviews/${params.id}`)
+      const product = await $axios.$get(`https://app.finevinume.com/api/products/${params.id}`)
+      const reviews = await $axios.$get(`https://app.finevinume.com/api/reviews/${params.id}`)
 
       const wishlist = store.getters['wishcolls/wishlist']
       const collection = store.getters['wishcolls/collection']

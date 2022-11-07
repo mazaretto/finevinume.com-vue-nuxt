@@ -42,15 +42,15 @@
             <div class="the-footer__section-links">
               <ul class="the-footer__nav-ul the-footer__contacts-ul">
                 <li class="the-footer__nav-item">
-                  <a class="the-footer__link" href="#">Winecollection@gmail.com</a>
+                  <a class="the-footer__link" href="mailto:Winecollection@gmail.com">Winecollection@gmail.com</a>
                   <svg-link-mail class="the-footer__nav-item-icon" />
                 </li>
                 <li class="the-footer__nav-item">
-                  <a class="the-footer__link" href="#">+38 (044) 220 20 20</a>
+                  <a class="the-footer__link" href="tel:+380442202020">+38 (044) 220 20 20</a>
                   <svg-link-phone class="the-footer__nav-item-icon" />
                 </li>
                 <li class="the-footer__nav-item">
-                  <a class="the-footer__link" href="#">+38 (044) 220 20 19</a>
+                  <a class="the-footer__link" href="tel:+380442202019">+38 (044) 220 20 19</a>
                   <svg-link-phone class="the-footer__nav-item-icon" />
                 </li>
               </ul>
@@ -65,7 +65,7 @@
             </p>
             <form class="the-footer__newsletter-form">
               <input class="input the-footer__newsletter-input" type="email" placeholder="Email">
-              <v-button default class="the-footer__newsletter-button v-button--uppercase">
+              <v-button @click.native="OPEN_MODAL('register')" default class="the-footer__newsletter-button v-button--uppercase">
                 Sign Up
               </v-button>
             </form>

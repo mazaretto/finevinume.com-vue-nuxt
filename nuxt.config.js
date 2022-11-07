@@ -52,15 +52,7 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: 'https://app.finevinume.com/public/api',
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET, POST, PUT, PATCH, POST, DELETE, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type',
-      'Access-Control-Max-Age': '86400',
-      'login': 'admin',
-      'api_token': '6qBuGaMSzsivJQNAwNxHA8da6JrJ7UEMIzeHdNtV',
-    }
+    baseURL: 'https://app.finevinume.com/api'
   },
 
   // Auth Next module configuration: https://dev.auth.nuxtjs.org/api-index
@@ -78,7 +70,7 @@ export default {
         endpoints: {
           login: { url: '/auth', method: 'post' },
           user: { url: '/profile', method: 'get' },
-          logout: false,
+          logout: false
         }
       }
     }

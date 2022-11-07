@@ -2,21 +2,21 @@
   <div class="v-product-gallery">
     <div class="v-product-gallery__main">
       <div class="v-product-gallery__main-photo">
-        <img class="v-product-gallery__img" :src="`https://asd777.ru/storage/${photo}`" alt="bottle">
+        <img class="v-product-gallery__img" :src="`https://app.finevinume.com/storage/${photo}`" alt="bottle" />
       </div>
     </div>
     <div class="v-product-gallery__bottom">
       <div class="v-product-gallery__bottom-cell">
-        <img class="v-product-gallery__img" :src="require('~/assets/images/empty-bottle.png')" alt="bottle">
+        <img class="v-product-gallery__img" :src="require('~/assets/images/empty-bottle.png')" alt="bottle" />
       </div>
       <div class="v-product-gallery__bottom-cell">
-        <img class="v-product-gallery__img" :src="require('~/assets/images/empty-bottle.png')" alt="bottle">
+        <img class="v-product-gallery__img" :src="require('~/assets/images/empty-bottle.png')" alt="bottle" />
       </div>
       <div class="v-product-gallery__bottom-cell">
-        <img class="v-product-gallery__img" :src="require('~/assets/images/empty-bottle.png')" alt="bottle">
+        <img class="v-product-gallery__img" :src="require('~/assets/images/empty-bottle.png')" alt="bottle" />
       </div>
     </div>
-    <div class="v-product-gallery__add-photo">
+    <div class="v-product-gallery__add-photo" v-if="$auth.loggedIn">
       <svg-camera class="v-product-gallery__add-photo-icon" />
       <span class="v-product-gallery__add-photo-text">Send a photo</span>
     </div>

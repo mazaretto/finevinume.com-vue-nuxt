@@ -150,12 +150,15 @@ export default {
               password: this.form.second.password
             }
           })
-
           this.OPEN_SUCCESS_MODAL()
         } catch (e) {
           const errors = e.response.data.message.errors
 
           let error
+
+          if (!errors) {
+            return this.OPEN_SUCCESS_MODAL()
+          }
 
           if (errors.email && errors.login) {
             error = 'The email and login has already been taken.'
