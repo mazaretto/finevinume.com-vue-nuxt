@@ -1,11 +1,11 @@
 <template>
   <div class="v-stores-catalog-filter">
-    <form v-if="!selects.length" class="v-stores-catalog-filter__search">
+    <form v-if="!selects.length" class="v-stores-catalog-filter__search" @submit.prevent="searchItems(searched)">
       <input v-model="searched" class="input v-stores-catalog-filter__search-input" type="search">
       <v-button
         class="v-stores-catalog-filter__search-submit v-button--uppercase"
         default
-        @click.native="searchItems(searched)"
+        type="submit"
       >
         Enter
       </v-button>
@@ -16,6 +16,7 @@
         v-for="(select, id) of selects"
         :key="id"
         :placeholder="select.placeholder"
+        :checked="checked"
         :search-options="getOptionsWithProperty(select.property)"
         v-slot="{ options }"
       >

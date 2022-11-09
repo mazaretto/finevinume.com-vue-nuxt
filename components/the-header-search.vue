@@ -1,17 +1,12 @@
 <template>
   <div class="the-header-search">
-    <span class="the-header-search__statistics" :class="{'the-header-search__statistics--disable': active}">
+    <span class="the-header-search__statistics" :class="{ 'the-header-search__statistics--disable': active }">
       We are looking among 62486 bottles, among 1274 manufacturers
     </span>
 
-    <form class="the-header-search__form" :class="{'the-header-search__form--active': active}">
-      <input
-        class="input the-header-search__input"
-        type="search"
-        @focus="active = true"
-        @blur="active = false"
-      >
-      <v-button class="the-header-search__button">
+    <form class="the-header-search__form" :class="{ 'the-header-search__form--active': active }">
+      <input class="input the-header-search__input" type="search" v-model="searchContent" @focus="active = true" @blur="active = false">
+      <v-button @click.native="submit()" class="the-header-search__button">
         <svg-binoculars class="the-header-search__button-icon" />
         Search
       </v-button>
@@ -23,8 +18,14 @@
 import SvgBinoculars from '~/assets/icons/binoculars.svg?inline'
 
 export default {
+  methods: {
+    submit () {
+      console.log('qwe')
+    }
+  },
   data () {
     return {
+      searchContent: '',
       active: false
     }
   },
@@ -109,7 +110,8 @@ $border-radius: 25px;
   fill: $primary-color;
   right: 0;
 
-  &:hover, &:active {
+  &:hover,
+  &:active {
     color: #fff;
     fill: #fff;
   }

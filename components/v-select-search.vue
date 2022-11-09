@@ -40,10 +40,8 @@ export default {
         } else if (typeof option === 'object') {
           value = String(option.value).toLowerCase()
         }
-
         return value.includes(newValue.toLowerCase())
       })
-
       this.$emit('sort-options', options)
     }
   },

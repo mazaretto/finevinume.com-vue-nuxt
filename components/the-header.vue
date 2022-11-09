@@ -12,7 +12,12 @@
       </div>
       <nav class="the-header__nav">
         <ul class="the-header__nav-ul">
-          <li v-for="(link, id) in links" :key="id" class="the-header__nav-item">
+          <li
+            v-for="(link, id) in links"
+            :key="id"
+            class="the-header__nav-item"
+            v-bind:class="{'the-header__nav-item--active' : link.route.split('/').join('') === $nuxt.$route.name}"
+          >
             <nuxt-link class="the-header__nav-link" :to="link.route">
               {{ link.name }}
             </nuxt-link>
@@ -241,6 +246,18 @@ export default {
       }
     }
   }
+}
+
+.the-header__nav-item--active {
+  &::after {
+      content: '';
+      position: absolute;
+      display: block;
+      width: 100%;
+      height: 6px;
+      background-color: $primary-color;
+      top: calc(100% + 14px);
+    }
 }
 
 .the-header__mobile-nav {

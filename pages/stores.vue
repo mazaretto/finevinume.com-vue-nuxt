@@ -8,9 +8,13 @@
       class="stores-catalog__grid"
     >
       <template #over-catalog-view>
-        <div v-if="!$auth.loggedIn" class="buttons-container stores-catalog__buttons container">
-          <v-button class="stores-catalog__button" default>My added shops</v-button>
-          <v-button class="stores-catalog__button" default-secondary>+ Add shop</v-button>
+        <div v-if="$auth.loggedIn" class="buttons-container stores-catalog__buttons container">
+          <v-button class="stores-catalog__button" default type="button">
+            <nuxt-link class="stores-catalog__link" to="/profile/shoplinks">My added shops</nuxt-link>
+          </v-button>
+          <v-button class="stores-catalog__button" default-secondary>
+            <nuxt-link class="stores-catalog__link" to="/profile/shoplinks">+ Add shop</nuxt-link>
+          </v-button>
         </div>
       </template>
     </v-stores-catalog>
@@ -116,6 +120,14 @@ export default {
     margin-top: 50px;
     margin-bottom: 0;
   }
+}
+
+.stores-catalog__link {
+  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .stores-catalog__button {

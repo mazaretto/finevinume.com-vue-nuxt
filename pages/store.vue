@@ -27,19 +27,19 @@
           <div class="store-banner__grid-cell">
             <div class="store-banner__bottom-link">
               <svg-store-banner-site class="store-banner__grid-cell-icon" />
-              <a href="#">http://goodwine.ua</a>
+              <a href="http://goodwine.ua">http://goodwine.ua</a>
             </div>
           </div>
           <div class="store-banner__grid-cell">
             <div class="store-banner__bottom-link">
               <svg-store-banner-mail class="store-banner__grid-cell-icon" />
-              <a href="#">goodwine@gmail.com</a>
+              <a href="mailto:goodwine@gmail.com">goodwine@gmail.com</a>
             </div>
           </div>
           <div class="store-banner__grid-cell">
             <div class="store-banner__bottom-link">
               <svg-store-banner-phone class="store-banner__grid-cell-icon" />
-              <a href="#">(044) 390 79 62</a>
+              <a href="tel:+380443907962">(044) 390 79 62</a>
             </div>
           </div>
         </div>

@@ -9,6 +9,7 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 export default {
   props: {
     active: {
@@ -25,9 +26,13 @@ export default {
   methods: {
     toggleWishcolls () {
       if (this.$auth.loggedIn) {
-        this.$emit('togglewishcolls', 1)
+        return this.$emit('togglewishcolls', 1)
       }
-    }
+      return this.OPEN_MODAL('login')
+    },
+    ...mapMutations({
+      OPEN_MODAL: 'auth-modal/OPEN_MODAL'
+    })
   }
 }
 </script>

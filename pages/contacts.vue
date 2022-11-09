@@ -59,38 +59,73 @@
         <p class="customer-service__description">
           Please fill out the form below and a member of our Customer Service team will get back to you as soon as possible.
         </p>
-        <form class="customer-service__form">
+        <form class="customer-service__form" @submit.prevent="submit">
           <div class="customer-service__form-fiqure">
             <img class="customer-service__form-fiqure-img" :src="require('~/assets/images/customer-services-form-image.png')" alt="customer-service-image">
           </div>
           <label class="form-field form-field--column">
             <span class="form-field__name form-field__name--uppercase">Your name</span>
-            <input type="text" class="input" placeholder="Your name">
+            <v-input
+              type="text"
+              class="input"
+              placeholder="Your name"
+              v-model="form.name"
+              :invalid="name.$error"
+              :message="!name.required ? 'Password is required' : 'Minimal length is 3'"
+            />
           </label>
 
           <label class="form-field form-field--column">
             <span class="form-field__name form-field__name--uppercase">Email</span>
-            <input type="text" class="input" placeholder="Your email">
+            <v-input
+              type="text"
+              class="input"
+              placeholder="Your email"
+              v-model="form.email"
+              :invalid="email.$error"
+              :message="!email.required ? 'Email is required' : 'Invalid Email'"
+            />
           </label>
 
           <label class="form-field form-field--column">
             <span class="form-field__name form-field__name--uppercase">Telephone</span>
-            <input type="text" class="input" placeholder="Your email">
+            <v-input
+              type="text"
+              class="input"
+              placeholder="Your phone"
+              v-model="form.telephone"
+              :invalid="telephone.$error"
+              :message="!telephone.required ? 'Phone is required' : 'Invalid Phone'"
+            />
           </label>
 
           <label class="form-field form-field--column customer-service__message">
             <span class="form-field__name form-field__name--uppercase">Message</span>
-            <textarea class="textarea customer-service__form-textarea" cols="30" rows="10" placeholder="Write what you would like to tell us ..."></textarea>
+            <textarea
+              class="textarea customer-service__form-textarea"
+              cols="30"
+              rows="10"
+              placeholder="Write what you would like to tell us ..."
+              v-model="form.message"
+            ></textarea>
+            <span
+            class="v-input__error v-input-pos"
+              v-if="$v.form.message.$error"
+            >{{ form.message.required ? 'Message is required' : 'Minimal length is 6' }}</span>
           </label>
 
           <div class="buttons-container customer-service__buttons-container">
             <div class="customer-service__checkbox-field">
               <label class="label-input-button">
-                <v-input-button class="customer-service__checkbox" />
+                <v-input-button class="customer-service__checkbox" v-model="form.captcha" />
                 <span class="label-input-button__text">I'm not robot</span>
               </label>
             </div>
-            <v-button class="v-button--uppercase" default>Enter</v-button>
+            <v-button type="submit" class="v-button--uppercase" default>Enter</v-button>
+            <span
+                class="v-input__error v-input-pos"
+                v-if="$v.form.captcha.$error"
+              >Complete the captcha</span>
           </div>
         </form>
       </div>
@@ -99,11 +134,102 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
+import { required, email, sameAs, minLength, helpers } from 'vuelidate/lib/validators'
+const number = helpers.regex(
+  'serial',
+  /^[0-9]{3}-[0-9]{3}-[0-9]{4}$/
+)
 export default {
+  data () {
+    return {
+      active: false,
+      form: {
+        name: '',
+        email: '',
+        telephone: '',
+        message: '',
+        captcha: false
+      }
+    }
+  },
+  validations: {
+    form: {
+      name: { required, minLength: minLength(3) },
+      email: { required, email },
+      telephone: { required, number },
+      message: { required, minLength: minLength(6) },
+      captcha: { sameAs: sameAs(() => true) }
+    }
+  },
+  computed: {
+    name () {
+      return this.$v.form.name
+    },
+    email () {
+      return this.$v.form.email
+    },
+    telephone () {
+      return this.$v.form.telephone
+    },
+    message () {
+      return this.$v.form.message
+    },
+    captcha () {
+      return this.$v.form.captcha
+    }
+  },
+  methods: {
+    async submit () {
+      this.$v.form.$touch()
+      if (!this.$auth.loggedIn) {
+        return this.OPEN_MODAL('login')
+      }
+      if (this.$v.form.$invalid) {
+        return false
+      }
+      try {
+        this.fetching = true
+
+        await this.$axios.$post('https://app.finevinume.com/api/support', {
+          data: {
+            Username: this.name,
+            problem_text: this.message,
+            problem_link: this.message,
+            email: this.email,
+            telephone: this.telephone
+          },
+          headers: {
+            Authorization: `Bearer ${this.$auth.user.api_token}`
+          }
+        })
+
+        this.OPEN_SUCCESS_MODAL()
+      } catch (e) {
+        const errors = e.response.data.message.errors
+
+        let error
+
+        if (!errors) {
+          return this.OPEN_SUCCESS_MODAL()
+        }
+
+        this.ADD_NOTIFICATION({ reject: true, error })
+      } finally {
+        this.fetching = false
+      }
+    },
+    ...mapMutations({
+      OPEN_MODAL: 'auth-modal/OPEN_MODAL'
+    })
+  }
 }
 </script>
 
 <style lang="scss">
+.v-input-pos {
+  position: initial;
+}
 .contacts {
   padding-bottom: 80px;
 }
