@@ -54,6 +54,11 @@ export default {
       searched: '',
       letter: false
     }
+  },
+  watch: {
+    filteredItems: function (oldVal, newVal) {
+      return this.$emit('callbackCount', newVal)
+    }
   }
 }
 </script>

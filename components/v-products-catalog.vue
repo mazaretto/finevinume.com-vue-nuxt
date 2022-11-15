@@ -4,7 +4,7 @@
       <v-products-catalog-filter
         :products="products"
         :laptop="laptopActive === 'filter'"
-        @recieve-products="filteredProducts = $event"
+        @recieve-products="receiveProducts"
         @close="toggleMenu('filter')"
       />
       <div class="v-products-catalog__head">
@@ -55,7 +55,17 @@ export default {
       grid: true
     }
   },
+  // watch: {
+  //   filteredProducts (oldVal, newVal) {
+  //     console.log(newVal)
+  //     return this.$emit('callbackCount', newVal.length)
+  //   }
+  // },
   methods: {
+    receiveProducts (value) {
+      this.filteredProducts = value
+      this.$emit('callbackCount', value.length)
+    },
     toggleMenu (item) {
       if (document.documentElement.clientWidth <= 600) {
         this.CHANGE_MOBILE_MODAL(`products-catalog-${item}`)

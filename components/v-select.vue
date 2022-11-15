@@ -13,7 +13,8 @@
       :class="{'v-select__head--invalid': invalid}"
       @click="active = !active"
     >
-      <span class="v-select__placeholder">{{ placeholderSort }}</span>
+      <span class="v-select__placeholder" v-if="!value">{{ placeholderSort }}</span>
+      <span class="v-select__placeholder" v-else>{{ value }}</span>
       <svg-select-arrow class="v-select__arrow" />
     </div>
     <div class="v-select__body" v-show="active">
@@ -71,9 +72,9 @@ export default {
   },
   computed: {
     placeholderSort () {
-      if (!this.$props.checked.length || this.$props.checked.length === 0) {
-        return this.placeholder
-      }
+      // if (!this.$props.checked.length || this.$props.checked.length === 0) {
+      //   return this.placeholder
+      // }
       return this.placeholder
       // let res = []
       // for (let i = 0; i < this.$props.checked.length; i++) {

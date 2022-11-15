@@ -16,6 +16,6 @@ module.exports = {
   // add your custom rules here
   rules: {
     'no-unused-vars': 'off',
-    'prefer-const': 'off'
+    'prefer-const': 'off',
   }
 }

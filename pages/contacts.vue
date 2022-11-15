@@ -157,7 +157,7 @@ export default {
     form: {
       name: { required, minLength: minLength(3) },
       email: { required, email },
-      telephone: { required, number },
+      telephone: { required },
       message: { required, minLength: minLength(6) },
       captcha: { sameAs: sameAs(() => true) }
     }
