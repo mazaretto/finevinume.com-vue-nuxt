@@ -20,6 +20,17 @@ export const actions = {
       console.log(e)
     }
   },
+  async REMOVE_FROM_WISHCOLLS ({ dispatch }, payload) {
+    try {
+      const response = await this.$axios.$post('/wishcolls/destroy', payload)
+
+      dispatch('RECIEVE_WISHCOLLS')
+
+      return response
+    } catch (e) {
+      console.log(e)
+    }
+  },
   async RECIEVE_WISHCOLLS ({ commit }) {
     try {
       const response = await this.$axios.$get('wishcolls')

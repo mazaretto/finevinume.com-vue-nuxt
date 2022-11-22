@@ -21,7 +21,7 @@ export default {
   },
   async asyncData ({ $axios, error }) {
     try {
-      const response = await $axios.$get('https://app.finevinume.com/api/products')
+      const response = await $axios.$get('http://127.0.0.1:8000/api/products')
 
       return {
         count: response.data.length,

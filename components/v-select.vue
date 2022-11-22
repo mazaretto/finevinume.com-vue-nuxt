@@ -1,32 +1,38 @@
 <template>
-  <div v-click-outside="close" class="v-select" :style="{'z-index': active ? 9 : 1}">
+  <div
+    v-click-outside="close"
+    class="v-select"
+    :style="{ 'z-index': active ? 9 : 1 }"
+  >
     <input
+      ref="input"
       class="v-select__disabled-input"
       type="text"
       :name="name"
       :value="value"
-      ref="input"
     >
 
     <div
       class="v-select__head"
-      :class="{'v-select__head--invalid': invalid}"
+      :class="{ 'v-select__head--invalid': invalid }"
       @click="active = !active"
     >
-      <span class="v-select__placeholder" v-if="!value">{{ placeholderSort }}</span>
-      <span class="v-select__placeholder" v-else>{{ value }}</span>
+      <span v-if="!value" class="v-select__placeholder">{{
+        placeholderLocal
+      }}</span>
+      <span v-else class="v-select__placeholder">{{ value }}</span>
       <svg-select-arrow class="v-select__arrow" />
     </div>
-    <div class="v-select__body" v-show="active">
+    <div v-show="active" class="v-select__body">
       <div class="v-select__body-inner">
         <v-select-search
-          class="v-select__search"
           v-if="searchOptions"
+          class="v-select__search"
           :options="searchOptions"
           @sort-options="options = $event"
         />
 
-        <slot :options="options"></slot>
+        <slot :options="options" />
       </div>
     </div>
   </div>
@@ -38,6 +44,12 @@ import ClickOutside from 'vue-click-outside'
 import SvgSelectArrow from '~/assets/icons/select-arrow.svg?inline'
 
 export default {
+  directives: {
+    ClickOutside
+  },
+  components: {
+    SvgSelectArrow
+  },
   props: {
     placeholder: {
       type: String,
@@ -60,53 +72,144 @@ export default {
     checked: {
       type: Array,
       required: true
+    },
+    country: {
+      type: Array,
+      required: true
+    },
+    region: {
+      type: Array,
+      required: true
+    },
+    subregion: {
+      type: Array,
+      required: true
+    },
+    deep: {
+      type: Number,
+      required: true
+    },
+    items: {
+      type: Array,
+      required: true
     }
   },
   data () {
     return {
       active: false,
-      options: this.searchOptions,
-      placeholderArray: [],
-      value: ''
-    }
-  },
-  computed: {
-    placeholderSort () {
-      // if (!this.$props.checked.length || this.$props.checked.length === 0) {
-      //   return this.placeholder
-      // }
-      return this.placeholder
-      // let res = []
-      // for (let i = 0; i < this.$props.checked.length; i++) {
-      //   for (let j = 0; i < this.$props.searchOptions.length; j++) {
-      //     if (this.$props.searchOptions[j].value !== undefined && this.$props.checked[i] !== this.$props.searchOptions[j].value) {
-      //       continue
-      //     }
-      //     res.push(this.$props.checked[i])
-      //   }
-      // }
-      // return this.$props.checked.join(', ')
-    }
-  },
-  methods: {
-    setValue (value) {
-      this.value = value
-    },
-    close () {
-      this.active = false
+      options: this.deepFilter(),
+      value: '',
+      placeholderLocal: this.placeholder
     }
   },
   watch: {
     value (value) {
       this.active = false
       this.$emit('select', value)
+    },
+    checked () {
+      this.options = this.deepFilter()
+      const slicePlaceholder = (items) => {
+        if (items.length <= 2) {
+          return items.join(', ')
+        }
+        return items.slice(0, 2).join(', ') + ', ...'
+      }
+      if (!this.checked.length) {
+        return (this.placeholderLocal = this.placeholder)
+      }
+      if (this.deep === 0) {
+        let tmp = (this.placeholderLocal = this.checked.filter((n) => {
+          return this.country.includes(n)
+        }))
+        return tmp.length
+          ? (this.placeholderLocal = slicePlaceholder(tmp))
+          : (this.placeholderLocal = this.placeholder)
+      }
+      if (this.deep === 1) {
+        let tmp = (this.placeholderLocal = this.checked.filter((n) => {
+          return this.region.includes(n)
+        }))
+        return tmp.length
+          ? (this.placeholderLocal = slicePlaceholder(tmp))
+          : (this.placeholderLocal = this.placeholder)
+      }
+      if (this.deep === 2) {
+        let tmp = (this.placeholderLocal = this.checked.filter((n) => {
+          return this.subregion.includes(n)
+        }))
+        return tmp.length
+          ? (this.placeholderLocal = slicePlaceholder(tmp))
+          : (this.placeholderLocal = this.placeholder)
+      }
+      return (this.placeholderLocal = this.placeholder)
     }
   },
-  directives: {
-    ClickOutside
-  },
-  components: {
-    SvgSelectArrow
+  methods: {
+    checkItems () {
+      let res = []
+      for (let i = 0; i < this.items.length; i++) {
+        if (!this.checked.includes(this.items[i].country)) {
+          continue
+        }
+        res.push(this.items[i])
+      }
+      return res
+    },
+    checkItemsSub () {
+      let res = []
+      for (let i = 0; i < this.items.length; i++) {
+        if (!this.checked.includes(this.items[i].region)) {
+          continue
+        }
+        res.push(this.items[i])
+      }
+      return res
+    },
+    filterSubRegion (itemsChecked) {
+      let res = []
+
+      for (let i = 0; i < this.searchOptions.length; i++) {
+        for (let j = 0; j < itemsChecked.length; j++) {
+          if (itemsChecked[j].subregion === this.searchOptions[i].value) {
+            res.push(this.searchOptions[i])
+          }
+        }
+      }
+      return res
+    },
+    filterRegion (itemsChecked) {
+      let res = []
+
+      for (let i = 0; i < this.searchOptions.length; i++) {
+        for (let j = 0; j < itemsChecked.length; j++) {
+          if (itemsChecked[j].region === this.searchOptions[i].value) {
+            res.push(this.searchOptions[i])
+          }
+        }
+      }
+      return res
+    },
+    deepFilter () {
+      let res = []
+      if (this.deep === 0) {
+        return (res = this.searchOptions)
+      }
+      if (this.deep === 1) {
+        res = this.filterRegion(this.checkItems())
+      }
+      if (this.deep === 2) {
+        res = this.filterSubRegion(this.checkItemsSub())
+      }
+
+      return res
+    },
+    setValue (value) {
+      this.value = value
+    },
+    close () {
+      this.active = false
+    }
   }
 }
 </script>

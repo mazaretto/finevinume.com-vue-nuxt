@@ -1,7 +1,15 @@
 <template>
   <div class="v-stores-catalog-filter">
-    <form v-if="!selects.length" class="v-stores-catalog-filter__search" @submit.prevent="searchItems(searched)">
-      <input v-model="searched" class="input v-stores-catalog-filter__search-input" type="search">
+    <form
+      v-if="!selects.length"
+      class="v-stores-catalog-filter__search"
+      @submit.prevent="searchItems(searched)"
+    >
+      <input
+        v-model="searched"
+        class="input v-stores-catalog-filter__search-input"
+        type="search"
+      >
       <v-button
         class="v-stores-catalog-filter__search-submit v-button--uppercase"
         default
@@ -15,16 +23,21 @@
       <v-select
         v-for="(select, id) of selects"
         :key="id"
+        v-slot="{ options }"
+        :deep="id"
         :placeholder="select.placeholder"
         :checked="checked"
+        :country="country"
+        :region="region"
+        :items="items"
+        :subregion="subregion"
         :search-options="getOptionsWithProperty(select.property)"
-        v-slot="{ options }"
       >
         <div class="v-select__inner-list">
           <v-select-checkbox-option
-            v-model="checked"
             v-for="(option, id) of options"
             :key="id"
+            v-model="checked"
             :value="option.value"
             :count="option.count"
             @change="addRemoveEntry([select.property, option.value], entries)"
@@ -42,7 +55,7 @@
 
     <div
       class="buttons-container v-stores-catalog-filter__buttons"
-      :class="{'buttons-container--column': !selects.length}"
+      :class="{ 'buttons-container--column': !selects.length }"
     >
       <v-button
         v-if="selects.length"
@@ -51,7 +64,10 @@
       >
         Filter
       </v-button>
-      <v-button default-secondary @click.native="CHANGE_MOBILE_MODAL('stores-catalog-view')">
+      <v-button
+        default-secondary
+        @click.native="CHANGE_MOBILE_MODAL('stores-catalog-view')"
+      >
         Select
       </v-button>
     </div>
@@ -62,7 +78,9 @@
           v-for="letter in letters"
           :key="letter"
           class="v-stores-catalog-filter__letter"
-          :class="{'v-stores-catalog-filter__letter--checked': letter === checkedLetter}"
+          :class="{
+            'v-stores-catalog-filter__letter--checked': letter === checkedLetter
+          }"
           @click="setLetter(letter)"
         >
           {{ letter }}
@@ -76,17 +94,17 @@
       <div class="the-mobile-modal__search">
         <svg-binoculars class="the-mobile-modal__search-binoculars" />
         <input
+          v-model="searched"
           class="the-mobile-modal__search-input"
           placeholder="Search"
           type="search"
-          v-model="searched"
         >
       </div>
       <div class="v-stores-catalog-filter__mobile-selects">
         <v-catalog-filter-select
-          v-model="checkedMobile"
           v-for="(select, id) of selects"
           :key="id"
+          v-model="checkedMobile"
           :title="select.placeholder"
           :property="select.property"
           :items="items"
@@ -94,7 +112,9 @@
           @add-remove-entry="addRemoveEntry($event, entriesMobile)"
         />
       </div>
-      <div class="buttons-container buttons-container--column buttons-container--top-auto">
+      <div
+        class="buttons-container buttons-container--column buttons-container--top-auto"
+      >
         <v-button
           class="v-button--round"
           default
@@ -138,20 +158,56 @@ export default {
     return {
       filteredItems: this.items,
       checked: [],
+      country: this.getLocalItems('country'),
+      region: this.getLocalItems('region'),
+      subregion: this.getLocalItems('subregion'),
       checkedMobile: [],
       entries: [],
       entriesMobile: [],
       searched: '',
       letters: [
-        'a', 'b', 'c', 'd', 'f',
-        'g', 'h', 'i', 'j', 'k',
-        'l', 'm', 'n', 'o', 'p',
-        'q', 'r', 's', 't', 'u',
-        'v', 'w', 'x', 'y', 'z'
+        'a',
+        'b',
+        'c',
+        'd',
+        'f',
+        'g',
+        'h',
+        'i',
+        'j',
+        'k',
+        'l',
+        'm',
+        'n',
+        'o',
+        'p',
+        'q',
+        'r',
+        's',
+        't',
+        'u',
+        'v',
+        'w',
+        'x',
+        'y',
+        'z'
       ]
     }
   },
   methods: {
+    getLocalItems (state) {
+      let res = []
+      for (let i = 0; i < this.items.length; i++) {
+        res.push(
+          state === 'country'
+            ? this.items[i].country
+            : state === 'region'
+              ? this.items[i].region
+              : this.items[i].subregion
+        )
+      }
+      return res
+    },
     setLetter (letter) {
       const value = this.checkedLetter !== letter ? letter : false
 
@@ -227,26 +283,45 @@ export default {
   },
   watch: {
     entries (entries) {
-      if (entries.length !== 0) {
-        const filteredItems = this.items.filter((product) => {
-          let result
-
-          for (const [property, value] of entries) {
-            if (product[property] === value) {
-              result = true
-              break
-            } else {
-              result = false
-            }
-          }
-
-          return result
-        })
-
-        this.filteredItems = filteredItems
-      } else {
+      if (entries.length === 0) {
         this.filteredItems = this.items
       }
+
+      let filteredEntries = []
+
+      let subRegions = []
+      let regions = []
+
+      for (let i = 0; i < entries.length; i++) {
+        if (entries[i][0] === 'subregion') {
+          subRegions.push(entries[i])
+        }
+        if (entries[i][0] === 'region') {
+          regions.push(entries[i])
+        }
+      }
+
+      filteredEntries =
+        subRegions.length !== 0
+          ? subRegions
+          : regions.length !== 0
+            ? regions
+            : entries
+
+      const filteredItems = this.items.filter((product) => {
+        let result
+        for (const [property, value] of filteredEntries) {
+          if (product[property] === value) {
+            result = true
+            break
+          }
+          result = false
+        }
+
+        return result
+      })
+
+      this.filteredItems = filteredItems
     },
     filteredItems (filteredItems) {
       this.$emit('recieve-items', filteredItems)

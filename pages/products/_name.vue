@@ -282,8 +282,8 @@ export default {
   },
   async asyncData ({ $axios, params, error, store }) {
     try {
-      const product = await $axios.$get(`https://app.finevinume.com/api/products/${params.id}`)
-      const reviews = await $axios.$get(`https://app.finevinume.com/api/reviews/${params.id}`)
+      const product = await $axios.$get(`http://127.0.0.1:8000/api/products/${params.id}`)
+      const reviews = await $axios.$get(`http://127.0.0.1:8000/api/reviews/${params.id}`)
 
       const wishlist = store.getters['wishcolls/wishlist']
       const collection = store.getters['wishcolls/collection']
@@ -380,7 +380,7 @@ export default {
 
           this.review.modal = false
 
-          const reviews = await this.$axios.$get(`https://app.finevinume.com/public/api/reviews/${this.$route.params.id}`)
+          const reviews = await this.$axios.$get(`http://127.0.0.1:8000/public/api/reviews/${this.$route.params.id}`)
 
           this.reviews = reviews.data
         } catch (e) {

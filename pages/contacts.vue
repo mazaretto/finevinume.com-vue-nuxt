@@ -191,17 +191,12 @@ export default {
       try {
         this.fetching = true
 
-        await this.$axios.$post('https://app.finevinume.com/api/support', {
-          data: {
-            Username: this.name,
-            problem_text: this.message,
-            problem_link: this.message,
-            email: this.email,
-            telephone: this.telephone
-          },
-          headers: {
-            Authorization: `Bearer ${this.$auth.user.api_token}`
-          }
+        await this.$axios.$post('http://127.0.0.1:8000/api/support', {
+          username: this.$auth.user.login,
+          name: this.name.$model,
+          problem_text: this.message.$model,
+          problem_link: this.email.$model,
+          telephone: this.telephone.$model
         })
 
         this.OPEN_SUCCESS_MODAL()
@@ -220,7 +215,9 @@ export default {
       }
     },
     ...mapMutations({
-      OPEN_MODAL: 'auth-modal/OPEN_MODAL'
+      OPEN_MODAL: 'auth-modal/OPEN_MODAL',
+      OPEN_SUCCESS_MODAL: 'auth-modal/OPEN_SUCCESS_MODAL',
+      ADD_NOTIFICATION: 'notifications/ADD_NOTIFICATION'
     })
   }
 }

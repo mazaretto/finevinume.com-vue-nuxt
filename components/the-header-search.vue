@@ -1,15 +1,55 @@
 <template>
   <div class="the-header-search">
-    <span class="the-header-search__statistics" :class="{ 'the-header-search__statistics--disable': active }">
+    <span
+      class="the-header-search__statistics"
+      :class="{ 'the-header-search__statistics--disable': active }"
+    >
       We are looking among 62486 bottles, among 1274 manufacturers
     </span>
 
-    <form class="the-header-search__form" :class="{ 'the-header-search__form--active': active }">
-      <input class="input the-header-search__input" type="search" v-model="searchContent" @focus="active = true" @blur="active = false">
-      <v-button @click.native="submit()" class="the-header-search__button">
+    <form
+      class="the-header-search__form"
+      :class="{ 'the-header-search__form--active': active }"
+      @submit.stop.prevent="submit"
+    >
+      <input
+        v-model="searchContent"
+        class="input the-header-search__input"
+        type="search"
+        @focus="active = true"
+        @blur="active = false"
+      >
+      <v-button
+        class="the-header-search__button"
+        type="button"
+        @click.native="submit()"
+      >
         <svg-binoculars class="the-header-search__button-icon" />
         Search
       </v-button>
+
+      <nav
+        v-if="searchResult && searchResult.length"
+        class="header-search-result"
+      >
+        <ul class="header-search-result__list">
+          <li
+            v-for="(item, index) in searchResult"
+            :key="index"
+            class="header-search-result__item"
+          >
+            <nuxt-link
+              class="header-search-result__link"
+              :to="{
+                name: 'products-name',
+                params: { id: item.id, name: item.name }
+              }"
+            >
+              {{ item.name }}
+            </nuxt-link>
+          </li>
+        </ul>
+      </nav>
     </form>
   </div>
 </template>
@@ -18,19 +58,26 @@
 import SvgBinoculars from '~/assets/icons/binoculars.svg?inline'
 
 export default {
-  methods: {
-    submit () {
-      console.log('qwe')
-    }
+  components: {
+    SvgBinoculars
   },
   data () {
     return {
       searchContent: '',
+      searchResult: [],
       active: false
     }
   },
-  components: {
-    SvgBinoculars
+  methods: {
+    async submit () {
+      const res = await this.$axios.$post('http://127.0.0.1:8000/api/search', {
+        search: this.searchContent
+      })
+      if (res.data.length >= 5) {
+        return (this.searchResult = res.data.splice(0, 5))
+      }
+      return (this.searchResult = res.data)
+    }
   }
 }
 </script>
@@ -122,8 +169,8 @@ $border-radius: 25px;
   }
 
   &:active {
-    background-color: #9E1224;
-    border-color: #9E1224;
+    background-color: #9e1224;
+    border-color: #9e1224;
   }
 
   @media screen and (max-width: 1024px) {
@@ -141,5 +188,34 @@ $border-radius: 25px;
   @media screen and (max-width: 1024px) {
     margin-right: 10px;
   }
+}
+.header-search-result {
+  opacity: 0;
+  width: 100%;
+  height: auto;
+  z-index: 1000;
+  position: absolute;
+  left: 0;
+  top: 100%;
+  padding-top: 20px;
+  transition: 350ms ease-in-out;
+}
+.the-header-search__form:not(:hover) .header-search-result {
+  z-index: -1;
+}
+.the-header-search__form:hover > .header-search-result {
+  opacity: 1;
+}
+.header-search-result__list {
+  padding: 10px 20px;
+  border-radius: 5px !important;
+  color: #333333;
+  border: 1px solid #e0e0e0;
+  background-color: white;
+}
+.header-search-result__link {
+  display: block;
+  width: 100%;
+  padding: 10px 0;
 }
 </style>

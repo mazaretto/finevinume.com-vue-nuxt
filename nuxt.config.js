@@ -52,7 +52,7 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: 'https://app.finevinume.com/api'
+    baseURL: 'http://127.0.0.1:8000/api'
   },
 
   // Auth Next module configuration: https://dev.auth.nuxtjs.org/api-index

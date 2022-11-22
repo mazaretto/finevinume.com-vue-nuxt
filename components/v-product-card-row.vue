@@ -37,7 +37,7 @@ export default {
   computed: {
     photo () {
       if (this.product.photo !== null) {
-        return `http://app.finevinume.com/storage/${this.product.photo}`
+        return `http://127.0.0.1:8000/storage/${this.product.photo}`
       } else {
         return require('~/assets/images/empty-bottle.png')
       }

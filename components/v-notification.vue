@@ -10,7 +10,8 @@
     <div class="v-notification__main">
       <template v-if="notification.product">
         <nuxt-link :to="link" class="v-notification__link">{{ notification.product.name }}</nuxt-link>
-        <span>Added to your {{ notification.product.type }}</span>
+        <span v-if="notification.remove">Remove from your {{ notification.product.type }}</span>
+        <span v-else>Added to your {{ notification.product.type }}</span>
       </template>
       <span v-else>{{ notification.error }}</span>
     </div>

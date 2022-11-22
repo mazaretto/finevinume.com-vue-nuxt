@@ -23,9 +23,9 @@
       </div>
       <div class="v-products-catalog-filter__selects">
         <v-catalog-filter-select
-          v-model="checked"
           v-for="(select, id) of selects"
           :key="id"
+          v-model="checked"
           :title="select.title"
           :property="select.property"
           :items="products"
@@ -53,15 +53,22 @@
             :key="tag.entry ? tag.entry[1] : 'Delete'"
             :value="tag.entry ? tag.entry[1] : 'Delete'"
             :deleting="tag.deleting"
-            @remove="remove(tag.entry[1], checkedDuplicate, tag.entry, entriesDuplicate)"
+            @remove="
+              remove(
+                tag.entry[1],
+                checkedDuplicate,
+                tag.entry,
+                entriesDuplicate
+              )
+            "
             @remove-all="removeAll(entriesDuplicate, checkedDuplicate)"
           />
         </transition-group>
       </template>
       <v-catalog-filter-select
-        v-model="checkedDuplicate"
         v-for="(select, id) of selects"
         :key="id"
+        v-model="checkedDuplicate"
         :title="select.title"
         :property="select.property"
         :items="products"
@@ -74,9 +81,9 @@
       <span class="the-mobile-modal__title">Filters:</span>
       <div class="v-products-catalog-filter__selects">
         <v-catalog-filter-select
-          v-model="checkedDuplicate"
           v-for="(select, id) of selects"
           :key="id"
+          v-model="checkedDuplicate"
           :title="select.title"
           :property="select.property"
           :items="products"
@@ -84,18 +91,13 @@
           @add-remove-entry="addRemoveEntry($event, entriesDuplicate)"
         />
       </div>
-      <div class="buttons-container buttons-container--column buttons-container--top-auto">
-        <v-button
-          class="v-button--round"
-          default
-          @click.native="enter"
-        >
+      <div
+        class="buttons-container buttons-container--column buttons-container--top-auto"
+      >
+        <v-button class="v-button--round" default @click.native="enter">
           Enter
         </v-button>
-        <span
-          class="link link--center the-mobile-modal__link"
-          @click="close"
-        >
+        <span class="link link--center the-mobile-modal__link" @click="close">
           Close
         </span>
       </div>
@@ -107,6 +109,10 @@
 import { mapGetters } from 'vuex'
 
 export default {
+  model: {
+    prop: 'checked',
+    event: 'change'
+  },
   props: {
     products: {
       type: Array,
@@ -117,10 +123,6 @@ export default {
       required: true,
       default: false
     }
-  },
-  model: {
-    prop: 'checked',
-    event: 'change'
   },
   data () {
     return {
@@ -147,6 +149,35 @@ export default {
           search: true
         }
       ]
+    }
+  },
+  watch: {
+    entries (entries) {
+      if (entries.length !== 0) {
+        const filteredProducts = this.products.filter((product) => {
+          let result
+
+          for (const [property, value] of entries) {
+            if (product[property] === value) {
+              result = true
+              break
+            } else {
+              result = false
+            }
+          }
+
+          return result
+        })
+
+        this.$emit('recieve-products', filteredProducts)
+      } else {
+        this.$emit('recieve-products', this.products)
+      }
+
+      this.tags = this.recieveTags(entries)
+    },
+    entriesDuplicate (entries) {
+      this.tagsDuplicate = this.recieveTags(entries)
     }
   },
   methods: {
@@ -205,35 +236,6 @@ export default {
       this.$emit('close')
     }
   },
-  watch: {
-    entries (entries) {
-      if (entries.length !== 0) {
-        const filteredProducts = this.products.filter((product) => {
-          let result
-
-          for (const [property, value] of entries) {
-            if (product[property] === value) {
-              result = true
-              break
-            } else {
-              result = false
-            }
-          }
-
-          return result
-        })
-
-        this.$emit('recieve-products', filteredProducts)
-      } else {
-        this.$emit('recieve-products', this.products)
-      }
-
-      this.tags = this.recieveTags(entries)
-    },
-    entriesDuplicate (entries) {
-      this.tagsDuplicate = this.recieveTags(entries)
-    }
-  },
   computed: {
     containerHeight () {
       if (this.entries.length >= 2) {
@@ -282,7 +284,7 @@ export default {
     margin-right: 20px;
 
     &:after {
-      content: ":"
+      content: ':';
     }
   }
 }

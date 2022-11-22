@@ -72,36 +72,70 @@ export default {
     }
   },
   methods: {
+    switchActive (type, state) {
+      if (type) {
+        return this.inWishlist === state
+      }
+      return this.inCollection === state
+    },
     async toggleWishcolls (type) {
-      const currentType = type ? 'wishlist' : 'collection'
+      if ((type && this.inWishlist) || (!type && this.inCollection)) {
+        this.switchActive(type, false)
+        return await this.destroy(type)
+      }
+      this.switchActive(type, true)
+      await this.add(type)
+    },
+    async add (type) {
+      try {
+        await this.ADD_TO_WISHCOLLS({
+          product_id: this.product.id,
+          type_coll: type
+        })
 
-      if (!this[currentType]) {
-        try {
-          await this.ADD_TO_WISHCOLLS({
+        this.ADD_NOTIFICATION({
+          reject: false,
+          product: {
+            name: this.product.name,
+            type: type ? 'wishlist' : 'collection',
+            added: true
+          }
+        })
+      } catch (e) {
+        this.ADD_NOTIFICATION({
+          reject: true,
+          error: 'Something went wrong, try add this product later'
+        })
+      }
+    },
+    async destroy (type) {
+      try {
+        await this.REMOVE_FROM_WISHCOLLS(
+          {
             product_id: this.product.id,
             type_coll: type
-          })
+          }
+        )
 
-          this[currentType] = true
-
-          this.ADD_NOTIFICATION({
-            reject: false,
-            product: {
-              name: this.product.name,
-              type: currentType,
-              added: true
-            }
-          })
-        } catch (e) {
-          this.ADD_NOTIFICATION({
-            reject: true,
-            error: 'Something went wrong, try add this product later'
-          })
-        }
+        this.ADD_NOTIFICATION({
+          reject: false,
+          remove: true,
+          product: {
+            name: this.product.name,
+            type: type ? 'wishlist' : 'collection',
+            added: false
+          }
+        })
+      } catch (e) {
+        this.ADD_NOTIFICATION({
+          reject: true,
+          error: 'Something went wrong, try add this product later'
+        })
       }
     },
     ...mapActions({
-      ADD_TO_WISHCOLLS: 'wishcolls/ADD_TO_WISHCOLLS'
+      ADD_TO_WISHCOLLS: 'wishcolls/ADD_TO_WISHCOLLS',
+      REMOVE_FROM_WISHCOLLS: 'wishcolls/REMOVE_FROM_WISHCOLLS'
     }),
     ...mapMutations({
       ADD_NOTIFICATION: 'notifications/ADD_NOTIFICATION'

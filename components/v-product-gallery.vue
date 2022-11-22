@@ -2,7 +2,7 @@
   <div class="v-product-gallery">
     <div class="v-product-gallery__main">
       <div class="v-product-gallery__main-photo">
-        <img class="v-product-gallery__img" :src="`https://app.finevinume.com/storage/${photo}`" alt="bottle" />
+        <img class="v-product-gallery__img" :src="`http://127.0.0.1:8000/storage/${photo}`" alt="bottle" />
       </div>
     </div>
     <div class="v-product-gallery__bottom">
