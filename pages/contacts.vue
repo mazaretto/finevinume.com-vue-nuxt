@@ -191,7 +191,7 @@ export default {
       try {
         this.fetching = true
 
-        await this.$axios.$post('http://127.0.0.1:8000/api/support', {
+        await this.$axios.$post('/support', {
           username: this.$auth.user.login,
           name: this.name.$model,
           problem_text: this.message.$model,
