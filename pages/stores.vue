@@ -8,12 +8,19 @@
       class="stores-catalog__grid"
     >
       <template #over-catalog-view>
-        <div v-if="$auth.loggedIn" class="buttons-container stores-catalog__buttons container">
+        <div
+          v-if="$auth.loggedIn"
+          class="buttons-container stores-catalog__buttons container"
+        >
           <v-button class="stores-catalog__button" default type="button">
-            <nuxt-link class="stores-catalog__link" to="/profile/shoplinks">My added shops</nuxt-link>
+            <nuxt-link class="stores-catalog__link" to="/profile/shoplinks">
+              My added shops
+            </nuxt-link>
           </v-button>
           <v-button class="stores-catalog__button" default-secondary>
-            <nuxt-link class="stores-catalog__link" to="/profile/shoplinks">+ Add shop</nuxt-link>
+            <nuxt-link class="stores-catalog__link" to="/profile/shoplinks">
+              + Add shop
+            </nuxt-link>
           </v-button>
         </div>
       </template>
@@ -25,38 +32,17 @@
 export default {
   data () {
     return {
-      properties: [
-        'name',
-        'country',
-        'region',
-        'wines'
-      ],
-      items: [
-        {
-          name: 'Bestwine',
-          country: 'France',
-          region: 'Phone',
-          wines: 1231
-        },
-        {
-          name: 'Genimy wine',
-          country: 'France',
-          region: 'Rhone',
-          wines: 83274
-        },
-        {
-          name: 'Perfectwine',
-          country: 'Chily',
-          region: 'Chily region',
-          wines: 131242
-        },
-        {
-          name: 'Goodwine',
-          country: 'Argentina',
-          region: 'Argentina region',
-          wines: 43514
-        }
-      ]
+      properties: ['name', 'country', 'region', 'wines'],
+      items: []
+    }
+  },
+  mounted () {
+    this.asyncData()
+  },
+  methods: {
+    async asyncData () {
+      const response = await this.$axios.$get('/stores')
+      this.items = response.data
     }
   }
 }

@@ -56,7 +56,7 @@ export default {
     }
   },
   watch: {
-    filteredItems: function (oldVal, newVal) {
+    filteredItems (oldVal, newVal) {
       return this.$emit('callbackCount', newVal)
     }
   }

@@ -1,17 +1,24 @@
 <template>
   <div class="v-products-catalog-view">
-    <div :class="containerClass">
+    <div v-if="products.length > 0" :class="containerClass">
       <component
+        :is="grid ? 'VProductCard' : 'VProductCardRow'"
         v-for="product in visibleProducts"
         :key="product.id"
         :product="product"
         :in-wishlist="inWishcols(product.id, 'wishlist')"
         :in-collection="inWishcols(product.id, 'collection')"
-        :is="grid ? 'VProductCard' : 'VProductCardRow'">
-      </component>
+      />
+    </div>
+
+    <div v-else class="v-stores-catalog-view__message">
+      <p class="v-stores-catalog-view__message-text">
+        Not founds...
+      </p>
     </div>
 
     <v-pagination
+      v-if="products.length > 0"
       class="v-products-catalog-view__pagination"
       :items-length="products.length"
       :indices="indices"
@@ -54,8 +61,27 @@ export default {
       collection: 'wishcolls/collection'
     })
   },
+  watch: {
+    products: {
+      handler () {
+        this.setIndices()
+      },
+      deep: true
+    }
+  },
+  mounted () {
+    this.setIndices()
+
+    window.addEventListener('resize', this.setIndices)
+  },
+  destroyed () {
+    window.removeEventListener('resize', this.setIndices)
+  },
   methods: {
     inWishcols (id, type) {
+      if (this.products.length === 0) {
+        return false
+      }
       const indices = this[type].map(item => item.product_id)
 
       return indices.includes(id)
@@ -73,22 +99,6 @@ export default {
         this.indices = [0, 16]
       }
     }
-  },
-  watch: {
-    products: {
-      handler () {
-        this.setIndices()
-      },
-      deep: true
-    }
-  },
-  mounted () {
-    this.setIndices()
-
-    window.addEventListener('resize', this.setIndices)
-  },
-  destroyed () {
-    window.removeEventListener('resize', this.setIndices)
   }
 }
 </script>
@@ -96,6 +106,7 @@ export default {
 <style lang="scss">
 .v-products-catalog-view {
   grid-column: span 4;
+  min-height: 400px;
 }
 
 .v-products-catalog-view__grid {

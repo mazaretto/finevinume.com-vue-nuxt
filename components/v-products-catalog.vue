@@ -45,6 +45,10 @@ export default {
     products: {
       type: Array,
       required: true
+    },
+    search: {
+      type: String,
+      required: false
     }
   },
   data () {
@@ -55,12 +59,23 @@ export default {
       grid: true
     }
   },
-  // watch: {
-  //   filteredProducts (oldVal, newVal) {
-  //     console.log(newVal)
-  //     return this.$emit('callbackCount', newVal.length)
-  //   }
-  // },
+  watch: {
+    search (newVal) {
+      if (newVal === undefined || newVal === '') {
+        this.visibleProducts = this.products
+        return false
+      }
+      let res = []
+      for (let i = 0; i < this.products.length; i++) {
+        if (!this.products[i].name.includes(newVal)) {
+          continue
+        }
+        res.push(this.products[i])
+      }
+      this.visibleProducts = res
+      return true
+    }
+  },
   methods: {
     receiveProducts (value) {
       this.filteredProducts = value

@@ -282,6 +282,9 @@ export default {
     })
   },
   watch: {
+    items () {
+      this.filteredItems = this.items
+    },
     entries (entries) {
       if (entries.length === 0) {
         this.filteredItems = this.items
@@ -292,21 +295,25 @@ export default {
       let subRegions = []
       let regions = []
 
-      for (let i = 0; i < entries.length; i++) {
-        if (entries[i][0] === 'subregion') {
-          subRegions.push(entries[i])
+      if (this.subregion.length > 0) {
+        for (let i = 0; i < entries.length; i++) {
+          if (entries[i][0] === 'subregion') {
+            subRegions.push(entries[i])
+          }
+          if (entries[i][0] === 'region') {
+            regions.push(entries[i])
+          }
         }
-        if (entries[i][0] === 'region') {
-          regions.push(entries[i])
-        }
-      }
 
-      filteredEntries =
-        subRegions.length !== 0
-          ? subRegions
-          : regions.length !== 0
-            ? regions
-            : entries
+        filteredEntries =
+          subRegions.length !== 0
+            ? subRegions
+            : regions.length !== 0
+              ? regions
+              : entries
+      } else {
+        filteredEntries = entries
+      }
 
       const filteredItems = this.items.filter((product) => {
         let result

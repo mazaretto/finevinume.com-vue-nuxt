@@ -1,12 +1,17 @@
 <template>
   <main class="categories">
     <div class="container">
-      <v-breadcrumbs :count="count" />
+      <v-breadcrumbs :count="count" @callbackSearch="setSearch" />
     </div>
 
     <section class="categories-products">
       <div class="container">
-        <v-products-catalog @callbackCount="setCountFounds" class="categories-products" :products="products"/>
+        <v-products-catalog
+          :search="search"
+          class="categories-products"
+          :products="products"
+          @callbackCount="setCountFounds"
+        />
       </div>
     </section>
   </main>
@@ -14,11 +19,6 @@
 
 <script>
 export default {
-  methods: {
-    setCountFounds (value) {
-      this.count = value
-    }
-  },
   async asyncData ({ $axios, error }) {
     try {
       const response = await $axios.$get('http://127.0.0.1:8000/api/products')
@@ -29,6 +29,19 @@ export default {
       }
     } catch (e) {
       error(e)
+    }
+  },
+  data () {
+    return {
+      search: ''
+    }
+  },
+  methods: {
+    setCountFounds (value) {
+      this.count = value
+    },
+    setSearch (value) {
+      this.search = value
     }
   }
 }

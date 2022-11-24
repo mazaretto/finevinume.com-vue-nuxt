@@ -2,30 +2,57 @@
   <div class="v-breadcrumbs">
     <nav>
       <nuxt-link
-      v-for="path of paths"
-      class="v-breadcrumbs__path"
-      :key="path"
-      :to="{ name: path === '' ? 'index' : path }"
-      :class="{'v-breadcrumbs__path--current': path === $router.currentRoute.name}"
-    >
-      {{ path === $router.currentRoute.name ? path : `${path === '' ? 'home': path} |` }}
-    </nuxt-link>
+        v-for="path of paths"
+        :key="path"
+        class="v-breadcrumbs__path"
+        :to="{ name: path === '' ? 'index' : path }"
+        :class="{
+          'v-breadcrumbs__path--current': path === $router.currentRoute.name
+        }"
+      >
+        {{
+          path === $router.currentRoute.name
+            ? path
+            : `${path === '' ? 'home' : path} |`
+        }}
+      </nuxt-link>
     </nav>
-    <div class="" v-if="count !== undefined" >Showing: {{count}} Wines</div>
+    <div v-if="count !== undefined" class="v-breadcrumbs-search">
+      <span style="white-space: nowrap;">Showing: {{ count }} Wines</span>
+        <input
+          v-model.trim="search"
+          class="input input-search"
+          type="search"
+          :placeholder="'Search wines...'"
+          @input="sendSearch"
+        >
+    </div>
   </div>
 </template>
 
 <script>
+import SvgMagnifier from '~/assets/icons/magnifier.svg?inline'
+
 export default {
   props: {
     count: {
       required: false
     }
   },
+  data () {
+    return {
+      search: null
+    }
+  },
   computed: {
     paths () {
       const fullPath = this.$router.currentRoute.fullPath
       return fullPath.split('/')
+    }
+  },
+  methods: {
+    sendSearch () {
+      this.$emit('callbackSearch', this.search)
     }
   }
 }
@@ -55,5 +82,13 @@ export default {
 
 .v-breadcrumbs__path--current {
   color: $gray2;
+}
+.v-breadcrumbs-search {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+.v-breadcrumbs-select-search {
+  margin-bottom: 0 !important;
 }
 </style>
