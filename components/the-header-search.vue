@@ -70,7 +70,7 @@ export default {
   },
   methods: {
     async submit () {
-      const res = await this.$axios.$post('http://127.0.0.1:8000/api/search', {
+      const res = await this.$axios.$post('/search', {
         search: this.searchContent
       })
       if (res.data.length >= 5) {

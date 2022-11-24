@@ -282,8 +282,8 @@ export default {
   },
   async asyncData ({ $axios, params, error, store }) {
     try {
-      const product = await $axios.$get(`http://127.0.0.1:8000/api/products/${params.id}`)
-      const reviews = await $axios.$get(`http://127.0.0.1:8000/api/reviews/${params.id}`)
+      const product = await $axios.$get(`/products/${params.id}`)
+      const reviews = await $axios.$get(`/reviews/${params.id}`)
 
       const wishlist = store.getters['wishcolls/wishlist']
       const collection = store.getters['wishcolls/collection']
