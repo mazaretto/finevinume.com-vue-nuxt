@@ -18,21 +18,107 @@
       <div class="the-header-dropdown__links">
         <span class="the-header-dropdown__links-title">Wines:</span>
         <ul class="the-header-dropdown__links-list">
-          <li class="the-header-dropdown__links-item" v-for="(route, id) in routes" :key="id">
+          <li
+            v-for="(route, id) in routes"
+            :key="id"
+            class="the-header-dropdown__links-item"
+          >
             <svg-dropdown-link-arrow class="the-header-dropdown__link-arrow" />
-            <nuxt-link class="the-header-dropdown__link" :to="{ path: `/profile/${route.toLowerCase()}` }">
+            <nuxt-link
+              class="the-header-dropdown__link"
+              :to="{ path: `/profile/${route.toLowerCase()}` }"
+            >
               {{ route }}
             </nuxt-link>
           </li>
         </ul>
       </div>
       <div class="the-header-dropdown__buttons">
-        <v-button class="the-header-dropdown__button v-button--default-secondary v-button--uppercase">
+        <v-button
+          class="the-header-dropdown__button v-button--default-secondary v-button--uppercase"
+          @click.native="editProfileModal = true"
+        >
           Edit profile
         </v-button>
-        <span class="link the-header-dropdown__logout" @click="$auth.logout()">Logout</span>
+        <span
+          class="link the-header-dropdown__logout"
+          @click="$auth.logout()"
+        >Logout</span>
       </div>
     </div>
+
+    <v-modal class="profile-modal" :active="editProfileModal">
+      <v-modal-lightbox title="Edit Profile" @close="editProfileModal = false">
+        <template #main>
+          <div class="v-modal-lightbox__main-inner">
+            <form class="v-modal-lightbox__form">
+              <div class="v-modal-lightbox__form-grid">
+                <div class="form-field form-field--modal form-field--center">
+                  <span class="form-field__name">Gender</span>
+                  <div class="form-field__radio">
+                    <v-label-radio
+                      v-model="gender"
+                      name="gender"
+                      value="Male"
+                    />
+                    <v-label-radio
+                      v-model="gender"
+                      name="gender"
+                      value="Female"
+                    />
+                    <v-label-radio
+                      v-model="gender"
+                      name="gender"
+                      value="Not specified"
+                    />
+                  </div>
+                </div>
+                <label class="form-field form-field--modal">
+                  <span class="form-field__name">Firstname</span>
+                  <input
+                    class="input input--modal"
+                    type="text"
+                    placeholder="Firstname"
+                  >
+                </label>
+                <label class="form-field form-field--modal">
+                  <span class="form-field__name">Lastname</span>
+                  <input
+                    class="input input--modal"
+                    type="text"
+                    placeholder="Lastname"
+                  >
+                </label>
+                <label class="form-field form-field--modal">
+                  <span class="form-field__name">About me</span>
+                  <textarea
+                    class="textarea textarea--modal"
+                    placeholder="Info about shop"
+                  />
+                </label>
+                <div class="form-field form-field--modal">
+                  <span class="form-field__name">Country</span>
+                  <v-select class="v-select--modal" />
+                </div>
+                <div class="form-field form-field--modal">
+                  <label class="label-input-button label-input-button--modal">
+                    <v-input-button class="profile-modal__checkbox" />
+                    <span
+                      class="label-input-button__text"
+                    >Subscribe to our newsletter</span>
+                  </label>
+                </div>
+                <v-button
+                  class="v-button the-footer__newsletter-button v-button--uppercase v-button--default"
+                >
+                  Send
+                </v-button>
+              </div>
+            </form>
+          </div>
+        </template>
+      </v-modal-lightbox>
+    </v-modal>
   </div>
 </template>
 
@@ -40,19 +126,15 @@
 import SvgDropdownLinkArrow from '~/assets/icons/dropdown-link-arrow.svg?inline'
 
 export default {
-  data () {
-    return {
-      routes: [
-        'Collection',
-        'Notes',
-        'Rates',
-        'Shoplinks',
-        'Wishlist'
-      ]
-    }
-  },
   components: {
     SvgDropdownLinkArrow
+  },
+  data () {
+    return {
+      gender: '',
+      editProfileModal: false,
+      routes: ['Collection', 'Notes', 'Rates', 'Shoplinks', 'Wishlist']
+    }
   }
 }
 </script>

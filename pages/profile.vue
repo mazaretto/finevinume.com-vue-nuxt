@@ -46,7 +46,7 @@
       </div>
     </section>
 
-    <v-modal class="profile-modal" :active="editProfileModal">
+<v-modal class="profile-modal" :active="editProfileModal">
       <v-modal-lightbox @close="editProfileModal = false" title="Edit Profile">
         <template #main>
           <div class="v-modal-lightbox__main-inner">
@@ -82,12 +82,14 @@
                     <span class="label-input-button__text">Subscribe to our newsletter</span>
                   </label>
                 </div>
+                <v-button class="v-button the-footer__newsletter-button v-button--uppercase v-button--default">Send</v-button>
               </div>
             </form>
           </div>
         </template>
       </v-modal-lightbox>
     </v-modal>
+
   </main>
 </template>
 <script>
