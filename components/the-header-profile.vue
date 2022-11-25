@@ -28,7 +28,7 @@ import { mapMutations } from 'vuex'
 export default {
   data () {
     return {
-      active: true
+      active: false
     }
   },
   methods: {
