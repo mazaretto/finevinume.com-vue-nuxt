@@ -267,7 +267,7 @@ export default {
           name: this.name.$model,
           message: this.message.$model,
           email: this.email.$model,
-          telephone: this.telephone.$model
+          phone: this.telephone.$model
         })
 
         this.OPEN_SUCCESS_MODAL()
