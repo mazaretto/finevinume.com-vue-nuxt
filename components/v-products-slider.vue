@@ -11,7 +11,10 @@
           />
         </div>
       </div>
-      <div class="v-products-slider__nav">
+      <div
+        v-if="products.length > options.slidesPerView"
+        class="v-products-slider__nav"
+      >
         <div class="v-products-slider__nav-button-prev">
           <svg-slider-prev class="v-products-slider__nav-button-arrow" />
         </div>
