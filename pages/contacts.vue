@@ -2,8 +2,13 @@
   <main class="contacts">
     <v-banner :src="require('~/assets/images/banner-6.png')" />
     <v-page-preview title="Contact Us">
-      <p class="v-page-preview__paragraph">If you would like to find out more about our services, the team is here to help - so no matter whether you're looking for a valuation, have a collection of bottles you'd like to sell or even if you just have a query about buying whisky at auction.
-      Please don't hesitate to get in touch with us.</p>
+      <p class="v-page-preview__paragraph">
+        If you would like to find out more about our services, the team is here
+        to help - so no matter whether you're looking for a valuation, have a
+        collection of bottles you'd like to sell or even if you just have a
+        query about buying whisky at auction. Please don't hesitate to get in
+        touch with us.
+      </p>
     </v-page-preview>
     <section class="contacts-info">
       <div class="container container--narrow">
@@ -12,32 +17,60 @@
             <div class="contacts-info__section-inner">
               <span class="contacts-info__section-title">Partnership</span>
               <ul class="contacts-info__section-list">
-                <li class="contacts-info__section-list-item">Winecollection</li>
-                <li class="contacts-info__section-list-item">+38 (044) 220 20 20</li>
-                <li class="contacts-info__section-list-item">+38 (044) 224 20 20</li>
+                <li class="contacts-info__section-list-item">
+                  Winecollection
+                </li>
+                <li class="contacts-info__section-list-item">
+                  +38 (044) 220 20 20
+                </li>
+                <li class="contacts-info__section-list-item">
+                  +38 (044) 224 20 20
+                </li>
               </ul>
             </div>
           </div>
           <div class="contacts-info__section">
             <div class="contacts-info__section-inner">
-              <span class="contacts-info__section-title">Technical service</span>
+              <span
+                class="contacts-info__section-title"
+              >Technical service</span>
               <ul class="contacts-info__section-list">
-                <li class="contacts-info__section-list-item">Techicalwc@gmail.com</li>
-                <li class="contacts-info__section-list-item">+38 (044) 219 20 20</li>
-                <li class="contacts-info__section-list-item">+38 (044) 219 19 19</li>
+                <li class="contacts-info__section-list-item">
+                  Techicalwc@gmail.com
+                </li>
+                <li class="contacts-info__section-list-item">
+                  +38 (044) 219 20 20
+                </li>
+                <li class="contacts-info__section-list-item">
+                  +38 (044) 219 19 19
+                </li>
               </ul>
             </div>
           </div>
           <div class="contacts-info__section">
             <div class="contacts-info__section-inner">
-              <span class="contacts-info__section-title">Head Office Address</span>
+              <span
+                class="contacts-info__section-title"
+              >Head Office Address</span>
               <ul class="contacts-info__section-list">
-                <li class="contacts-info__section-list-item">West Building</li>
-                <li class="contacts-info__section-list-item">Ruthvenfield Grove</li>
-                <li class="contacts-info__section-list-item">Inveralmond Industrial Estate</li>
-                <li class="contacts-info__section-list-item">Perth</li>
-                <li class="contacts-info__section-list-item">United Kingdom</li>
-                <li class="contacts-info__section-list-item">PH1 3FN</li>
+                <li class="contacts-info__section-list-item">
+                  West Building
+                </li>
+                <li class="contacts-info__section-list-item">
+                  Ruthvenfield Grove
+                </li>
+                <li class="contacts-info__section-list-item">
+                  Inveralmond Industrial Estate
+                </li>
+                <li class="contacts-info__section-list-item">
+                  Perth
+                </li>
+                <li class="contacts-info__section-list-item">
+                  United Kingdom
+                </li>
+                <li class="contacts-info__section-list-item">
+                  PH1 3FN
+                </li>
               </ul>
             </div>
           </div>
@@ -45,9 +78,17 @@
             <div class="contacts-info__section-inner">
               <span class="contacts-info__section-title">legal status</span>
               <ul class="contacts-info__section-list">
-                <li class="contacts-info__section-list-item">Company No. 4449145</li>
-                <li class="contacts-info__section-list-item">VAT Registration No. GB735785005</li>
-                <li class="contacts-info__section-list-item contacts-info__section-list-item--lower">Registered in England and Wales</li>
+                <li class="contacts-info__section-list-item">
+                  Company No. 4449145
+                </li>
+                <li class="contacts-info__section-list-item">
+                  VAT Registration No. GB735785005
+                </li>
+                <li
+                  class="contacts-info__section-list-item contacts-info__section-list-item--lower"
+                >
+                  Registered in England and Wales
+                </li>
               </ul>
             </div>
           </div>
@@ -57,75 +98,107 @@
     <section class="customer-service">
       <div class="container container--narrow">
         <p class="customer-service__description">
-          Please fill out the form below and a member of our Customer Service team will get back to you as soon as possible.
+          Please fill out the form below and a member of our Customer Service
+          team will get back to you as soon as possible.
         </p>
         <form class="customer-service__form" @submit.prevent="submit">
           <div class="customer-service__form-fiqure">
-            <img class="customer-service__form-fiqure-img" :src="require('~/assets/images/customer-services-form-image.png')" alt="customer-service-image">
+            <img
+              class="customer-service__form-fiqure-img"
+              :src="require('~/assets/images/customer-services-form-image.png')"
+              alt="customer-service-image"
+            >
           </div>
           <label class="form-field form-field--column">
-            <span class="form-field__name form-field__name--uppercase">Your name</span>
+            <span
+              class="form-field__name form-field__name--uppercase"
+            >Your name</span>
             <v-input
+              v-model="form.name"
               type="text"
               class="input"
               placeholder="Your name"
-              v-model="form.name"
               :invalid="name.$error"
-              :message="!name.required ? 'Password is required' : 'Minimal length is 3'"
+              :message="
+                !name.required ? 'Password is required' : 'Minimal length is 3'
+              "
             />
           </label>
 
           <label class="form-field form-field--column">
-            <span class="form-field__name form-field__name--uppercase">Email</span>
+            <span
+              class="form-field__name form-field__name--uppercase"
+            >Email</span>
             <v-input
+              v-model="form.email"
               type="text"
               class="input"
               placeholder="Your email"
-              v-model="form.email"
               :invalid="email.$error"
               :message="!email.required ? 'Email is required' : 'Invalid Email'"
             />
           </label>
 
           <label class="form-field form-field--column">
-            <span class="form-field__name form-field__name--uppercase">Telephone</span>
+            <span
+              class="form-field__name form-field__name--uppercase"
+            >Telephone</span>
             <v-input
+              v-model="form.telephone"
               type="text"
               class="input"
               placeholder="Your phone"
-              v-model="form.telephone"
               :invalid="telephone.$error"
-              :message="!telephone.required ? 'Phone is required' : 'Invalid Phone'"
+              :message="
+                !telephone.required ? 'Phone is required' : 'Invalid Phone'
+              "
             />
           </label>
 
-          <label class="form-field form-field--column customer-service__message">
-            <span class="form-field__name form-field__name--uppercase">Message</span>
+          <label
+            class="form-field form-field--column customer-service__message"
+          >
+            <span
+              class="form-field__name form-field__name--uppercase"
+            >Message</span>
             <textarea
+              v-model="form.message"
               class="textarea customer-service__form-textarea"
               cols="30"
               rows="10"
               placeholder="Write what you would like to tell us ..."
-              v-model="form.message"
-            ></textarea>
+            />
             <span
-            class="v-input__error v-input-pos"
               v-if="$v.form.message.$error"
-            >{{ form.message.required ? 'Message is required' : 'Minimal length is 6' }}</span>
+              class="v-input__error v-input-pos"
+            >{{
+              form.message.required
+                ? 'Message is required'
+                : 'Minimal length is 6'
+            }}</span>
           </label>
 
           <div class="buttons-container customer-service__buttons-container">
             <div class="customer-service__checkbox-field">
               <label class="label-input-button">
-                <v-input-button class="customer-service__checkbox" v-model="form.captcha" />
+                <v-input-button
+                  v-model="form.captcha"
+                  class="customer-service__checkbox"
+                />
                 <span class="label-input-button__text">I'm not robot</span>
               </label>
             </div>
-            <v-button type="submit" class="v-button--uppercase" default>Enter</v-button>
+            <v-button
+              type="submit"
+              class="v-button--uppercase"
+              default
+            >
+              Enter
+            </v-button>
             <span
-                class="v-input__error v-input-pos"
-                v-if="$v.form.captcha.$error"
-              >Complete the captcha</span>
+              v-if="$v.form.captcha.$error"
+              class="v-input__error v-input-pos"
+            >Complete the captcha</span>
           </div>
         </form>
       </div>
@@ -135,11 +208,14 @@
 
 <script>
 import { mapMutations } from 'vuex'
-import { required, email, sameAs, minLength, helpers } from 'vuelidate/lib/validators'
-const number = helpers.regex(
-  'serial',
-  /^[0-9]{3}-[0-9]{3}-[0-9]{4}$/
-)
+import {
+  required,
+  email,
+  sameAs,
+  minLength,
+  helpers
+} from 'vuelidate/lib/validators'
+const number = helpers.regex('serial', /^[0-9]{3}-[0-9]{3}-[0-9]{4}$/)
 export default {
   data () {
     return {
@@ -190,12 +266,10 @@ export default {
       }
       try {
         this.fetching = true
-
-        await this.$axios.$post('/support', {
-          username: this.$auth.user.login,
+        await this.$axios.$post('/contacts', {
           name: this.name.$model,
-          problem_text: this.message.$model,
-          problem_link: this.email.$model,
+          message: this.message.$model,
+          email: this.email.$model,
           telephone: this.telephone.$model
         })
 

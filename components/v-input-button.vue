@@ -86,6 +86,8 @@ export default {
   padding: 0;
 
   &:checked + .v-input-button__thumb {
+    background-size: contain;
+    background-position: 25% 100%;
     display: block;
   }
 }

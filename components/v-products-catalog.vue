@@ -67,7 +67,7 @@ export default {
       }
       let res = []
       for (let i = 0; i < this.products.length; i++) {
-        if (!this.products[i].name.includes(newVal)) {
+        if (!this.products[i].name.toLowerCase().includes(newVal.toLowerCase())) {
           continue
         }
         res.push(this.products[i])
