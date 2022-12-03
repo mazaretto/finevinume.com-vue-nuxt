@@ -1,7 +1,7 @@
 <template>
   <main class="product">
     <div class="product__top container">
-      <v-breadcrumbs />
+      <v-breadcrumbs :currentRouteName="product.name" />
 
       <div v-if="$auth.loggedIn" class="product__top-wishcolls">
         <v-product-wishlist
@@ -29,9 +29,17 @@
                 <span class="product__votes">67 votes</span>
               </div>
               <div class="product__ratings">
-                <div class="product__rating" v-for="(rating, id) of ['WA', 'WS', 'JR', 'JS']" :key="id">
-                  <div class="product__rating-author">{{ rating }}</div>
-                  <span class="product__rating-value">{{ product[rating] || 0 }}</span>
+                <div
+                  v-for="(rating, id) of ['WA', 'WS', 'JR', 'JS']"
+                  :key="id"
+                  class="product__rating"
+                >
+                  <div class="product__rating-author">
+                    {{ rating }}
+                  </div>
+                  <span class="product__rating-value">{{
+                    product[rating] || 0
+                  }}</span>
                 </div>
               </div>
             </div>
@@ -52,12 +60,23 @@
 
           <div class="product__info-characteristics">
             <ul class="product__characteristics-list">
-              <li class="product__characteristic" v-for="(characteristic, id) of characteristics" :key="id">
-                <span class="product__characteristic-name">{{ characteristic.name }}</span>
-                <span class="product__characteristic-value">{{ product[characteristic.property] || "Undefined" }}</span>
+              <li
+                v-for="(characteristic, id) of characteristics"
+                :key="id"
+                class="product__characteristic"
+              >
+                <span class="product__characteristic-name">{{
+                  characteristic.name
+                }}</span>
+                <span class="product__characteristic-value">{{
+                  product[characteristic.property] || 'Undefined'
+                }}</span>
               </li>
             </ul>
-            <v-button v-if="$auth.loggedIn" class="product__update-button v-button--uppercase">
+            <v-button
+              v-if="$auth.loggedIn"
+              class="product__update-button v-button--uppercase"
+            >
               <svg-cogwheel class="product__update-button-icon" />
               <span class="product__update-button-text">+ add/update info</span>
             </v-button>
@@ -68,14 +87,24 @@
           <v-product-gallery :photo="product.photo" />
           <div class="product__info-box">
             <div v-if="$auth.loggedIn" class="product__overall-rating">
-              <span class="product__info-box-title">Overall rating 89.40/100</span>
-              <p class="product__overall-rating-notification">You have 1 rating 89</p>
-              <v-button class="product__overall-rating-button v-button--uppercase">Save</v-button>
+              <span
+                class="product__info-box-title"
+              >Overall rating 89.40/100</span>
+              <p class="product__overall-rating-notification">
+                You have 1 rating 89
+              </p>
+              <v-button
+                class="product__overall-rating-button v-button--uppercase"
+              >
+                Save
+              </v-button>
             </div>
 
             <span class="product__info-box-title">AVERAGE VALUE € 124,99</span>
             <div class="product__founded-shops">
-              <span class="product__founded-shops-title">Found {{ shops.length }} online shops:</span>
+              <span
+                class="product__founded-shops-title"
+              >Found {{ shops.length }} online shops:</span>
               <div class="product__founded-shops-list">
                 <v-founded-shop
                   v-for="(shop, id) in shops"
@@ -85,11 +114,20 @@
               </div>
 
               <div v-if="!$auth.loggedIn" class="product__call-to-register">
-                <span>Create a free Whiskybase account to view 1 additional offers and compare bottle prices of sellers all over the world</span>
-                <span class="link product__call-to-register-link" @click="OPEN_MODAL('register')">Create free account</span>
+                <span>Create a free Whiskybase account to view 1 additional offers
+                  and compare bottle prices of sellers all over the world</span>
+                <span
+                  class="link product__call-to-register-link"
+                  @click="OPEN_MODAL('register')"
+                >Create free account</span>
               </div>
 
-              <v-button v-else class="product__button v-button--uppercase">+ add to shoplink</v-button>
+              <v-button
+                v-else
+                class="product__button v-button--uppercase"
+              >
+                + add to shoplink
+              </v-button>
             </div>
           </div>
         </div>
@@ -101,21 +139,21 @@
         <div class="product-reviews__top">
           <button
             class="product-reviews__head-button"
-            :class="{'product-reviews__head-button--active': !professionals}"
+            :class="{ 'product-reviews__head-button--active': !professionals }"
             @click="professionals = false"
           >
             Reviews
           </button>
           <button
             class="product-reviews__head-button"
-            :class="{'product-reviews__head-button--active': professionals}"
+            :class="{ 'product-reviews__head-button--active': professionals }"
             @click="professionals = true"
           >
             Reviews from professionals
           </button>
         </div>
         <div class="product-reviews__main">
-          <div class="product-reviews__grid" v-if="activeReviews.length">
+          <div v-if="activeReviews.length" class="product-reviews__grid">
             <v-product-review
               v-for="(review, id) in activeReviews"
               :key="id"
@@ -123,7 +161,7 @@
             />
           </div>
 
-          <div class="product-reviews__placeholder" v-else>
+          <div v-else class="product-reviews__placeholder">
             <span class="product-reviews__placeholder-text">No reviews</span>
           </div>
 
@@ -131,11 +169,16 @@
             <v-button
               v-if="currentReviews.length > step"
               default-secondary
-              @click.native="onMaxLength ? limit = step : limit += step"
+              @click.native="onMaxLength ? (limit = step) : (limit += step)"
             >
               {{ onMaxLength ? 'Hide reviews' : 'Show More' }}
             </v-button>
-            <v-button default @click.native="$auth.loggedIn ? review.modal = true : OPEN_MODAL('register')">
+            <v-button
+              default
+              @click.native="
+                $auth.loggedIn ? (review.modal = true) : OPEN_MODAL('register')
+              "
+            >
               Add a review
             </v-button>
           </div>
@@ -151,7 +194,10 @@
       >
         <template #main>
           <div class="v-modal-lightbox__main-inner">
-            <form class="product__review-modal-form" @submit.prevent="addReview">
+            <form
+              class="product__review-modal-form"
+              @submit.prevent="addReview"
+            >
               <div class="product__review-modal-rating">
                 <span class="product__review-modal-rating-label">RATING:</span>
                 <v-input
@@ -168,11 +214,26 @@
                 class="textarea product__review-modal-textarea"
                 placeholder="Write something what you want ..."
                 :invalid="$v.review.form.comment.$error"
-                :message="!$v.review.form.comment.required ? 'Comment is required': 'Minimal length is 10'"
+                :message="
+                  !$v.review.form.comment.required
+                    ? 'Comment is required'
+                    : 'Minimal length is 10'
+                "
               />
-              <div class="buttons-container product__review-modal-form-buttons buttons-container--column">
-                <span class="link link--primary-color" @click="review.modal = false">CLOSE</span>
-                <v-button class="v-button--uppercase" default type="submit">Enter</v-button>
+              <div
+                class="buttons-container product__review-modal-form-buttons buttons-container--column"
+              >
+                <span
+                  class="link link--primary-color"
+                  @click="review.modal = false"
+                >CLOSE</span>
+                <v-button
+                  class="v-button--uppercase"
+                  default
+                  type="submit"
+                >
+                  Enter
+                </v-button>
               </div>
             </form>
           </div>
@@ -184,7 +245,13 @@
 
 <script>
 import { mapActions, mapMutations } from 'vuex'
-import { required, numeric, minValue, maxValue, minLength } from 'vuelidate/lib/validators'
+import {
+  required,
+  numeric,
+  minValue,
+  maxValue,
+  minLength
+} from 'vuelidate/lib/validators'
 
 import SvgCogwheel from '~/assets/icons/cogwheel.svg?inline'
 
@@ -380,7 +447,9 @@ export default {
 
           this.review.modal = false
 
-          const reviews = await this.$axios.$get(`http://127.0.0.1:8000/public/api/reviews/${this.$route.params.id}`)
+          const reviews = await this.$axios.$get(
+            `http://127.0.0.1:8000/public/api/reviews/${this.$route.params.id}`
+          )
 
           this.reviews = reviews.data
         } catch (e) {
@@ -758,7 +827,7 @@ export default {
   align-items: baseline;
 
   &::after {
-    content: "";
+    content: '';
     flex: 1;
     border-bottom: 1px dotted $gray2;
     margin-left: 5px;
@@ -999,7 +1068,7 @@ export default {
 .product-modal__rating-limit {
   width: 50px;
   text-align: center;
-  color: $gray4
+  color: $gray4;
 }
 
 .product-modal__textarea {

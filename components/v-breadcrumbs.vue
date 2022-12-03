@@ -10,22 +10,27 @@
           'v-breadcrumbs__path--current': path === $router.currentRoute.name
         }"
       >
-        {{
-          path === $router.currentRoute.name
-            ? path
-            : `${path === '' ? 'home' : path} |`
-        }}
+        <span v-if="(currentRouteName && Number(path))">
+          {{ currentRouteName }}
+        </span>
+        <span v-else>
+          {{
+            path === $router.currentRoute.name
+              ? path
+              : `${path === '' ? 'home' : path} |`
+          }}
+        </span>
       </nuxt-link>
     </nav>
     <div v-if="count !== undefined" class="v-breadcrumbs-search">
       <span style="white-space: nowrap;">Showing: {{ count }} Wines</span>
-        <input
-          v-model.trim="search"
-          class="input input-search"
-          type="search"
-          :placeholder="'Search wines...'"
-          @input="sendSearch"
-        >
+      <input
+        v-model.trim="search"
+        class="input input-search"
+        type="search"
+        :placeholder="'Search wines...'"
+        @input="sendSearch"
+      >
     </div>
   </div>
 </template>
@@ -35,6 +40,9 @@ import SvgMagnifier from '~/assets/icons/magnifier.svg?inline'
 
 export default {
   props: {
+    currentRouteName: {
+      required: false
+    },
     count: {
       required: false
     }

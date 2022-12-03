@@ -5,7 +5,7 @@
         <img class="v-product-card__img" :src="photo" alt="Bottle">
       </div>
       <div class="v-product-card__title">
-        <nuxt-link class="v-product-card__title-text" :to="{ name: 'products-name', params: { id: product.id, name: product.name }}">
+        <nuxt-link class="v-product-card__title-text" :to="{ name: 'products-id', params: { id: product.id, name: product.name }}">
           {{ product.name }}
         </nuxt-link>
       </div>
