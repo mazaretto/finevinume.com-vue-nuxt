@@ -258,9 +258,6 @@ export default {
   methods: {
     async submit () {
       this.$v.form.$touch()
-      if (!this.$auth.loggedIn) {
-        return this.OPEN_MODAL('login')
-      }
       if (this.$v.form.$invalid) {
         return false
       }
