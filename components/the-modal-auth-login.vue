@@ -7,7 +7,9 @@
           <v-input
             v-model="form.email"
             :invalid="$v.form.email.$error"
-            :message="!$v.form.email.required ? 'Email is required' : 'Invalid email'"
+            :message="
+              !$v.form.email.required ? 'Email is required' : 'Invalid email'
+            "
             class="input the-modal-auth__input"
             placeholder="Username or Email"
           />
@@ -17,17 +19,26 @@
           <v-input
             v-model="form.password"
             :invalid="$v.form.password.$error"
-            :message="!$v.form.password.required ? 'Password is required' : 'Minimal length is 6'"
+            :message="
+              !$v.form.password.required
+                ? 'Password is required'
+                : 'Minimal length is 6'
+            "
             class="input the-modal-auth__input"
             type="password"
           />
         </label>
       </div>
-      <div class="buttons-container buttons-container--column buttons-container--top-auto">
+      <div
+        class="buttons-container buttons-container--column buttons-container--top-auto buttons-login"
+      >
         <v-button class="v-button--default v-button--round" type="submit">
           Continue
         </v-button>
-        <span class="link link--primary-color link--center" @click="SET_MODAL_CONTEXT('register')">Close</span>
+        <span
+          class="link link--primary-color link--center"
+          @click="SET_MODAL_CONTEXT('register')"
+        >Close</span>
       </div>
     </form>
   </div>
@@ -73,20 +84,26 @@ export default {
               password: this.form.password
             }
           })
-
-          this.RECIEVE_WISHCOLLS()
-          this.CLOSE_MODAL()
         } catch (e) {
           this.ADD_NOTIFICATION({
             reject: true,
             error: e.response.data.message
           })
+        } finally {
+          this.ADD_NOTIFICATION({
+            reject: false,
+            error: 'You have been authorized'
+          })
+          this.RECIEVE_WISHCOLLS()
+          this.CLOSE_MOBILE_MODAL()
+          this.CLOSE_MODAL()
         }
       }
     },
     ...mapMutations({
       SET_MODAL_CONTEXT: 'auth-modal/SET_MODAL_CONTEXT',
       CLOSE_MODAL: 'auth-modal/CLOSE_MODAL',
+      CLOSE_MOBILE_MODAL: 'mobile-modal/CLOSE_MOBILE_MODAL',
       ADD_NOTIFICATION: 'notifications/ADD_NOTIFICATION'
     }),
     ...mapActions({
@@ -111,6 +128,10 @@ export default {
   @media screen and (max-width: 600px) {
     flex: 1;
   }
+}
+
+.buttons-login {
+  margin-top: 50px;
 }
 
 .the-modal-auth-login__form-grid {

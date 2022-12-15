@@ -2,13 +2,20 @@
   <header class="the-header">
     <div class="container">
       <div class="the-header__top">
-        <svg-burger-menu class="the-header__burger-menu" @click="CHANGE_MOBILE_MODAL('header')" />
+        <svg-burger-menu
+          class="the-header__burger-menu"
+          @click="CHANGE_MOBILE_MODAL('header')"
+        />
         <nuxt-link class="the-header__home-link" to="/">
           <svg-logo class="the-header__logo" />
         </nuxt-link>
         <the-header-search />
         <the-header-profile />
-        <v-avatar class="the-header__top-avatar" small @click.native="CHANGE_MOBILE_MODAL('auth')" />
+        <v-avatar
+          class="the-header__top-avatar"
+          small
+          @click.native="profileCheck()"
+        />
       </div>
       <nav class="the-header__nav">
         <ul class="the-header__nav-ul">
@@ -16,7 +23,10 @@
             v-for="(link, id) in links"
             :key="id"
             class="the-header__nav-item"
-            v-bind:class="{'the-header__nav-item--active' : link.route.split('/').join('') === $nuxt.$route.name}"
+            :class="{
+              'the-header__nav-item--active':
+                link.route.split('/').join('') === $nuxt.$route.name
+            }"
           >
             <nuxt-link class="the-header__nav-link" :to="link.route">
               {{ link.name }}
@@ -28,11 +38,19 @@
     <the-mobile-modal :active="mobileModal === 'header'">
       <div class="the-mobile-modal__search">
         <svg-binoculars class="the-mobile-modal__search-binoculars" />
-        <input class="the-mobile-modal__search-input" placeholder="Search" type="search">
+        <input
+          class="the-mobile-modal__search-input"
+          placeholder="Search"
+          type="search"
+        >
       </div>
       <div class="the-header__mobile-nav">
         <ul class="the-header__mobile-nav-ul">
-          <li v-for="(link, id) in links" :key="id" class="the-header__mobile-nav-item">
+          <li
+            v-for="(link, id) in links"
+            :key="id"
+            class="the-header__mobile-nav-item"
+          >
             <nuxt-link class="the-header__mobile-nav-link" :to="link.route">
               {{ link.name }}
             </nuxt-link>
@@ -40,8 +58,17 @@
           </li>
         </ul>
         <ul class="the-header__mobile-nav-ul">
-          <li class="the-header__mobile-nav-item">
-            <span class="the-header__mobile-nav-link" @click="CHANGE_MOBILE_MODAL('auth')">Register / Login</span>
+          <li v-if="!this.$auth.user" class="the-header__mobile-nav-item">
+            <span
+              class="the-header__mobile-nav-link"
+              @click="CHANGE_MOBILE_MODAL('auth')"
+            >Register / Login</span>
+            <svg-mobile-link-arrow class="the-header__mobile-nav-item-arrow" />
+          </li>
+          <li v-if="this.$auth.user" class="the-header__mobile-nav-item">
+            <span class="the-header__mobile-nav-link">
+              <nuxt-link :to="profileLink">Profile</nuxt-link>
+            </span>
             <svg-mobile-link-arrow class="the-header__mobile-nav-item-arrow" />
           </li>
           <li class="the-header__mobile-nav-item">
@@ -49,7 +76,9 @@
             <svg-mobile-link-arrow class="the-header__mobile-nav-item-arrow" />
           </li>
           <li class="the-header__mobile-nav-item">
-            <nuxt-link :to="{ name: 'contacts' }">Contact us</nuxt-link>
+            <nuxt-link :to="{ name: 'contacts' }">
+              Contact us
+            </nuxt-link>
             <svg-mobile-link-arrow class="the-header__mobile-nav-item-arrow" />
           </li>
         </ul>
@@ -76,6 +105,7 @@ export default {
   data () {
     return {
       mobileMenu: false,
+      profileLink: '/profile',
       links: [
         {
           name: 'Categories',
@@ -105,6 +135,12 @@ export default {
     }
   },
   methods: {
+    profileCheck () {
+      if (this.$auth.user) {
+        return this.$router.push('/profile')
+      }
+      this.CHANGE_MOBILE_MODAL('auth')
+    },
     toggleMenu () {
       if (this.authModal) {
         this.CLOSE_MODAL()
@@ -115,7 +151,7 @@ export default {
     ...mapMutations({
       OPEN_MODAL: 'auth-modal/OPEN_MODAL',
       CLOSE_MODAL: 'auth-modal/CLOSE_MODAL',
-      CHANGE_MOBILE_MODAL: 'mobile-auth-modal/CHANGE_MOBILE_MODAL'
+      CHANGE_MOBILE_MODAL: 'mobile-modal/CHANGE_MOBILE_MODAL'
     })
   },
   computed: {
@@ -174,6 +210,7 @@ export default {
     display: block;
     width: 21px;
     height: 20px;
+    cursor: pointer;
   }
 }
 
@@ -250,14 +287,14 @@ export default {
 
 .the-header__nav-item--active {
   &::after {
-      content: '';
-      position: absolute;
-      display: block;
-      width: 100%;
-      height: 6px;
-      background-color: $primary-color;
-      top: calc(100% + 14px);
-    }
+    content: '';
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 6px;
+    background-color: $primary-color;
+    top: calc(100% + 14px);
+  }
 }
 
 .the-header__mobile-nav {

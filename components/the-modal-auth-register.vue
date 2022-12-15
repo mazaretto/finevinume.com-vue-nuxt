@@ -233,7 +233,11 @@ export default {
   .v-input-button__thumb {
     background-color: transparent;
     background-image: url('~/assets/icons/register-checkbox-arrow.svg');
-    background-repeat: no-repeat;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    width: 10px;
+    height: 10px;
+    background-size: contain;
   }
 
   @media screen and (max-width: 600px) {

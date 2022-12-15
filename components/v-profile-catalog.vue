@@ -3,7 +3,10 @@
     <div class="v-profile-catalog__sorter-container">
       <div class="container">
         <div class="v-profile-catalog__sorter">
-          <v-catalog-sort-button class="v-profile-catalog__sorter-name" property="name" />
+          <v-catalog-sort-button
+            class="v-profile-catalog__sorter-name"
+            property="name"
+          />
           <v-catalog-sort-button
             v-for="property of properties"
             :key="property"
@@ -13,8 +16,8 @@
       </div>
     </div>
     <div class="v-profile-catalog__body container">
-      <template v-if="items.length">
-        <slot></slot>
+      <template v-if="items && items.length">
+        <slot />
       </template>
       <div v-else class="v-profile-catalog__body-message">
         The list is empty, first add something to this list
@@ -49,7 +52,7 @@ export default {
 
 .v-profile-catalog__sorter-container {
   display: contents;
-  background-color: #F2F2F2;
+  background-color: #f2f2f2;
 
   @media screen and (max-width: 1024px) {
     display: block;
@@ -67,11 +70,11 @@ export default {
   justify-items: center;
   grid-gap: 10px;
   height: 50px;
-  background-color: #F2F2F2;
+  background-color: #f2f2f2;
   padding: {
     left: 90px;
     right: 10px;
-  };
+  }
 
   & > span:first-child {
     justify-self: flex-start;

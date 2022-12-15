@@ -4,8 +4,10 @@
       <span class="the-header-profile__login" @click="OPEN_MODAL('login')">
         Login
       </span>
-      |
-      <span class="the-header-profile__register" @click="OPEN_MODAL('register')">
+      <span
+        class="the-header-profile__register"
+        @click="OPEN_MODAL('register')"
+      >
         Registration
       </span>
     </span>
@@ -16,7 +18,9 @@
       @mouseleave="active = !active"
     >
       <v-avatar small />
-      <span class="the-header-profile__greeting">Welcome, {{ $auth.user.name }}</span>
+      <span
+        class="the-header-profile__greeting"
+      >Welcome, {{ $auth.user.name }}</span>
       <the-header-dropdown v-if="active" />
     </div>
   </div>
@@ -53,15 +57,27 @@ export default {
 
 .the-header-profile__no-auth {
   margin-left: auto;
+  display: flex;
 }
 
 .the-header-profile__login,
 .the-header-profile__register {
   cursor: pointer;
+  display: block;
 
   &:hover {
     font-weight: 600;
   }
+}
+
+.the-header-profile__login::after {
+  content: '|';
+  font-weight: 400 !important;
+  margin-right: 5px;
+}
+
+.the-header-profile__register {
+  width: 100px;
 }
 
 .the-header-profile__auth {

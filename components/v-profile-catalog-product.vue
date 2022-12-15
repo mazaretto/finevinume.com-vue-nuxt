@@ -1,16 +1,21 @@
 <template>
-  <div class="v-profile-catalog-product" :class="{'v-profile-catalog-product--active': active}">
+  <div
+    class="v-profile-catalog-product"
+    :class="{ 'v-profile-catalog-product--active': active }"
+  >
     <div class="v-profile-catalog-product__front">
       <div class="v-profile-catalog-product__figure">
         <img class="v-profile-catalog-product__img" :src="photo" alt="Bottle">
       </div>
       <div class="v-profile-catalog-product__name-description">
-        <span class="v-profile-catalog-product__name">Chateau Calon-Segur Saint-Estephe 3-eme Grand Cru Classe</span>
-        <p class="v-profile-catalog-product__description">Dry red, Bordeaux, Saint Estef, Chateau calon-segur, 12.5%, 0.75L</p>
+        <span class="v-profile-catalog-product__name">{{ product.name }}</span>
       </div>
-      <slot></slot>
+      <slot />
       <div v-if="undermenu" class="v-profile-catalog-product__toggle-undermenu">
-        <span class="v-profile-catalog-product__text-button" @click="active = true">Edit</span>
+        <span
+          class="v-profile-catalog-product__text-button"
+          @click="active = true"
+        >Edit</span>
         <svg-profile-product-arrow
           v-show="active"
           class="v-profile-catalog-product__undermenu-arrow"
@@ -18,9 +23,12 @@
         />
       </div>
     </div>
-    <div v-if="undermenu && active" class="v-profile-catalog-product__undermenu">
+    <div
+      v-if="undermenu && active"
+      class="v-profile-catalog-product__undermenu"
+    >
       <div class="v-profile-catalog-product__undermenu-main">
-        <slot name="undermenu"></slot>
+        <slot name="undermenu" />
       </div>
       <span class="v-profile-catalog-product__delete-button">Delete</span>
       <span class="v-profile-catalog-product__text-button">Save</span>
@@ -32,6 +40,9 @@
 import SvgProfileProductArrow from '~/assets/icons/profile-product-arrow.svg?inline'
 
 export default {
+  components: {
+    SvgProfileProductArrow
+  },
   props: {
     product: {
       type: Object,
@@ -61,16 +72,14 @@ export default {
         return require('~/assets/images/empty-bottle.png')
       }
     }
-  },
-  components: {
-    SvgProfileProductArrow
   }
 }
 </script>
 
 <style lang="scss">
 .v-profile-catalog-product--active {
-  box-shadow: 0px -4px 4px rgba(206, 206, 206, 0.1), 0px 4px 4px rgba(27, 27, 27, 0.1);
+  box-shadow: 0px -4px 4px rgba(206, 206, 206, 0.1),
+    0px 4px 4px rgba(27, 27, 27, 0.1);
 }
 
 .v-profile-catalog-product__front {
@@ -238,7 +247,7 @@ export default {
   width: 20px;
   height: 12px;
   fill: $gray5;
-  cursor: pointer;;
+  cursor: pointer;
 }
 
 .v-profile-catalog-product__paid {

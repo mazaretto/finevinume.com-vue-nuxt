@@ -41,7 +41,7 @@
             <nuxt-link
               class="header-search-result__link"
               :to="{
-                name: 'products-name',
+                name: 'products-id',
                 params: { id: item.id, name: item.name }
               }"
             >

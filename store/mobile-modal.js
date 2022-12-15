@@ -5,6 +5,9 @@ export const state = () => ({
 export const mutations = {
   CHANGE_MOBILE_MODAL (state, modal) {
     state.modal = state.modal === modal ? false : modal
+  },
+  CLOSE_MOBILE_MODAL (state) {
+    state.modal = false
   }
 }
 

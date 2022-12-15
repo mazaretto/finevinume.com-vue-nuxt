@@ -37,6 +37,12 @@ export default {
       default: false
     }
   },
+  methods: {
+    select (val) {
+      console.log(val)
+      this.$emit('select', val)
+    }
+  },
   components: {
     SvgCross
   }
