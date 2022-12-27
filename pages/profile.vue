@@ -143,7 +143,7 @@ export default {
       gender: '',
       lists: ['Collection', 'Wishlist', 'Rates', 'Notes', 'Shoplinks'],
       form: {
-
+        country: ''
       }
     }
   },

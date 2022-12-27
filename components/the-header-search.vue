@@ -4,7 +4,8 @@
       class="the-header-search__statistics"
       :class="{ 'the-header-search__statistics--disable': active }"
     >
-      We are looking among 62486 bottles, among 1274 manufacturers
+      We are looking among {{ bottles }} bottles, among
+      {{ stores }} manufacturers
     </span>
 
     <form
@@ -55,6 +56,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 import SvgBinoculars from '~/assets/icons/binoculars.svg?inline'
 
 export default {
@@ -69,6 +71,9 @@ export default {
     }
   },
   methods: {
+    ...mapActions({
+      GET_COUNTERS: 'counters/GET_COUNTERS'
+    }),
     async submit () {
       const res = await this.$axios.$post('/search', {
         search: this.searchContent
@@ -78,6 +83,16 @@ export default {
       }
       return (this.searchResult = res.data)
     }
+  },
+
+  async fetch () {
+    await this.GET_COUNTERS()
+  },
+  computed: {
+    ...mapGetters({
+      bottles: 'counters/products',
+      stores: 'counters/stores'
+    })
   }
 }
 </script>

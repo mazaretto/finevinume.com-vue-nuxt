@@ -80,7 +80,7 @@ export default {
       initialOptions: this.getOptions(),
       options: this.getOptions(),
       visibleLimit: 4,
-      active: false,
+      active: true,
       disclosed: false
     }
   },

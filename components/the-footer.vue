@@ -20,7 +20,7 @@
               <span class="the-footer__section-title the-footer__section-title--underlined">Personal Area</span>
               <div class="the-footer__section-links">
                 <ul class="the-footer__nav-ul">
-                  <li class="the-footer__nav-item">
+                  <li class="the-footer__nav-item" v-if="!this.$auth.user">
                     <span class="the-footer__auth">
                       <span class="the-footer__register" @click="OPEN_MODAL('register')">Register</span>
                       /
@@ -31,7 +31,7 @@
                     <a class="the-footer__link" href="#">Find the wine</a>
                   </li>
                   <li class="the-footer__nav-item">
-                    <a class="the-footer__link" href="#">Privacy Policy</a>
+                    <nuxt-link class="the-footer__link" to="/policy">Privacy Policy</nuxt-link>
                   </li>
                 </ul>
               </div>
@@ -95,7 +95,7 @@
       </div>
       <div class="the-footer__bottom" :class="{'the-footer__bottom--logged-in': $auth.loggedIn}">
         <div class="the-footer__row">
-          <span>Coperight©2020</span>
+          <span>Coperight©2022</span>
           <a class="link" href="#">Cookie Polity</a>
         </div>
         <div v-if="$auth.loggedIn" class="the-footer__bottom-account">

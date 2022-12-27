@@ -13,11 +13,40 @@
       </div>
       <div class="float-box home__float-box">
         <v-company-indicator
-          v-for="(indicator, id) in indicators"
-          :key="id"
-          :src="indicator.src"
-          :count="indicator.count"
-          :name="indicator.name"
+          :src="require('~/assets/icons/indicator-bottlers.svg')"
+          :count="bottles"
+          :name="'Bottles'"
+          :alt="'bottles'"
+        />
+        <v-company-indicator
+          :src="require('~/assets/icons/indicator-brands.svg')"
+          :count="stores"
+          :name="'Brands'"
+          :alt="'brands'"
+        />
+        <v-company-indicator
+          :src="require('~/assets/icons/indicator-rates.svg')"
+          :count="rates"
+          :name="'Rates'"
+          :alt="'stars'"
+        />
+        <v-company-indicator
+          :src="require('~/assets/icons/indicator-reviews.svg')"
+          :count="reviews"
+          :name="'Reviews'"
+          :alt="'review'"
+        />
+        <v-company-indicator
+          :src="require('~/assets/icons/indicator-collections.svg')"
+          :count="colls"
+          :name="'Collections'"
+          :alt="'collection'"
+        />
+        <v-company-indicator
+          :src="require('~/assets/icons/indicator-membres.svg')"
+          :count="users"
+          :name="'Membres'"
+          :alt="'membre'"
         />
       </div>
     </section>
@@ -30,13 +59,15 @@
     <section class="about-wines">
       <div class="container about-wines__grid">
         <article class="about-wines__article">
-          <span class="about-wines__cell-title">Ticket sale started for the Gathering 2021</span>
+          <span
+            class="about-wines__cell-title"
+          >Ticket sale started for the Gathering 2021</span>
           <div class="about-wines__article-main">
             <p>
-              We would like to thank all the people who joined
-              us at the Gathering. It was a fantastic event!
-              The vibe from the very beginning, and the smiles
-              from the people walking around, who were enjoying their.
+              We would like to thank all the people who joined us at the
+              Gathering. It was a fantastic event! The vibe from the very
+              beginning, and the smiles from the people walking around, who were
+              enjoying their.
             </p>
           </div>
         </article>
@@ -52,7 +83,11 @@
         <article class="about-wines__article">
           <span class="about-wines__cell-title">Brands</span>
           <div class="about-wines__article-main">
-            <span v-for="(link, id) of links" :key="id" class="about-wines__link">
+            <span
+              v-for="(link, id) of links"
+              :key="id"
+              class="about-wines__link"
+            >
               {{ link }}
             </span>
           </div>
@@ -60,7 +95,11 @@
         <div class="about-wines__grid-row">
           <span class="about-wines__cell-title">Vintages</span>
           <div class="about-wines__vintages">
-            <div v-for="vintage in vintages" :key="vintage" class="about-wines__vintage">
+            <div
+              v-for="vintage in vintages"
+              :key="vintage"
+              class="about-wines__vintage"
+            >
               {{ vintage }}
             </div>
           </div>
@@ -84,19 +123,28 @@
         </div>
       </div>
       <div class="container">
-        <v-products-slider class="bids-orders__slider" :products="products2" narrow />
+        <v-products-slider
+          class="bids-orders__slider"
+          :products="products2"
+          narrow
+        />
       </div>
     </section>
     <section class="last-added-bottles">
       <div class="container">
         <span class="title title--center">Last added bottles</span>
-        <v-products-slider class="last-added-bottles__slider" :products="products1" />
+        <v-products-slider
+          class="last-added-bottles__slider"
+          :products="products1"
+        />
       </div>
     </section>
   </main>
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
+
 export default {
   async asyncData ({ $axios, error }) {
     try {
@@ -108,6 +156,11 @@ export default {
     } catch (e) {
       error(e)
     }
+  },
+  methods: {
+    ...mapActions({
+      GET_COUNTERS: 'counters/GET_COUNTERS'
+    })
   },
   data () {
     return {
@@ -134,44 +187,6 @@ export default {
         require('~/assets/images/banner-3.png'),
         require('~/assets/images/banner-4.png')
       ],
-      indicators: [
-        {
-          src: require('~/assets/icons/indicator-bottlers.svg'),
-          alt: 'bottles',
-          name: 'Bottlers',
-          count: 119020
-        },
-        {
-          src: require('~/assets/icons/indicator-brands.svg'),
-          alt: 'brands',
-          name: 'Brands',
-          count: 5409
-        },
-        {
-          src: require('~/assets/icons/indicator-rates.svg'),
-          alt: 'stars',
-          name: 'Rates',
-          count: 1802203
-        },
-        {
-          src: require('~/assets/icons/indicator-reviews.svg'),
-          alt: 'review',
-          name: 'Reviews',
-          count: 1002207
-        },
-        {
-          src: require('~/assets/icons/indicator-collections.svg'),
-          alt: 'bottles',
-          name: 'Collections',
-          count: 19006
-        },
-        {
-          src: require('~/assets/icons/indicator-membres.svg'),
-          alt: 'membres',
-          name: 'Membres',
-          count: 69011
-        }
-      ],
       positions: [
         {
           icon: require('~/assets/icons/positions-red-wines.svg'),
@@ -195,10 +210,34 @@ export default {
         }
       ],
       vintages: [
-        '1976', '1987', '1995', '1996', '1997', '1998', '2004',
-        '2005', '2006', '2007', '2008', '2009', '1998/99', '1999',
-        '2000', '2001', '2002', '2003', '2010', '2011', '2012',
-        '2013', '2014', '2015', '2016', '2017', '2018', '2019'
+        '1976',
+        '1987',
+        '1995',
+        '1996',
+        '1997',
+        '1998',
+        '2004',
+        '2005',
+        '2006',
+        '2007',
+        '2008',
+        '2009',
+        '1998/99',
+        '1999',
+        '2000',
+        '2001',
+        '2002',
+        '2003',
+        '2010',
+        '2011',
+        '2012',
+        '2013',
+        '2014',
+        '2015',
+        '2016',
+        '2017',
+        '2018',
+        '2019'
       ],
       links: [
         'Remoissenet Pere et Fils',
@@ -241,37 +280,54 @@ export default {
         {
           preview: require('~/assets/images/article-preview-1.png'),
           title: 'Bordeaux wine consultants in lockdown: ‘We have to adapt’',
-          description: 'From juicy Zinfandel with burgers to rosé Champagne with salmon and Chardonnay with your BBQ chicken, here is some'
+          description:
+            'From juicy Zinfandel with burgers to rosé Champagne with salmon and Chardonnay with your BBQ chicken, here is some'
         },
         {
           preview: require('~/assets/images/article-preview-2.png'),
           title: 'Bordeaux wine consultants in lockdown: ‘We have to adapt’',
-          description: 'From juicy Zinfandel with burgers to rosé Champagne with salmon and Chardonnay with your BBQ chicken, here is some'
+          description:
+            'From juicy Zinfandel with burgers to rosé Champagne with salmon and Chardonnay with your BBQ chicken, here is some'
         },
         {
           preview: require('~/assets/images/article-preview-3.png'),
           title: 'Bordeaux wine consultants in lockdown: ‘We have to adapt’',
-          description: 'From juicy Zinfandel with burgers to rosé Champagne with salmon and Chardonnay with your BBQ chicken, here is some'
+          description:
+            'From juicy Zinfandel with burgers to rosé Champagne with salmon and Chardonnay with your BBQ chicken, here is some'
         },
         {
           preview: require('~/assets/images/article-preview-4.png'),
           title: 'Bordeaux wine consultants in lockdown: ‘We have to adapt’',
-          description: 'From juicy Zinfandel with burgers to rosé Champagne with salmon and Chardonnay with your BBQ chicken, here is some'
+          description:
+            'From juicy Zinfandel with burgers to rosé Champagne with salmon and Chardonnay with your BBQ chicken, here is some'
         },
         {
           preview: require('~/assets/images/article-preview-5.png'),
           title: 'Bordeaux wine consultants in lockdown: ‘We have to adapt’',
-          description: 'From juicy Zinfandel with burgers to rosé Champagne with salmon and Chardonnay with your BBQ chicken, here is some'
+          description:
+            'From juicy Zinfandel with burgers to rosé Champagne with salmon and Chardonnay with your BBQ chicken, here is some'
         },
         {
           preview: require('~/assets/images/article-preview-6.png'),
           title: 'Bordeaux wine consultants in lockdown: ‘We have to adapt’',
-          description: 'From juicy Zinfandel with burgers to rosé Champagne with salmon and Chardonnay with your BBQ chicken, here is some'
+          description:
+            'From juicy Zinfandel with burgers to rosé Champagne with salmon and Chardonnay with your BBQ chicken, here is some'
         }
       ]
     }
   },
+  async fetch () {
+    await this.GET_COUNTERS()
+  },
   computed: {
+    ...mapGetters({
+      bottles: 'counters/products',
+      stores: 'counters/stores',
+      rates: 'counters/rates',
+      reviews: 'counters/reviews',
+      colls: 'counters/colls',
+      users: 'counters/users'
+    }),
     products1 () {
       const products = this.products.slice()
       products.reverse()
@@ -361,7 +417,7 @@ export default {
     }
     margin-top: -120px;
 
-    .v-company-indicator:nth-child(-n+3) {
+    .v-company-indicator:nth-child(-n + 3) {
       padding-bottom: 20px;
       border-bottom: 1px solid $gray6;
     }
@@ -375,7 +431,7 @@ export default {
     grid-template-columns: repeat(2, 85px);
     justify-content: space-evenly;
 
-    .v-company-indicator:nth-child(-n+3) {
+    .v-company-indicator:nth-child(-n + 3) {
       padding-bottom: 0;
       border-bottom: 0;
     }
@@ -392,7 +448,7 @@ export default {
 
 .about-wines {
   padding: 50px 0;
-  background-color: #F7F3F0;
+  background-color: #f7f3f0;
 }
 
 .about-wines__grid {
@@ -484,9 +540,7 @@ export default {
   transition-duration: 0.4s;
 
   &:hover {
-    box-shadow:
-      0px -4px 4px rgba(#cecece, 0.1),
-      0px 4px 4px rgba(#1b1b1b, 0.1);
+    box-shadow: 0px -4px 4px rgba(#cecece, 0.1), 0px 4px 4px rgba(#1b1b1b, 0.1);
   }
 }
 
@@ -530,6 +584,6 @@ export default {
 }
 
 .last-added-bottles {
-  padding-top: 35px
+  padding-top: 35px;
 }
 </style>
