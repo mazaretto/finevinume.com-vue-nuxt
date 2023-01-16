@@ -5,7 +5,7 @@
       <svg-select-arrow class="v-catalog-filter-select__arrow" />
       <svg-mobile-select-arrow
         class="v-catalog-filter-select__mobile-arrow"
-        :class="{'v-catalog-filter-select__mobile-arrow--active': active}"
+        :class="{ 'v-catalog-filter-select__mobile-arrow--active': active }"
       />
     </div>
 
@@ -29,9 +29,9 @@
       </div>
 
       <v-button
-        class="v-catalog-filter-select__toggler"
-        :class="{'v-catalog-filter-select__toggler--opened': disclosed}"
         v-show="filteredOptions.length > visibleLimit"
+        class="v-catalog-filter-select__toggler"
+        :class="{ 'v-catalog-filter-select__toggler--opened': disclosed }"
         @click.native="disclosed = !disclosed"
       >
         <span class="v-catalog-filter-select__toggler-text">
@@ -49,6 +49,10 @@ import SvgTogglerArrow from '~/assets/icons/toggler-arrow.svg?inline'
 import SvgMobileSelectArrow from '~/assets/icons/mobile-select-arrow.svg?inline'
 
 export default {
+  model: {
+    prop: 'checked',
+    event: 'change'
+  },
   props: {
     title: {
       type: String,
@@ -71,10 +75,6 @@ export default {
       type: Array
     }
   },
-  model: {
-    prop: 'checked',
-    event: 'change'
-  },
   data () {
     return {
       initialOptions: this.getOptions(),
@@ -87,7 +87,7 @@ export default {
   computed: {
     activeOptions () {
       return this.filteredOptions.filter((option, id) => {
-        return (id < this.visibleLimit) || this.disclosed
+        return id < this.visibleLimit || this.disclosed
       })
     },
     filteredOptions () {

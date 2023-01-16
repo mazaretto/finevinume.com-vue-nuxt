@@ -1,11 +1,24 @@
 <template>
-  <div class="v-product-card" :class="{'v-product-card--narrow': narrow}">
+  <div class="v-product-card" :class="{ 'v-product-card--narrow': narrow }">
     <div class="v-product-card__main">
       <div class="v-product-card__figure">
-        <img class="v-product-card__img" :src="photo" alt="Bottle">
+        <nuxt-link
+          :to="{
+            name: 'products-id',
+            params: { id: product.id, name: product.name }
+          }"
+        >
+          <img class="v-product-card__img" :src="photo" alt="Bottle">
+        </nuxt-link>
       </div>
       <div class="v-product-card__title">
-        <nuxt-link class="v-product-card__title-text" :to="{ name: 'products-id', params: { id: product.id, name: product.name }}">
+        <nuxt-link
+          class="v-product-card__title-text"
+          :to="{
+            name: 'products-id',
+            params: { id: product.id, name: product.name }
+          }"
+        >
           {{ product.name }}
         </nuxt-link>
       </div>
@@ -15,12 +28,18 @@
         <v-product-points />
         <svg-product-amount class="v-product-card__amount" />
         <template v-if="!narrow">
-          <v-product-wishlist :active="inWishlist" @togglewishcolls="toggleWishcolls" />
-          <v-product-collection :active="inCollection" @togglewishcolls="toggleWishcolls" />
+          <v-product-wishlist
+            :active="inWishlist"
+            @togglewishcolls="toggleWishcolls"
+          />
+          <v-product-collection
+            :active="inCollection"
+            @togglewishcolls="toggleWishcolls"
+          />
         </template>
       </div>
-      <div class="v-product__description" v-if="!narrow">
-        <p class="v-product__description-text"></p>
+      <div v-if="!narrow" class="v-product__description">
+        <p class="v-product__description-text" />
       </div>
     </div>
   </div>
@@ -110,12 +129,10 @@ export default {
     },
     async destroy (type) {
       try {
-        await this.REMOVE_FROM_WISHCOLLS(
-          {
-            product_id: this.product.id,
-            type_coll: type
-          }
-        )
+        await this.REMOVE_FROM_WISHCOLLS({
+          product_id: this.product.id,
+          type_coll: type
+        })
 
         this.ADD_NOTIFICATION({
           reject: false,
@@ -149,6 +166,8 @@ export default {
 
 <style lang="scss">
 .v-product-card {
+  cursor: pointer;
+  margin: 10px 0;
   max-width: 220px;
   background-color: #fff;
   border: 1px solid $gray6;
@@ -159,14 +178,15 @@ export default {
   transition-duration: 0.4s;
 
   &:hover {
-    box-shadow: 0px -4px 4px rgba(#cecece, 0.1), 0px 4px 4px rgba(#1b1b1b, 0.1);
+    box-shadow: 0px -4px 4px rgba(206, 206, 206, 0.2),
+      0px 4px 4px rgba(27, 27, 27, 0.2);
   }
 
   @media screen and (max-width: 1279px) {
     padding: 10px;
   }
 
-  @media screen and (max-width: 1024px) and (min-width: 481px)  {
+  @media screen and (max-width: 1024px) and (min-width: 481px) {
     svg {
       max-width: 18px;
       max-height: 18px;
@@ -405,7 +425,7 @@ export default {
   overflow: hidden;
   z-index: -1;
   top: 0;
-  transition-property: opacity,z-index;
+  transition-property: opacity, z-index;
   transition-duration: 0.4s;
 
   &:hover {

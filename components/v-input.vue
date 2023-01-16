@@ -85,6 +85,11 @@ export default {
   position: relative;
 }
 
+.v-input__error {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
 .v-input--invalid {
   border-color: $red !important;
   color: $red;

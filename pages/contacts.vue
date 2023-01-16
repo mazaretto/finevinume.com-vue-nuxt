@@ -21,10 +21,10 @@
                   Winecollection
                 </li>
                 <li class="contacts-info__section-list-item">
-                  +38 (044) 220 20 20
+                  <a href="+380442202020">+38 (044) 220 20 20</a>
                 </li>
                 <li class="contacts-info__section-list-item">
-                  +38 (044) 224 20 20
+                  <a href="+380442242020">+38 (044) 224 20 20</a>
                 </li>
               </ul>
             </div>
@@ -36,13 +36,13 @@
               >Technical service</span>
               <ul class="contacts-info__section-list">
                 <li class="contacts-info__section-list-item">
-                  Techicalwc@gmail.com
+                  <a href="mailto:Techicalwc@gmail.com">Techicalwc@gmail.com</a>
                 </li>
                 <li class="contacts-info__section-list-item">
-                  +38 (044) 219 20 20
+                  <a href="tel:+380442192020">+38 (044) 219 20 20</a>
                 </li>
                 <li class="contacts-info__section-list-item">
-                  +38 (044) 219 19 19
+                  <a href="tel:+380442191919">+38 (044) 219 19 19</a>
                 </li>
               </ul>
             </div>
@@ -120,7 +120,7 @@
               placeholder="Your name"
               :invalid="name.$error"
               :message="
-                !name.required ? 'Password is required' : 'Minimal length is 3'
+                !name.required ? 'Name is required' : 'Minimal length is 2'
               "
             />
           </label>

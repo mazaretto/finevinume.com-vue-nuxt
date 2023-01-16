@@ -1,5 +1,8 @@
 <template>
-  <div class="v-breadcrumbs" v-bind:class="{'v-breadcrumbs--grid' : count !== undefined}">
+  <div
+    class="v-breadcrumbs"
+    :class="{ 'v-breadcrumbs--grid': count !== undefined }"
+  >
     <nav>
       <nuxt-link
         v-for="path of paths"
@@ -23,7 +26,14 @@
       </nuxt-link>
     </nav>
     <div v-if="count !== undefined" class="v-breadcrumbs-search">
-      <span style="white-space: nowrap;">Showing: {{ count }} Wines</span>
+      <span
+        v-if="countries.length > 0"
+        style="white-space: nowrap;"
+      >Showing: {{ count }} Wines, {{ countries.join(', ') }}</span>
+      <span
+        v-else
+        style="white-space: nowrap;"
+      >Showing: {{ count }} Wines</span>
       <div class="search__wrapper">
         <input
           v-model.trim="search"
@@ -38,6 +48,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import SvgMagnifier from '~/assets/icons/magnifier.svg?inline'
 
 export default {
@@ -55,6 +66,9 @@ export default {
     }
   },
   computed: {
+    ...mapGetters({
+      countries: 'categories-filters/countries'
+    }),
     paths () {
       const fullPath = this.$router.currentRoute.fullPath
       return fullPath.split('/')

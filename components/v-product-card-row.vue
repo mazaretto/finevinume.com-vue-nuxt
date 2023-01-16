@@ -5,13 +5,23 @@
     </div>
     <div class="v-product-card-row__main">
       <span class="v-product-card-row__title">
-        {{ product.name }}
+        <nuxt-link
+          class="v-product-card__title-text"
+          :to="{
+            name: 'products-id',
+            params: { id: product.id, name: product.name }
+          }"
+        >
+          {{ product.name }}
+        </nuxt-link>
       </span>
       <!-- <span class="v-product-card-row__description"></span> -->
     </div>
     <div class="v-product-card-row__info">
-      <span class="v-product-card-row__vintage">{{ product.vintage || 0 }}</span>
-      <v-product-points :value="product.points"/>
+      <span class="v-product-card-row__vintage">{{
+        product.vintage || 0
+      }}</span>
+      <v-product-points :value="product.points" />
       <span class="v-product-card-row__classification">RA 95</span>
       <svg-product-amount class="v-product-card__amount" />
     </div>
@@ -22,6 +32,9 @@
 import SvgProductAmount from '~/assets/icons/product-amount.svg?inline'
 
 export default {
+  components: {
+    SvgProductAmount
+  },
   props: {
     product: {
       type: Object,
@@ -42,9 +55,6 @@ export default {
         return require('~/assets/images/empty-bottle.png')
       }
     }
-  },
-  components: {
-    SvgProductAmount
   }
 }
 </script>
@@ -63,9 +73,7 @@ export default {
   transition-duration: 0.4s;
 
   &:hover {
-    box-shadow:
-      0px -4px 4px rgba(#cecece, 0.1),
-      0px 4px 4px rgba(#1b1b1b, 0.1);
+    box-shadow: 0px -4px 4px rgba(#cecece, 0.1), 0px 4px 4px rgba(#1b1b1b, 0.1);
   }
 }
 

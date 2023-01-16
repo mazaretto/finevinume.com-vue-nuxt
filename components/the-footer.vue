@@ -65,7 +65,7 @@
             </p>
             <form class="the-footer__newsletter-form">
               <input class="input the-footer__newsletter-input" type="email" placeholder="Email">
-              <v-button @click.native="OPEN_MODAL('register')" default class="the-footer__newsletter-button v-button--uppercase">
+              <v-button @click.native="sendForm()" default class="the-footer__newsletter-button v-button--uppercase">
                 Sign Up
               </v-button>
             </form>
@@ -147,6 +147,11 @@ export default {
           route: '/about-us'
         }
       ],
+      methods: {
+        sendForm () {
+          return true
+        }
+      },
       routes: [
         'Collection',
         'Notes',
@@ -155,11 +160,6 @@ export default {
         'Wishlist'
       ]
     }
-  },
-  methods: {
-    ...mapMutations({
-      OPEN_MODAL: 'auth-modal/OPEN_MODAL'
-    })
   },
   components: {
     SvgLinkMail,

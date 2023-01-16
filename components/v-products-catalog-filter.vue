@@ -106,7 +106,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 
 export default {
   model: {
@@ -153,6 +153,8 @@ export default {
   },
   watch: {
     entries (entries) {
+      console.log(this.checked)
+      this.SET_COUNTRIES(this.checked)
       if (entries.length !== 0) {
         const filteredProducts = this.products.filter((product) => {
           let result
@@ -181,6 +183,9 @@ export default {
     }
   },
   methods: {
+    ...mapMutations({
+      SET_COUNTRIES: 'categories-filters/SET_COUNTRIES'
+    }),
     remove (value, values, entry, entries) {
       values.splice(values.indexOf(value), 1)
 
