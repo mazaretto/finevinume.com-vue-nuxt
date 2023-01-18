@@ -1,16 +1,26 @@
 export const state = () => ({
-  countries: ['Q']
+  countries: []
 })
 
 export const getters = {
   countries (state) {
-    return state.countries
+    if (state.countries.length === 0) {
+      return ''
+    }
+    if (state.countries.length > 3) {
+      let [first, second, third] = state.countries
+      return first + ', ' + second + ', ' + third + '..'
+    }
+    return state.countries.join(', ')
   }
 }
 
 export const mutations = {
   SET_COUNTRIES (state, payload) {
-    state.countries = payload.splice(0, 2)
+    if (payload.length === 0) {
+      return (state.countries = [])
+    }
+    return (state.countries = payload)
   }
 }
 

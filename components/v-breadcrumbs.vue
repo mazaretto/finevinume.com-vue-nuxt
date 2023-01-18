@@ -29,7 +29,7 @@
       <span
         v-if="countries.length > 0"
         style="white-space: nowrap;"
-      >Showing: {{ count }} Wines, {{ countries.join(', ') }}</span>
+      >Showing: {{ count }} Wines, {{ countries }}</span>
       <span
         v-else
         style="white-space: nowrap;"
