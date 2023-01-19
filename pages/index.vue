@@ -130,6 +130,11 @@
         />
       </div>
     </section>
+    <section class="news">
+      <div class="container">
+        <v-news />
+      </div>
+    </section>
     <section class="last-added-bottles">
       <div class="container">
         <span class="title title--center">Last added bottles</span>
