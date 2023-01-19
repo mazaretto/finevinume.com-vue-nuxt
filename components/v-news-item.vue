@@ -22,9 +22,9 @@ export default {
   computed: {
     photo () {
       if (this.item.photo) {
-        return `http://localhost:8000/img/news/${this.item.photo}`
+        return `http://app.finevinume.com/img/news/${this.item.photo}`
       }
-      return 'http://localhost:8000/img/news/preview.png'
+      return 'http://app.finevinume.com/img/news/preview.png'
     }
   }
 }

@@ -145,6 +145,10 @@ export default {
         {
           name: 'About us',
           route: '/about-us'
+        },
+        {
+          name: 'News',
+          route: '/news'
         }
       ],
       methods: {
