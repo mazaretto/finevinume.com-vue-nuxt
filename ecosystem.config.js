@@ -11,7 +11,7 @@ module.exports = {
   deploy : {
     production : {
       user: 'admin',
-      host: ['machine ip address'],
+      host: ['45.67.57.171'],
       ref: 'origin/master',
       repo: 'git@github.com:mazaretto/finevinume.com-vue-nuxt.git',
       ssh_options: ['ForwardAgent=yes'],
