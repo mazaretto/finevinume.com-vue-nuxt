@@ -23,7 +23,6 @@
       <v-button
         class="the-header-search__button"
         type="button"
-        @click.native="submit()"
       >
         <svg-binoculars class="the-header-search__button-icon" />
         Search
@@ -68,6 +67,13 @@ export default {
       searchContent: '',
       searchResult: [],
       active: false
+    }
+  },
+  watch: {
+    searchContent () {
+      setTimeout(() => {
+        this.submit()
+      }, 300)
     }
   },
   methods: {
@@ -205,7 +211,6 @@ $border-radius: 25px;
   }
 }
 .header-search-result {
-  opacity: 0;
   width: 100%;
   height: auto;
   z-index: 1000;
@@ -214,12 +219,6 @@ $border-radius: 25px;
   top: 100%;
   padding-top: 20px;
   transition: 350ms ease-in-out;
-}
-.the-header-search__form:not(:hover) .header-search-result {
-  z-index: -1;
-}
-.the-header-search__form:hover > .header-search-result {
-  opacity: 1;
 }
 .header-search-result__list {
   padding: 10px 20px;
