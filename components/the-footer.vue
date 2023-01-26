@@ -5,10 +5,16 @@
         <div class="the-footer__links">
           <nav class="the-footer__nav">
             <div class="the-footer__main-section">
-              <span class="the-footer__section-title the-footer__section-title--underlined">Site navigation</span>
+              <span
+                class="the-footer__section-title the-footer__section-title--underlined"
+              >Site navigation</span>
               <div class="the-footer__section-links">
                 <ul class="the-footer__nav-ul">
-                  <li v-for="(link, id) of links" :key="id" class="the-footer__nav-item">
+                  <li
+                    v-for="(link, id) of links"
+                    :key="id"
+                    class="the-footer__nav-item"
+                  >
                     <nuxt-link class="the-footer__link" :to="link.route">
                       {{ link.name }}
                     </nuxt-link>
@@ -17,40 +23,61 @@
               </div>
             </div>
             <div class="the-footer__main-section">
-              <span class="the-footer__section-title the-footer__section-title--underlined">Personal Area</span>
+              <span
+                class="the-footer__section-title the-footer__section-title--underlined"
+              >Personal Area</span>
               <div class="the-footer__section-links">
                 <ul class="the-footer__nav-ul">
-                  <li class="the-footer__nav-item" v-if="!this.$auth.user">
+                  <li v-if="!this.$auth.user" class="the-footer__nav-item">
                     <span class="the-footer__auth">
-                      <span class="the-footer__register" @click="OPEN_MODAL('register')">Register</span>
+                      <span
+                        class="the-footer__register"
+                        @click="OPEN_MODAL('register')"
+                      >Register</span>
                       /
-                      <span class="the-footer__login" @click="OPEN_MODAL('login')">Login</span>
+                      <span
+                        class="the-footer__login"
+                        @click="OPEN_MODAL('login')"
+                      >Login</span>
                     </span>
                   </li>
                   <li class="the-footer__nav-item">
                     <a class="the-footer__link" href="#">Find the wine</a>
                   </li>
                   <li class="the-footer__nav-item">
-                    <nuxt-link class="the-footer__link" to="/policy">Privacy Policy</nuxt-link>
+                    <nuxt-link class="the-footer__link" to="/policy">
+                      Privacy Policy
+                    </nuxt-link>
                   </li>
                 </ul>
               </div>
             </div>
           </nav>
           <div class="the-footer__main-section the-footer__contacts">
-            <span class="the-footer__section-title the-footer__section-title--underlined">Contact us</span>
+            <span
+              class="the-footer__section-title the-footer__section-title--underlined"
+            >Contact us</span>
             <div class="the-footer__section-links">
               <ul class="the-footer__nav-ul the-footer__contacts-ul">
                 <li class="the-footer__nav-item">
-                  <a class="the-footer__link" href="mailto:Winecollection@gmail.com">Winecollection@gmail.com</a>
+                  <a
+                    class="the-footer__link"
+                    href="mailto:Winecollection@gmail.com"
+                  >Winecollection@gmail.com</a>
                   <svg-link-mail class="the-footer__nav-item-icon" />
                 </li>
                 <li class="the-footer__nav-item">
-                  <a class="the-footer__link" href="tel:+380442202020">+38 (044) 220 20 20</a>
+                  <a
+                    class="the-footer__link"
+                    href="tel:+380442202020"
+                  >+38 (044) 220 20 20</a>
                   <svg-link-phone class="the-footer__nav-item-icon" />
                 </li>
                 <li class="the-footer__nav-item">
-                  <a class="the-footer__link" href="tel:+380442202019">+38 (044) 220 20 19</a>
+                  <a
+                    class="the-footer__link"
+                    href="tel:+380442202019"
+                  >+38 (044) 220 20 19</a>
                   <svg-link-phone class="the-footer__nav-item-icon" />
                 </li>
               </ul>
@@ -61,49 +88,80 @@
           <span class="the-footer__section-title">Newsletter</span>
           <div class="the-footer__newsletter-main">
             <p class="the-footer__newsletter-description">
-              Whiskey Auctioneer will only use this information to send you our e-newsletter. You can unsubscribe at any time.
+              Whiskey Auctioneer will only use this information to send you our
+              e-newsletter. You can unsubscribe at any time.
             </p>
             <form class="the-footer__newsletter-form">
-              <input class="input the-footer__newsletter-input" type="email" placeholder="Email">
-              <v-button @click.native="sendForm()" default class="the-footer__newsletter-button v-button--uppercase">
+              <input
+                class="input the-footer__newsletter-input"
+                type="email"
+                placeholder="Email"
+              >
+              <v-button
+                default
+                class="the-footer__newsletter-button v-button--uppercase"
+                @click.native="sendForm()"
+              >
                 Sign Up
               </v-button>
             </form>
           </div>
         </div>
         <div v-else class="the-footer__account">
-          <span class="the-footer__section-title the-footer__section-title--underlined">My account</span>
+          <span
+            class="the-footer__section-title the-footer__section-title--underlined"
+          >My account</span>
           <div class="the-footer__section-links">
             <ul class="the-footer__nav-ul the-footer__account-ul">
-              <li v-for="(route, id) of routes" :key="id" class="the-footer__nav-item">
-                <nuxt-link class="the-footer__link" :to="{ path: `/profile/${route.toLowerCase()}` }">
+              <li
+                v-for="(route, id) of routes"
+                :key="id"
+                class="the-footer__nav-item"
+              >
+                <nuxt-link
+                  class="the-footer__link"
+                  :to="{ path: `/profile/${route.toLowerCase()}` }"
+                >
                   {{ route }}
                 </nuxt-link>
               </li>
-              <li class="the-footer__nav-item the-footer__nav-item--account-laptop">
+              <li
+                class="the-footer__nav-item the-footer__nav-item--account-laptop"
+              >
                 <span class="the-footer__link">+Add a shoplink</span>
               </li>
-              <li class="the-footer__nav-item the-footer__nav-item--account-laptop">
+              <li
+                class="the-footer__nav-item the-footer__nav-item--account-laptop"
+              >
                 <span class="the-footer__link">+Add a bottle</span>
               </li>
             </ul>
-            <v-button default class="the-footer__logout-button the-footer__logout-button-laptop v-button--uppercase">
+            <v-button
+              default
+              class="the-footer__logout-button the-footer__logout-button-laptop v-button--uppercase"
+            >
               Logout
             </v-button>
           </div>
         </div>
       </div>
-      <div class="the-footer__bottom" :class="{'the-footer__bottom--logged-in': $auth.loggedIn}">
+      <div
+        class="the-footer__bottom"
+        :class="{ 'the-footer__bottom--logged-in': $auth.loggedIn }"
+      >
         <div class="the-footer__row">
           <span>Coperight©2022</span>
-          <a class="link" href="#">Cookie Polity</a>
+          <a class="link" @click="SET_COOKIE(true)">Cookie Polity</a>
         </div>
         <div v-if="$auth.loggedIn" class="the-footer__bottom-account">
           <div class="the-footer__row">
             <span class="link">+Add a shoplink</span>
             <span class="link">+Add a bottle</span>
           </div>
-          <v-button default class="the-footer__logout-button v-button--uppercase">
+          <v-button
+            default
+            class="the-footer__logout-button v-button--uppercase"
+          >
             Logout
           </v-button>
         </div>
@@ -119,6 +177,15 @@ import SvgLinkMail from '~/assets/icons/link-mail.svg?inline'
 import SvgLinkPhone from '~/assets/icons/link-phone.svg?inline'
 
 export default {
+  components: {
+    SvgLinkMail,
+    SvgLinkPhone
+  },
+  methods: {
+    ...mapMutations({
+      SET_COOKIE: 'cookie/SET_COOKIE'
+    })
+  },
   data () {
     return {
       links: [
@@ -156,25 +223,15 @@ export default {
           return true
         }
       },
-      routes: [
-        'Collection',
-        'Notes',
-        'Rates',
-        'Shoplinks',
-        'Wishlist'
-      ]
+      routes: ['Collection', 'Notes', 'Rates', 'Shoplinks', 'Wishlist']
     }
-  },
-  components: {
-    SvgLinkMail,
-    SvgLinkPhone
   }
 }
 </script>
 
 <style lang="scss">
 .the-footer {
-  background-color: #1B1B1B;
+  background-color: #1b1b1b;
   font-weight: 600;
   color: $gray3;
   padding: 50px 0;
@@ -384,7 +441,7 @@ export default {
   }
 
   @media screen and (max-width: 400px) {
-    border-right: 1px solid #E0E0E0 !important;
+    border-right: 1px solid #e0e0e0 !important;
   }
 }
 

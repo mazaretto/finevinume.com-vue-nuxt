@@ -4,6 +4,7 @@
     <nuxt />
     <the-footer />
     <the-modal-auth />
+    <the-modal-cookie v-if="COOKIE" v-bind:active="COOKIE" />
 
     <transition-group
       tag="div"
@@ -20,13 +21,25 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   middleware: 'close-mobile-modal',
+  methods: {
+    ...mapActions({
+      RECIEVE_WISHCOLLS: 'wishcolls/RECIEVE_WISHCOLLS'
+    })
+  },
+  created () {
+    if (!this.$auth.loggedIn) {
+      return false
+    }
+    this.RECIEVE_WISHCOLLS()
+  },
   computed: {
     ...mapGetters({
-      notifications: 'notifications/notifications'
+      notifications: 'notifications/notifications',
+      COOKIE: 'cookie/COOKIE'
     })
   }
 }
@@ -48,7 +61,7 @@ export default {
   z-index: 9999;
   top: 95px;
   left: 0;
-  right: 0
+  right: 0;
 }
 
 .notification-enter-active,

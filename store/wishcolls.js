@@ -34,7 +34,6 @@ export const actions = {
   async RECIEVE_WISHCOLLS ({ commit }) {
     try {
       const response = await this.$axios.$get('wishcolls')
-
       commit('UPDATE_WISHCOLLS', response.data)
     } catch (err) {
       console.log(err)
