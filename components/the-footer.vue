@@ -308,14 +308,18 @@ export default {
 .the-footer__nav-ul {
   display: grid;
   grid-auto-flow: column;
-  grid-template-rows: repeat(4, auto);
-  margin-bottom: 40px;
+  grid-template-rows: repeat(3, auto);
   grid-gap: 15px 40px;
   line-height: 24px;
 
   @media screen and (max-width: 480px) {
     font-size: 14px;
   }
+}
+
+.the-footer__main-section:first-child .the-footer__nav-ul {
+  grid-template-rows: repeat(4, auto);
+  margin-bottom: 40px;
 }
 
 .the-footer__nav-item {
