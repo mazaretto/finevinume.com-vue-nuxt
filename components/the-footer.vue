@@ -102,7 +102,7 @@
                 class="the-footer__newsletter-button v-button--uppercase"
                 @click.native="sendForm()"
               >
-                Sign Up
+                Subscribe
               </v-button>
             </form>
           </div>
