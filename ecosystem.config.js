@@ -1,5 +1,4 @@
 module.exports = {
-  basePath: 'http://finevinume.com',
   apps: [
     {
       name: 'FineVinum',
