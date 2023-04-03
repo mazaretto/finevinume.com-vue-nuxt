@@ -279,6 +279,10 @@ export default {
           property: 'subregion'
         },
         {
+          name: 'Brand',
+          property: 'brand'
+        },
+        {
           name: 'Owner/Producer',
           property: 'producer'
         },

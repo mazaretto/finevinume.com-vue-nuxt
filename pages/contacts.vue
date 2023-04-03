@@ -154,7 +154,6 @@
               "
             />
           </label>
-
           <label
             class="form-field form-field--column customer-service__message"
           >
@@ -188,11 +187,7 @@
                 <span class="label-input-button__text">I'm not robot</span>
               </label>
             </div>
-            <v-button
-              type="submit"
-              class="v-button--uppercase"
-              default
-            >
+            <v-button type="submit" class="v-button--uppercase" default>
               Enter
             </v-button>
             <span
@@ -207,7 +202,7 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapActions, mapMutations } from 'vuex'
 import {
   required,
   email,
@@ -381,6 +376,11 @@ export default {
     font-size: 14px;
     line-height: 20px;
   }
+}
+
+.form-field,
+.customer-service__checkbox-field {
+  position: relative;
 }
 
 .contacts-info__section-list {

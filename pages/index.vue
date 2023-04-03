@@ -5,10 +5,10 @@
         <div v-swiper="sliderOptions">
           <div class="swiper-wrapper">
             <div v-for="(banner, id) in banners" :key="id" class="swiper-slide">
-              <v-banner class="home__banner" :src="banner" />
+              <v-banner class="home__banner" :src="banner"/>
             </div>
           </div>
-          <div class="home__slider-pagination" />
+          <div class="home__slider-pagination"/>
         </div>
       </div>
       <div class="float-box home__float-box">
@@ -53,7 +53,7 @@
     <section class="recommend">
       <div class="container">
         <span class="title title--center">We recommend</span>
-        <v-products-slider :products="products1" />
+        <v-products-slider :products="products1"/>
       </div>
     </section>
     <section class="about-wines">
@@ -118,6 +118,7 @@
               :flag="region.flag"
               :country="region.country"
               :image="region.image"
+              :link="region.link"
             />
           </div>
         </div>
@@ -132,7 +133,7 @@
     </section>
     <section class="news">
       <div class="container">
-        <v-news />
+        <v-news/>
       </div>
     </section>
     <section class="last-added-bottles">
@@ -151,7 +152,10 @@
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
-  async asyncData ({ $axios, error }) {
+  async asyncData ({
+    $axios,
+    error
+  }) {
     try {
       const response = await $axios.$get('/products')
 
@@ -260,25 +264,40 @@ export default {
           title: 'Bordeaux',
           flag: require('~/assets/icons/region-flag-france.svg'),
           country: 'France',
-          image: require('~/assets/icons/region-map-bordeaux.svg')
+          image: require('~/assets/icons/region-map-bordeaux.svg'),
+          link: {
+            country: 'France',
+            region: 'Bordeaux'
+          }
         },
         {
           title: 'Burgundy',
           flag: require('~/assets/icons/region-flag-france.svg'),
           country: 'France',
-          image: require('~/assets/icons/region-map-burgundy.svg')
+          image: require('~/assets/icons/region-map-burgundy.svg'),
+          link: {
+            country: 'France',
+            region: 'Burgundy'
+          }
         },
         {
           title: 'Rhone',
           flag: require('~/assets/icons/region-flag-france.svg'),
           country: 'France',
-          image: require('~/assets/icons/region-map-rhone.svg')
+          image: require('~/assets/icons/region-map-rhone.svg'),
+          link: {
+            country: 'France',
+            region: 'Rhone'
+          }
         },
         {
           title: 'Other regions',
           flag: require('~/assets/icons/region-flag-france.svg'),
           country: 'France',
-          image: require('~/assets/icons/region-other.svg')
+          image: require('~/assets/icons/region-other.svg'),
+          link: {
+            country: 'France'
+          }
         }
       ],
       articles: [

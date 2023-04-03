@@ -2,10 +2,11 @@
   <main class="profile">
     <section class="profile__head">
       <div class="container profile__head-container">
-        <v-avatar class="profile__avatar" />
+        <v-avatar class="profile__avatar" v-if="$auth && $auth.user && $auth.user.photo" :src="'http://localhost:8000/storage/' + $auth.user.photo" @click.native="editAvatarModal = !editAvatarModal"/>
+        <v-avatar class="profile__avatar" v-else @click.native="editAvatarModal = !editAvatarModal"/>
         <span class="profile__username">{{
-          $auth.user ? $auth.user.name : 'undefined'
-        }}</span>
+            $auth.user ? $auth.user.name : 'undefined'
+          }}</span>
         <div class="profile__head-bottom">
           <div class="profile__statuses">
             <span class="profile__status">Senior member</span>
@@ -57,7 +58,7 @@
         </div>
       </div>
       <div class="profile__products">
-        <nuxt-child />
+        <nuxt-child/>
       </div>
     </section>
 
@@ -112,11 +113,11 @@
                 </label>
                 <div class="form-field form-field--modal">
                   <span class="form-field__name">Country</span>
-                  <v-select-country class="v-select--modal" @select="select()" />
+                  <v-select-country class="v-select--modal" @select="select()"/>
                 </div>
                 <div class="form-field form-field--modal">
                   <label class="label-input-button label-input-button--modal">
-                    <v-input-button class="profile-modal__checkbox" />
+                    <v-input-button class="profile-modal__checkbox"/>
                     <span
                       class="label-input-button__text"
                     >Subscribe to our newsletter</span>
@@ -133,13 +134,40 @@
         </template>
       </v-modal-lightbox>
     </v-modal>
+
+    <v-modal class="profile-modal" :active="editAvatarModal">
+      <v-modal-lightbox title="Change Avatar" @close="editAvatarModal = false">
+        <template #main>
+          <div class="v-modal-lightbox__main-inner">
+            <form class="v-modal-lightbox__form">
+              <div class="v-modal-lightbox__form-grid">
+                <div class="form-field form-field--modal form-field--center">
+                  <label class="form-field__name">
+                    <input ref="image" type="file" @change="handleFileUpload">
+                  </label>
+                </div>
+                <v-button
+                  @click.native="submitFileUpload"
+                  class="v-button the-footer__newsletter-button v-button--uppercase v-button--default"
+                >
+                  Send
+                </v-button>
+              </div>
+            </form>
+          </div>
+        </template>
+      </v-modal-lightbox>
+    </v-modal>
   </main>
 </template>
 <script>
+
 export default {
   data () {
     return {
       editProfileModal: false,
+      editAvatarModal: false,
+      image: '',
       gender: '',
       lists: ['Collection', 'Wishlist', 'Rates', 'Notes', 'Shoplinks'],
       form: {
@@ -148,6 +176,27 @@ export default {
     }
   },
   methods: {
+    handleFileUpload () {
+      this.image = this.$refs.image.files[0]
+    },
+    submitFileUpload () {
+      let formData = new FormData()
+      formData.append('avatar', this.image)
+
+      this.$axios.post('/profile/change-avatar',
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+      ).then(function () {
+        console.log('SUCCESS!!')
+      })
+        .catch(function () {
+          console.log('FAILURE!!')
+        })
+    },
     checkPath (path) {
       const paths = this.$route.fullPath.split('/')
       const currentPath = paths[paths.length - 1]
@@ -375,7 +424,8 @@ export default {
   line-height: 16px;
 
   .v-button__inner {
-    padding: 0;
+    padding: 0 10px;
+    white-space: nowrap;
   }
 }
 

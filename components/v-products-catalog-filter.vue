@@ -151,10 +151,24 @@ export default {
       ]
     }
   },
+  mounted () {
+    if (!this.$route.query.country && !this.$route.query.region) {
+      return
+    }
+    if (this.$route.query.country) {
+      this.$data.checked.push(this.$route.query.country)
+      this.$data.entries.push(['country', this.$route.query.country])
+    }
+    if (this.$route.query.region) {
+      this.$data.checked.push(this.$route.query.region)
+      this.$data.entries.push(['region', this.$route.query.region])
+    }
+    this.SET_COUNTRIES(this.$data.checked)
+  },
   watch: {
     entries (entries) {
-      console.log(this.checked)
       this.SET_COUNTRIES(this.checked)
+
       if (entries.length !== 0) {
         const filteredProducts = this.products.filter((product) => {
           let result
@@ -188,7 +202,6 @@ export default {
     }),
     remove (value, values, entry, entries) {
       values.splice(values.indexOf(value), 1)
-
       this.addRemoveEntry(entry, entries)
     },
     removeAll (entries, checked) {

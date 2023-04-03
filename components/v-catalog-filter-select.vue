@@ -2,7 +2,7 @@
   <div class="v-catalog-filter-select">
     <div class="v-catalog-filter-select__head" @click="active = !active">
       <span class="v-catalog-filter-select__title">{{ title }}</span>
-      <svg-select-arrow class="v-catalog-filter-select__arrow" />
+      <svg-select-arrow class="v-catalog-filter-select__arrow"/>
       <svg-mobile-select-arrow
         class="v-catalog-filter-select__mobile-arrow"
         :class="{ 'v-catalog-filter-select__mobile-arrow--active': active }"
@@ -37,7 +37,7 @@
         <span class="v-catalog-filter-select__toggler-text">
           {{ disclosed ? 'Close' : 'Show all' }}
         </span>
-        <svg-toggler-arrow class="v-catalog-filter-select__toggler-arrow" />
+        <svg-toggler-arrow class="v-catalog-filter-select__toggler-arrow"/>
       </v-button>
     </div>
   </div>
@@ -71,10 +71,13 @@ export default {
       type: String,
       required: true
     },
+    // eslint-disable-next-line vue/require-default-prop
     checked: {
-      type: Array
+      type: Array,
+      required: false
     }
   },
+
   data () {
     return {
       initialOptions: this.getOptions(),

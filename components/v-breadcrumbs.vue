@@ -70,7 +70,7 @@ export default {
       countries: 'categories-filters/countries'
     }),
     paths () {
-      const fullPath = this.$router.currentRoute.fullPath
+      const fullPath = this.$router.currentRoute.fullPath.split('?')[0]
       return fullPath.split('/')
     }
   },

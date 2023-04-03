@@ -22,6 +22,12 @@ export const mutations = {
   }
 }
 
+export const actions = {
+  async OPEN_ASYNC_SUCCESS_MODAL (state) {
+    this.OPEN_SUCCESS_MODAL()
+  }
+}
+
 export const getters = {
   authModal (state) {
     return state.authModal

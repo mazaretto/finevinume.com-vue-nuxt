@@ -1,12 +1,12 @@
 <template>
-  <div class="v-region-button">
+  <nuxt-link :to="{path: 'categories', query: link}" class="v-region-button">
     <div class="v-region-button__main">
       <span class="v-region-button__title">{{ title }}</span>
       <img class="v-region-button__flag" :src="flag" :alt="country" >
       <span class="v-region-button__title-country">{{ country }}</span>
     </div>
     <img class="v-region-button__image" :src="image" :alt="title">
-  </div>
+  </nuxt-link>
 </template>
 
 <script>
@@ -28,6 +28,11 @@ export default {
     image: {
       type: String,
       required: true
+    },
+    link: {
+      type: Object,
+      required: false,
+      default: () => {}
     }
   }
 }
