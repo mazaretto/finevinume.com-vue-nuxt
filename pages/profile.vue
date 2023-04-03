@@ -5,7 +5,7 @@
         <v-avatar
           class="profile__avatar"
           v-if="$auth && $auth.user && $auth.user.photo"
-          :src="'http://localhost:8000/storage/' + $auth.user.photo"
+          :src="'http://app.finevinume.com/storage/' + $auth.user.photo"
           @click.native="editAvatarModal = !editAvatarModal"
         />
         <v-avatar class="profile__avatar" v-else @click.native="editAvatarModal = !editAvatarModal"/>
