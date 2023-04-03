@@ -2,7 +2,12 @@
   <main class="profile">
     <section class="profile__head">
       <div class="container profile__head-container">
-        <v-avatar class="profile__avatar" v-if="$auth && $auth.user && $auth.user.photo" :src="'http://localhost:8000/storage/' + $auth.user.photo" @click.native="editAvatarModal = !editAvatarModal"/>
+        <v-avatar
+          class="profile__avatar"
+          v-if="$auth && $auth.user && $auth.user.photo"
+          :src="'http://localhost:8000/storage/' + $auth.user.photo"
+          @click.native="editAvatarModal = !editAvatarModal"
+        />
         <v-avatar class="profile__avatar" v-else @click.native="editAvatarModal = !editAvatarModal"/>
         <span class="profile__username">{{
             $auth.user ? $auth.user.name : 'undefined'
@@ -190,12 +195,8 @@ export default {
             'Content-Type': 'multipart/form-data'
           }
         }
-      ).then(function () {
-        console.log('SUCCESS!!')
-      })
-        .catch(function () {
-          console.log('FAILURE!!')
-        })
+      )
+      this.editAvatarModal = false
     },
     checkPath (path) {
       const paths = this.$route.fullPath.split('/')
