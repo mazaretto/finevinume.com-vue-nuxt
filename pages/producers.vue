@@ -1,6 +1,6 @@
 <template>
   <main class="producers">
-    <v-banner :src="require('~/assets/images/banner-1.png')" />
+    <v-banner :src="require('~/assets/images/banner-1.png')"/>
     <v-stores-catalog
       :items="items"
       :properties="properties"
@@ -13,6 +13,15 @@
 
 <script>
 export default {
+  mounted () {
+    this.asyncData()
+  },
+  methods: {
+    async asyncData () {
+      const response = await this.$axios.$get('/categories-minified')
+      this.items = response.data
+    }
+  },
   data () {
     return {
       properties: [
@@ -36,71 +45,7 @@ export default {
           placeholder: 'Subregion'
         }
       ],
-      items: [
-        {
-          name: 'Fonsue',
-          country: 'France',
-          region: 'Phone',
-          subregion: 'Altish',
-          wines: 10
-        },
-        {
-          name: 'Amalbet',
-          country: 'USA',
-          region: 'USA region',
-          subregion: 'USA state',
-          wines: 423
-        },
-        {
-          name: 'Rongue',
-          country: 'Argentina',
-          region: 'Rongue region',
-          subregion: 'Rongue subregion',
-          wines: 67
-        },
-        {
-          name: 'Broomish',
-          country: 'Chily',
-          region: 'Chily region',
-          subregion: 'Very long name of Chily subregion',
-          wines: 192
-        },
-        {
-          name: 'Zorry Virtinsh',
-          country: 'Italy',
-          region: 'Italy region',
-          subregion: 'Italy subregion',
-          wines: 2424
-        },
-        {
-          name: 'Tizens',
-          country: 'Belgium',
-          region: 'Belgium region',
-          subregion: 'Belgium subregion',
-          wines: 232
-        },
-        {
-          name: 'Aborie',
-          country: 'Spain',
-          region: 'Spain region',
-          subregion: 'Spain state',
-          wines: 783
-        },
-        {
-          name: 'Tonomy Lackolt',
-          country: 'France',
-          region: 'Andur',
-          subregion: 'Medoc',
-          wines: 1276
-        },
-        {
-          name: 'Tarnony',
-          country: 'Italy',
-          region: 'Italy region',
-          subregion: 'Italy subregion',
-          wines: 22
-        }
-      ]
+      items: []
     }
   }
 }

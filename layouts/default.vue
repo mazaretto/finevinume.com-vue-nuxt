@@ -1,10 +1,10 @@
 <template>
   <div class="default-layout">
-    <the-header />
-    <nuxt />
-    <the-footer />
-    <the-modal-auth />
-    <the-modal-cookie v-if="COOKIE" v-bind:active="COOKIE" />
+    <the-header/>
+    <nuxt/>
+    <the-footer/>
+    <the-modal-auth/>
+    <the-modal-cookie v-if="COOKIE" v-bind:active="COOKIE"/>
 
     <transition-group
       tag="div"

@@ -165,7 +165,7 @@ export default {
     return {
       checkedProperty: false,
       checkedPropertyMobile: false,
-      alphabetMode: false,
+      alphabetMode: true,
       alphabetModeMobile: false,
       letters: [
         'a', 'b', 'c', 'd', 'f',

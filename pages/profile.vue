@@ -66,79 +66,7 @@
         <nuxt-child/>
       </div>
     </section>
-
-    <v-modal class="profile-modal" :active="editProfileModal">
-      <v-modal-lightbox title="Edit Profile" @close="editProfileModal = false">
-        <template #main>
-          <div class="v-modal-lightbox__main-inner">
-            <form class="v-modal-lightbox__form">
-              <div class="v-modal-lightbox__form-grid">
-                <div class="form-field form-field--modal form-field--center">
-                  <span class="form-field__name">Gender</span>
-                  <div class="form-field__radio">
-                    <v-label-radio
-                      v-model="gender"
-                      name="gender"
-                      value="Male"
-                    />
-                    <v-label-radio
-                      v-model="gender"
-                      name="gender"
-                      value="Female"
-                    />
-                    <v-label-radio
-                      v-model="gender"
-                      name="gender"
-                      value="Not specified"
-                    />
-                  </div>
-                </div>
-                <label class="form-field form-field--modal">
-                  <span class="form-field__name">Firstname</span>
-                  <input
-                    class="input input--modal"
-                    type="text"
-                    placeholder="Firstname"
-                  >
-                </label>
-                <label class="form-field form-field--modal">
-                  <span class="form-field__name">Lastname</span>
-                  <input
-                    class="input input--modal"
-                    type="text"
-                    placeholder="Lastname"
-                  >
-                </label>
-                <label class="form-field form-field--modal">
-                  <span class="form-field__name">About me</span>
-                  <textarea
-                    class="textarea textarea--modal"
-                    placeholder="Info about shop"
-                  />
-                </label>
-                <div class="form-field form-field--modal">
-                  <span class="form-field__name">Country</span>
-                  <v-select-country class="v-select--modal" @select="select()"/>
-                </div>
-                <div class="form-field form-field--modal">
-                  <label class="label-input-button label-input-button--modal">
-                    <v-input-button class="profile-modal__checkbox"/>
-                    <span
-                      class="label-input-button__text"
-                    >Subscribe to our newsletter</span>
-                  </label>
-                </div>
-                <v-button
-                  class="v-button the-footer__newsletter-button v-button--uppercase v-button--default"
-                >
-                  Send
-                </v-button>
-              </div>
-            </form>
-          </div>
-        </template>
-      </v-modal-lightbox>
-    </v-modal>
+    <v-modal-user-edit :active="editProfileModal" @close="closeModalProfile" />
 
     <v-modal class="profile-modal" :active="editAvatarModal">
       <v-modal-lightbox title="Change Avatar" @close="editAvatarModal = false">
@@ -173,11 +101,13 @@ export default {
       editProfileModal: false,
       editAvatarModal: false,
       image: '',
-      gender: '',
       lists: ['Collection', 'Wishlist', 'Rates', 'Notes', 'Shoplinks'],
-      form: {
-        country: ''
-      }
+      check: false
+    }
+  },
+  created () {
+    if (!this.$auth.user) {
+      this.$router.replace('/')
     }
   },
   methods: {
@@ -204,9 +134,8 @@ export default {
 
       return currentPath === path.toLowerCase()
     },
-    select (val) {
-      console.log(val)
-      this.form.country = val
+    closeModalProfile () {
+      this.editProfileModal = false
     }
   }
 }

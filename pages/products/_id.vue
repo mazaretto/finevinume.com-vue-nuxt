@@ -1,7 +1,7 @@
 <template>
   <main class="product">
     <div class="product__top container">
-      <v-breadcrumbs :currentRouteName="product.name" />
+      <v-breadcrumbs :currentRouteName="product.name"/>
 
       <div v-if="$auth.loggedIn" class="product__top-wishcolls">
         <v-product-wishlist
@@ -25,7 +25,7 @@
 
             <div class="product__points-votes-and-ratings">
               <div class="product__points-votes">
-                <v-product-points />
+                <v-product-points/>
                 <span class="product__votes">67 votes</span>
               </div>
               <div class="product__ratings">
@@ -38,8 +38,8 @@
                     {{ rating }}
                   </div>
                   <span class="product__rating-value">{{
-                    product[rating] || 0
-                  }}</span>
+                      product[rating] || 0
+                    }}</span>
                 </div>
               </div>
             </div>
@@ -66,25 +66,25 @@
                 class="product__characteristic"
               >
                 <span class="product__characteristic-name">{{
-                  characteristic.name
-                }}</span>
+                    characteristic.name
+                  }}</span>
                 <span class="product__characteristic-value">{{
-                  product[characteristic.property] || 'Undefined'
-                }}</span>
+                    product[characteristic.property] || 'Undefined'
+                  }}</span>
               </li>
             </ul>
             <v-button
               v-if="$auth.loggedIn"
               class="product__update-button v-button--uppercase"
             >
-              <svg-cogwheel class="product__update-button-icon" />
+              <svg-cogwheel class="product__update-button-icon"/>
               <span class="product__update-button-text">+ add/update info</span>
             </v-button>
           </div>
         </div>
 
         <div class="product__info-boxes">
-          <v-product-gallery :photo="product.photo" />
+          <v-product-gallery :photo="product.photo"/>
           <div class="product__info-box">
             <div v-if="$auth.loggedIn" class="product__overall-rating">
               <span
@@ -351,27 +351,37 @@ export default {
       }
     }
   },
-  async asyncData ({ $axios, params, error, store }) {
-    try {
-      const product = await $axios.$get(`/products/${params.id}`)
-      const reviews = await $axios.$get(`/reviews/${params.id}`)
 
-      const wishlist = store.getters['wishcolls/wishlist']
-      const collection = store.getters['wishcolls/collection']
+  // eslint-disable-next-line vue/order-in-components
+  async asyncData ({
+    $axios,
+    params,
+    error,
+    store,
+    redirect
+  }) {
+    const product = await $axios.$get(`/products/${params.id}`).catch(() => redirect('/not-found'))
+    const reviews = await $axios.$get(`/reviews/${params.id}`).catch(() => redirect('/not-found'))
 
-      const wishlistIndices = wishlist.map(item => item.product_id)
-      const collectionindices = collection.map(item => item.product_id)
+    const wishlist = store.getters['wishcolls/wishlist']
+    const collection = store.getters['wishcolls/collection']
 
-      return {
-        product: product.data,
-        reviews: reviews.data,
-        inWishlist: wishlistIndices.includes(product.data.id),
-        collection: collectionindices.includes(product.data.id)
-      }
-    } catch (e) {
-      error(e)
+    const wishlistIndices = wishlist.map(item => item.product_id)
+    const collectionindices = collection.map(item => item.product_id)
+
+    return {
+      product: product.data,
+      reviews: reviews.data,
+      inWishlist: wishlistIndices.includes(product.data.id),
+      collection: collectionindices.includes(product.data.id)
     }
   },
+  mounted () {
+    if (this.product === undefined) {
+      this.$router.replace('/not-found')
+    }
+  },
+
   computed: {
     reqularReviews () {
       return this.reviews.filter(item => item.type_review === 0)

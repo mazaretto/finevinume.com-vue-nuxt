@@ -34,11 +34,11 @@ export default {
     },
     properties: {
       type: Array,
-      reuqired: true
+      required: true
     },
     pageName: {
       type: String,
-      reuqired: true
+      required: true
     },
     selects: {
       type: Array,
