@@ -1,6 +1,6 @@
 <template>
   <div class="v-stores-catalog">
-    <v-page-preview class="producers__page-preview" title="Producer Directory" title-center>
+    <v-page-preview v-if="updated" class="producers__page-preview" title="Producer Directory" title-center>
       <v-stores-catalog-filter
         :items="items"
         :selects="selects"
@@ -48,11 +48,17 @@ export default {
       }
     }
   },
+  mounted () {
+    if (this.items) {
+      this.updated = true
+    }
+  },
   data () {
     return {
       filteredItems: this.items,
       searched: '',
-      letter: false
+      letter: false,
+      updated: false
     }
   },
   watch: {

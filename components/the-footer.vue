@@ -93,6 +93,7 @@
             </p>
             <form class="the-footer__newsletter-form">
               <input
+                ref="email"
                 class="input the-footer__newsletter-input"
                 type="email"
                 placeholder="Email"
@@ -184,7 +185,10 @@ export default {
   methods: {
     ...mapMutations({
       SET_COOKIE: 'cookie/SET_COOKIE'
-    })
+    }),
+    sendForm () {
+      this.$axios.$post('/subscribe', { email: this.$refs.email.value }).then(e => console.log(e)).catch(e => console.log(e))
+    }
   },
   data () {
     return {
@@ -218,11 +222,6 @@ export default {
           route: '/news'
         }
       ],
-      methods: {
-        sendForm () {
-          return true
-        }
-      },
       routes: ['Collection', 'Notes', 'Rates', 'Shoplinks', 'Wishlist']
     }
   }

@@ -1,7 +1,9 @@
 <template>
   <main class="store">
-    <v-banner :src="require('~/assets/images/banner-4.png')" />
-    <v-page-preview title="Goodwine">If you would like to find out more about our services, the team is here to help - so no matter whether you're looking for a valuation, have a collection of bottles you'd like to sell or even if you just have a query about buying whisky at auction.
+    <v-banner :src="require('~/assets/images/banner-4.png')"/>
+    <v-page-preview title="Goodwine">If you would like to find out more about our services, the team is here to help -
+      so no matter whether you're looking for a valuation, have a collection of bottles you'd like to sell or even if
+      you just have a query about buying whisky at auction.
       Please don't hesitate to get in touch with us.
     </v-page-preview>
     <section class="store-banner">
@@ -10,35 +12,47 @@
           <div class="store-banner__grid-cell">
             <img class="store-banner__photo" :src="require('~/assets/images/store-photo.png')" alt="store photo">
           </div>
-          <div class="store-banner__grid-cell">
-            <img class="store-banner__info-icon" :src="require('~/assets/icons/store-info-bottles.svg')" alt="bottles">
-            <span class="store-banner__info-title">Wines 1.000.00+</span>
-            <div class="store-banner__info-list">
-              <ul class="store-banner__info-list-inner">
-                <li class="store-banner__info-list-item">Country - UNITED KINGDOM</li>
-                <li class="store-banner__info-list-item">City - Basingstoke Postal</li>
-                <li class="store-banner__info-list-item">code - EC1Y 8SY</li>
-                <li class="store-banner__info-list-item">Street name - Old Common Rd, 23</li>
-              </ul>
+          <div class="store-banner__grid-cell store-banner__grid-cell--content">
+            <div class="store-banner__item">
+              <img
+                class="store-banner__info-icon"
+                :src="require('~/assets/icons/store-info-bottles.svg')"
+                alt="bottles"
+              >
+              <span class="store-banner__info-title">Wines 1.000.00+</span>
+              <div class="store-banner__info-list">
+                <button class="button--see-all">See all</button>
+              </div>
+            </div>
+            <div class="store-banner__item">
+              <img
+                class="store-banner__info-icon country-icon"
+                :src="require('~/assets/images/ukraine.png')"
+                alt="bottles"
+              >
+              <span class="store-banner__info-title">Ukraine</span>
+              <div class="store-banner__info-list">
+                <button class="button--see-all">On the map</button>
+              </div>
             </div>
           </div>
         </div>
         <div class="store-banner__grid store-banner__grid--bottom">
           <div class="store-banner__grid-cell">
             <div class="store-banner__bottom-link">
-              <svg-store-banner-site class="store-banner__grid-cell-icon" />
+              <svg-store-banner-site class="store-banner__grid-cell-icon"/>
               <a href="http://goodwine.ua">http://goodwine.ua</a>
             </div>
           </div>
           <div class="store-banner__grid-cell">
             <div class="store-banner__bottom-link">
-              <svg-store-banner-mail class="store-banner__grid-cell-icon" />
+              <svg-store-banner-mail class="store-banner__grid-cell-icon"/>
               <a href="mailto:goodwine@gmail.com">goodwine@gmail.com</a>
             </div>
           </div>
           <div class="store-banner__grid-cell">
             <div class="store-banner__bottom-link">
-              <svg-store-banner-phone class="store-banner__grid-cell-icon" />
+              <svg-store-banner-phone class="store-banner__grid-cell-icon"/>
               <a href="tel:+380443907962">(044) 390 79 62</a>
             </div>
           </div>
@@ -114,6 +128,45 @@ export default {
   }
 }
 
+.store-banner__grid-cell--content {
+  height: max-content;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: space-around !important;
+}
+
+.store-banner__item {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  width: 170px;
+
+  .store-banner__info-list {
+    width: 100%;
+    height: fit-content;
+  }
+
+  .country-icon {
+    width: 170px;
+    height: 100px;
+    object-fit: contain;
+  }
+
+  .button--see-all {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    background: #FFFFFF;
+    border: 1px solid #B41529;
+    border-radius: 52px;
+    width: 100%;
+    display: block;
+    padding: 8px;
+  }
+}
+
 .store-banner__info-icon {
   width: 50px;
   height: auto;
@@ -122,6 +175,7 @@ export default {
 .store-banner__grid--bottom {
   background-color: $gray5;
   border: 1px solid $gray5;
+  margin-top: 20px;
 
   .store-banner__grid-cell {
     height: 50px;

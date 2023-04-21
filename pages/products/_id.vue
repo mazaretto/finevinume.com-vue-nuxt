@@ -3,7 +3,7 @@
     <div class="product__top container">
       <v-breadcrumbs :currentRouteName="product.name"/>
 
-      <div v-if="$auth.loggedIn" class="product__top-wishcolls">
+      <div v-if="$auth.loggedIn && collsUploaded" class="product__top-wishcolls">
         <v-product-wishlist
           :active="inWishlist"
           text="+ Add to Wish List"
@@ -17,7 +17,9 @@
       </div>
     </div>
 
+    <p class="product__count-wishcolls">Found in the collection and wishlist of people: {{ product.wishcoll_count }}</p>
     <section class="product__info">
+
       <div class="container product__info-container">
         <div class="product__info-main">
           <div class="product__info-head">
@@ -178,6 +180,7 @@
               @click.native="
                 $auth.loggedIn ? (review.modal = true) : OPEN_MODAL('register')
               "
+              v-if="!professionals || (!professionals && !$auth.user) || (professionals && $auth.user && $auth.user && $auth.user.role === 11)"
             >
               Add a review
             </v-button>
@@ -265,6 +268,10 @@ export default {
           comment: ''
         }
       },
+      uploaded: false,
+      collsUploaded: false,
+      inWishlist: false,
+      collection: false,
       characteristics: [
         {
           name: 'Country',
@@ -363,20 +370,16 @@ export default {
     const product = await $axios.$get(`/products/${params.id}`).catch(() => redirect('/not-found'))
     const reviews = await $axios.$get(`/reviews/${params.id}`).catch(() => redirect('/not-found'))
 
-    const wishlist = store.getters['wishcolls/wishlist']
-    const collection = store.getters['wishcolls/collection']
-
-    const wishlistIndices = wishlist.map(item => item.product_id)
-    const collectionindices = collection.map(item => item.product_id)
-
     return {
       product: product.data,
       reviews: reviews.data,
-      inWishlist: wishlistIndices.includes(product.data.id),
-      collection: collectionindices.includes(product.data.id)
+      uploaded: true
     }
   },
   mounted () {
+    if (this.$auth.loggedIn && this.uploaded) {
+      this.syncWishcolls()
+    }
     if (this.product === undefined) {
       this.$router.replace('/not-found')
     }
@@ -417,6 +420,20 @@ export default {
     }
   },
   methods: {
+    async syncWishcolls () {
+      const wishcolls = await this.$axios.$get('/wishcolls').catch(() => {
+        return { data: [] }
+      })
+
+      const wishlist = wishcolls.data.filter(item => item.type_coll === 1)
+      const collection = wishcolls.data.filter(item => item.type_coll === 0)
+
+      const wishlistIndices = wishlist.map(item => item.product_id)
+      const collectionindices = collection.map(item => item.product_id)
+      this.$data.inWishlist = wishlistIndices.includes(this.product.id)
+      this.$data.collection = collectionindices.includes(this.product.id)
+      this.$data.collsUploaded = true
+    },
     async toggleWishcolls (type) {
       const currentType = type ? 'inWishlist' : 'collection'
 
@@ -494,6 +511,17 @@ export default {
   }
 }
 
+.product__count-wishcolls {
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 600;
+  color: black;
+  max-width: 1180px;
+  margin: 10px auto 0 auto;
+  text-align: right;
+  opacity: .7;
+}
+
 .product__top {
   display: flex;
   align-items: center;
@@ -503,9 +531,14 @@ export default {
     align-items: flex-start;
     flex-direction: column;
   }
-
   @media screen and (max-width: 600px) {
     display: none;
+  }
+}
+
+@media screen and (max-width: 1440px) {
+  .product__count-wishcolls {
+    width: 92.1875%;
   }
 }
 
@@ -513,6 +546,7 @@ export default {
   display: grid;
   grid-auto-flow: column;
   grid-gap: 20px;
+  margin-bottom: 10px;
 
   @media screen and (max-width: 767px) {
     margin-top: 20px;

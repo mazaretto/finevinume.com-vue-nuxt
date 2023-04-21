@@ -42,7 +42,7 @@
                 :key="id"
                 class="v-stores-catalog-view__item"
               >
-                <nuxt-link class="v-stores-catalog-view__item-link" :to="{ name: pageName }">
+                <nuxt-link class="v-stores-catalog-view__item-link" :to="{ name: pageName, query: { id: item.id, name: item.name } }">
                   {{ item.name }}
                 </nuxt-link>
                 <span
@@ -70,7 +70,7 @@
                     :key="id"
                     class="v-stores-catalog-view__item"
                   >
-                    <nuxt-link class="v-stores-catalog-view__item-link" :to="{ name: pageName }">
+                    <nuxt-link class="v-stores-catalog-view__item-link" :to="{ name: pageName, query: { id: item.id, name: item.name }}">
                       {{ item.name }}
                     </nuxt-link>
                     <span
@@ -233,8 +233,10 @@ export default {
   },
   methods: {
     reciveValues (item) {
-      const itemEntries = Object.entries(item)
-      itemEntries.shift()
+      let clone = JSON.parse(JSON.stringify(item))
+      delete clone.name
+      delete clone.id
+      const itemEntries = Object.entries(clone)
       return Object.fromEntries(itemEntries)
     },
     sortItems (items) {
@@ -543,4 +545,31 @@ export default {
 .v-catalog-sort-button--active {
   color: $primary-color;
 }
+@media screen and (max-width: 767px) {
+  .v-stores-catalog-view__items-list {
+    margin-left: 15px;
+  }
+  .v-stores-catalog-view__alphabet-block {
+    justify-content: start;
+  }
+  .v-stores-catalog-view__item {
+    display: flex;
+    justify-content: start;
+    span, a {
+      min-width: 100px;
+      max-width: 100px;
+      margin: 0 !important;
+    }
+  }
+}
+@media screen and (max-width: 767px) {
+  .v-stores-catalog-view__item {
+    gap: 5px;
+    span, a {
+      white-space: pre-wrap;
+      margin: 0 !important;
+    }
+  }
+}
+
 </style>

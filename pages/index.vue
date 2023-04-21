@@ -88,7 +88,7 @@
               :key="id"
               class="about-wines__link"
             >
-              {{ link }}
+              {{ link.brand }}
             </span>
           </div>
         </article>
@@ -248,17 +248,7 @@ export default {
         '2018',
         '2019'
       ],
-      links: [
-        'Remoissenet Pere et Fils',
-        'Domaine Chavy-Chouet',
-        'Domaine Christian Confuron et Fils',
-        'Hubert Lignier',
-        'Remoissenet Pere et Fils',
-        'Louis Jadot',
-        'Domaine Chavy-Chouet',
-        'Domaine Christian Confuron et Fils',
-        'Hubert Lignier'
-      ],
+      links: [],
       regions: [
         {
           title: 'Bordeaux',
@@ -342,6 +332,7 @@ export default {
   },
   async fetch () {
     await this.GET_COUNTERS()
+    this.links = await this.$axios.get('/last-brands').then(({ data }) => data.data)
   },
   computed: {
     ...mapGetters({
@@ -502,14 +493,6 @@ export default {
   line-height: 20px;
   font-weight: 300;
   margin-top: 10px;
-}
-
-.about-wines__link {
-  cursor: pointer;
-
-  &:hover {
-    text-decoration: underline;
-  }
 }
 
 .about-wines__positions {

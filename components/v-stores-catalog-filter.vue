@@ -1,5 +1,7 @@
 <template>
-  <div class="v-stores-catalog-filter">
+  <div
+    class="v-stores-catalog-filter"
+  >
     <form
       v-if="!selects.length"
       class="v-stores-catalog-filter__search"
@@ -29,6 +31,8 @@
         :checked="checked"
         :country="country"
         :region="region"
+        :country-checked="countryChecked"
+        :region-checked="regionChecked"
         :items="items"
         :subregion="subregion"
         :search-options="getOptionsWithProperty(select.property)"
@@ -92,7 +96,7 @@
     <the-mobile-modal :active="mobileModal === 'stores-catalog-filter'">
       <span class="the-mobile-modal__title">Filters:</span>
       <div class="the-mobile-modal__search">
-        <svg-binoculars class="the-mobile-modal__search-binoculars" />
+        <svg-binoculars class="the-mobile-modal__search-binoculars"/>
         <input
           v-model="searched"
           class="the-mobile-modal__search-input"
@@ -161,6 +165,9 @@ export default {
       country: this.getLocalItems('country'),
       region: this.getLocalItems('region'),
       subregion: this.getLocalItems('subregion'),
+      countryChecked: false,
+      regionChecked: false,
+      loaded: false,
       checkedMobile: [],
       entries: [],
       entriesMobile: [],
@@ -294,6 +301,8 @@ export default {
 
       let subRegions = []
       let regions = []
+      this.countryChecked = !!entries.find(a => a[0] === 'country')
+      this.regionChecked = !!entries.find(a => a[0] === 'region')
 
       if (this.subregion.length > 0) {
         for (let i = 0; i < entries.length; i++) {

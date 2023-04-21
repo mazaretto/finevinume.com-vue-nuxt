@@ -1,6 +1,6 @@
 <template>
   <main class="contacts">
-    <v-banner :src="require('~/assets/images/banner-6.png')" />
+    <v-banner :src="require('~/assets/images/banner-6.png')"/>
     <v-page-preview title="Contact Us">
       <p class="v-page-preview__paragraph">
         If you would like to find out more about our services, the team is here
@@ -171,29 +171,33 @@
               v-if="$v.form.message.$error"
               class="v-input__error v-input-pos"
             >{{
-              form.message.required
-                ? 'Message is required'
-                : 'Minimal length is 6'
-            }}</span>
+                form.message.required
+                  ? 'Message is required'
+                  : 'Minimal length is 6'
+              }}</span>
           </label>
 
           <div class="buttons-container customer-service__buttons-container">
-            <div class="customer-service__checkbox-field">
-              <label class="label-input-button">
-                <v-input-button
-                  v-model="form.captcha"
-                  class="customer-service__checkbox"
-                />
-                <span class="label-input-button__text">I'm not robot</span>
-              </label>
+            <div class="captcha">
+              <div class="customer-service__checkbox-field">
+                <label class="label-input-button">
+                  <v-input-button
+                    v-model="form.captcha"
+                    @click.native="loadCaptcha"
+                    class="customer-service__checkbox"
+                  />
+                  <span class="label-input-button__text">I'm not robot</span>
+                </label>
+              </div>
+              <span
+                v-if="$v.form.captcha.$error"
+                class="v-input__error v-input-pos v-input__error--captcha"
+              >Complete the captcha
+            </span>
             </div>
             <v-button type="submit" class="v-button--uppercase" default>
               Enter
             </v-button>
-            <span
-              v-if="$v.form.captcha.$error"
-              class="v-input__error v-input-pos"
-            >Complete the captcha</span>
           </div>
         </form>
       </div>
@@ -210,8 +214,19 @@ import {
   minLength,
   helpers
 } from 'vuelidate/lib/validators'
+
 const number = helpers.regex('serial', /^[0-9]{3}-[0-9]{3}-[0-9]{4}$/)
 export default {
+  async mounted () {
+    try {
+      await this.$recaptcha.init()
+    } catch (e) {
+      console.error(e)
+    }
+  },
+  beforeDestroy () {
+    this.$recaptcha.destroy()
+  },
   data () {
     return {
       active: false,
@@ -226,10 +241,19 @@ export default {
   },
   validations: {
     form: {
-      name: { required, minLength: minLength(3) },
-      email: { required, email },
+      name: {
+        required,
+        minLength: minLength(3)
+      },
+      email: {
+        required,
+        email
+      },
       telephone: { required },
-      message: { required, minLength: minLength(6) },
+      message: {
+        required,
+        minLength: minLength(6)
+      },
       captcha: { sameAs: sameAs(() => true) }
     }
   },
@@ -251,6 +275,11 @@ export default {
     }
   },
   methods: {
+    async loadCaptcha () {
+      const token = await this.$recaptcha.execute('contact')
+
+      const recaptcha = await this.$axios.post('/api/check-token', { token })
+    },
     async submit () {
       this.$v.form.$touch()
       if (this.$v.form.$invalid) {
@@ -275,7 +304,10 @@ export default {
           return this.OPEN_SUCCESS_MODAL()
         }
 
-        this.ADD_NOTIFICATION({ reject: true, error })
+        this.ADD_NOTIFICATION({
+          reject: true,
+          error
+        })
       } finally {
         this.fetching = false
       }
@@ -293,6 +325,7 @@ export default {
 .v-input-pos {
   position: initial;
 }
+
 .contacts {
   padding-bottom: 80px;
 }
@@ -512,5 +545,9 @@ export default {
 
 .customer-service__checkbox {
   border-color: $gray5 !important;
+}
+
+.captcha {
+  position: relative;
 }
 </style>

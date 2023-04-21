@@ -18,10 +18,10 @@
       @click="active = !active"
     >
       <span v-if="!value" class="v-select__placeholder">{{
-        placeholderLocal
-      }}</span>
+          placeholderLocal
+        }}</span>
       <span v-else class="v-select__placeholder">{{ value }}</span>
-      <svg-select-arrow class="v-select__arrow" />
+      <svg-select-arrow class="v-select__arrow"/>
     </div>
     <div v-show="active" class="v-select__body">
       <div class="v-select__body-inner">
@@ -32,7 +32,7 @@
           @sort-options="options = $event"
         />
 
-        <slot :options="options" />
+        <slot :options="options"/>
       </div>
     </div>
   </div>
@@ -92,12 +92,27 @@ export default {
     items: {
       type: Array,
       required: true
+    },
+    countryChecked: {
+      type: Boolean,
+      required: false,
+      default: () => false
+    },
+    regionChecked: {
+      type: Boolean,
+      required: false,
+      default: () => false
     }
+  },
+  created () {
+    setTimeout(() => {
+      this.options = this.deepFilter()
+    }, 100)
   },
   data () {
     return {
       active: false,
-      options: this.deepFilter(),
+      options: [],
       value: '',
       placeholderLocal: this.placeholder
     }
@@ -122,6 +137,7 @@ export default {
         let tmp = (this.placeholderLocal = this.checked.filter((n) => {
           return this.country.includes(n)
         }))
+
         return tmp.length
           ? (this.placeholderLocal = slicePlaceholder(tmp))
           : (this.placeholderLocal = this.placeholder)
@@ -167,8 +183,10 @@ export default {
       return res
     },
     filterSubRegion (itemsChecked) {
+      if (!this.countryChecked && !this.regionChecked) {
+        return this.searchOptions
+      }
       let res = []
-
       for (let i = 0; i < this.searchOptions.length; i++) {
         for (let j = 0; j < itemsChecked.length; j++) {
           if (itemsChecked[j].subregion === this.searchOptions[i].value) {
@@ -179,6 +197,9 @@ export default {
       return res
     },
     filterRegion (itemsChecked) {
+      if (!this.countryChecked) {
+        return this.searchOptions
+      }
       let res = []
 
       for (let i = 0; i < this.searchOptions.length; i++) {
@@ -191,18 +212,15 @@ export default {
       return res
     },
     deepFilter () {
-      let res = []
       if (this.deep === 0) {
-        return (res = this.searchOptions)
+        return this.searchOptions
       }
       if (this.deep === 1) {
-        res = this.filterRegion(this.checkItems())
+        return this.filterRegion(this.checkItems())
       }
       if (this.deep === 2) {
-        res = this.filterSubRegion(this.checkItemsSub())
+        return this.filterSubRegion(this.checkItemsSub())
       }
-
-      return res
     },
     setValue (value) {
       this.value = value
