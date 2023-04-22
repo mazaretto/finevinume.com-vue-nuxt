@@ -1,25 +1,20 @@
 <template>
   <div class="v-product-gallery">
     <div class="v-product-gallery__main">
-      <div class="v-product-gallery__main-photo">
-        <img class="v-product-gallery__img" :src="`https://app.finevinume.com/storage/${photo}`" alt="bottle" />
+      <div class="v-product-gallery__main-photo" @click="active = true">
+        <img class="v-product-gallery__img" :src="pictures[0]" alt="bottle" />
       </div>
     </div>
     <div class="v-product-gallery__bottom">
-      <div class="v-product-gallery__bottom-cell">
-        <img class="v-product-gallery__img" :src="require('~/assets/images/empty-bottle.png')" alt="bottle" />
-      </div>
-      <div class="v-product-gallery__bottom-cell">
-        <img class="v-product-gallery__img" :src="require('~/assets/images/empty-bottle.png')" alt="bottle" />
-      </div>
-      <div class="v-product-gallery__bottom-cell">
-        <img class="v-product-gallery__img" :src="require('~/assets/images/empty-bottle.png')" alt="bottle" />
+      <div v-for="(el, ind) in pictures.filter((el, ind) => subPictures(el, ind))" :key="ind" class="v-product-gallery__bottom-cell">
+        <img class="v-product-gallery__img" :src="el" alt="bottle" />
       </div>
     </div>
-    <div class="v-product-gallery__add-photo" v-if="$auth.loggedIn">
+    <div v-if="$auth.loggedIn" class="v-product-gallery__add-photo">
       <svg-camera class="v-product-gallery__add-photo-icon" />
       <span class="v-product-gallery__add-photo-text">Send a photo</span>
     </div>
+    <the-modal-pictures-gallery :pictures="pictures" :active="active" @close="() => this.active = false" />
   </div>
 </template>
 
@@ -28,14 +23,42 @@ import SvgCamera from '~/assets/icons/camera.svg?inline'
 
 export default {
   name: 'VProductGallery',
+  components: {
+    SvgCamera
+  },
   props: {
     photo: {
       type: String,
       required: true
     }
   },
-  components: {
-    SvgCamera
+  data () {
+    return {
+      active: false
+    }
+  },
+  computed: {
+    pictures () {
+      if (this.photo === null) {
+        return [require('~/assets/images/empty-bottle.png')]
+      }
+      const splited = this.photo.split('|')
+      if (splited.length === 1) {
+        return this.$axios.defaults.baseURL.split('/api')[0] + '/storage/' + splited[0]
+      }
+      return [...splited.map(el => this.$axios.defaults.baseURL.split('/api')[0] + '/storage/' + el)]
+    }
+  },
+  methods: {
+    subPictures (el, ind) {
+      if (ind === 0) {
+        return false
+      }
+      if (ind > 4) {
+        return false
+      }
+      return true
+    }
   }
 }
 </script>
@@ -85,6 +108,7 @@ export default {
   height: 100%;
   padding: 10px;
   top: 0;
+  cursor: pointer;
 }
 
 .v-product-gallery__bottom {
