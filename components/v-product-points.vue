@@ -1,7 +1,7 @@
 <template>
   <div class="v-product-points">
     <svg-product-points class="v-product-points__icon" />
-    <span class="v-product-points__number">{{ value || "99+" }}</span>
+    <span class="v-product-points__number">{{ value }}</span>
   </div>
 </template>
 
@@ -12,7 +12,10 @@ export default {
   props: {
     value: {
       type: Number,
-      required: false
+      required: false,
+      default: () => {
+        return 0
+      }
     }
   },
   components: {

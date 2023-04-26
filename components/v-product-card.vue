@@ -25,8 +25,8 @@
     </div>
     <div class="v-product-card__bottom">
       <div class="v-product-card__actions">
-        <v-product-points />
-        <svg-product-amount class="v-product-card__amount" />
+        <v-product-points :value="rating"/>
+        <svg-product-amount class="v-product-card__amount"/>
         <template v-if="!narrow">
           <v-product-wishlist
             :active="inWishlist"
@@ -39,7 +39,7 @@
         </template>
       </div>
       <div v-if="!narrow" class="v-product__description">
-        <p class="v-product__description-text" />
+        <p class="v-product__description-text"/>
       </div>
     </div>
   </div>
@@ -82,6 +82,18 @@ export default {
     }
   },
   computed: {
+    rating () {
+      let res = 0
+
+      if (!this.product.reviews || this.product.reviews.length === 0) {
+        return res
+      }
+      if (this.product.reviews.length === 1) {
+        return this.product.reviews[0].count_result
+      }
+      res = this.product.reviews.reduce((p, n) => p.count_result + n.count_result) / this.product.reviews.length
+      return res
+    },
     photo () {
       if (this.product.photo) {
         return `http://app.finevinume.com/storage/${this.product.photo}`
@@ -179,7 +191,7 @@ export default {
 
   &:hover {
     box-shadow: 0px -4px 4px rgba(206, 206, 206, 0.2),
-      0px 4px 4px rgba(27, 27, 27, 0.2);
+    0px 4px 4px rgba(27, 27, 27, 0.2);
   }
 
   @media screen and (max-width: 1279px) {

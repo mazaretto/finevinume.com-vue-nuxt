@@ -27,8 +27,8 @@
 
             <div class="product__points-votes-and-ratings">
               <div class="product__points-votes">
-                <v-product-points/>
-                <span class="product__votes">67 votes</span>
+                <v-product-points :value="rating" />
+                <span class="product__votes">{{ product.reviews.length ? product.reviews.length : 0 }} votes</span>
               </div>
               <div class="product__ratings">
                 <div
@@ -91,7 +91,7 @@
             <div v-if="$auth.loggedIn" class="product__overall-rating">
               <span
                 class="product__info-box-title"
-              >Overall rating 89.40/100</span>
+              >Overall rating {{ rating }}/100</span>
               <p class="product__overall-rating-notification">
                 You have 1 rating 89
               </p>
@@ -386,6 +386,18 @@ export default {
   },
 
   computed: {
+    rating () {
+      let res = 0
+
+      if (!this.product.reviews || this.product.reviews.length === 0) {
+        return res
+      }
+      if (this.product.reviews.length === 1) {
+        return this.product.reviews[0].count_result
+      }
+      res = this.product.reviews.reduce((p, n) => p.count_result + n.count_result) / this.product.reviews.length
+      return res
+    },
     reqularReviews () {
       return this.reviews.filter(item => item.type_review === 0)
     },
