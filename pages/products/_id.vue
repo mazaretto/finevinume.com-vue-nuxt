@@ -481,7 +481,7 @@ export default {
         try {
           await this.$axios.$post('reviews', {
             product_id: this.product.id,
-            type_review: 0,
+            type_review: this.professionals && this.$auth.user.role !== 0,
             count_result: this.review.form.rating,
             description: this.review.form.comment,
             count_stars: 0,
