@@ -49,11 +49,14 @@ export default {
   },
   computed: {
     photo () {
-      if (this.product.photo !== null) {
-        return `https://app.finevinume.com/storage/${this.product.photo}`
-      } else {
-        return require('~/assets/images/empty-bottle.png')
+      if (this.photo === null) {
+        return [require('~/assets/images/empty-bottle.png')]
       }
+      const splited = this.photo.split('|')
+      if (splited.length === 1) {
+        return [this.$axios.defaults.baseURL.split('/api')[0] + '/storage/' + splited[0]]
+      }
+      return [...splited.map(el => this.$axios.defaults.baseURL.split('/api')[0] + '/storage/' + el)]
     }
   }
 }

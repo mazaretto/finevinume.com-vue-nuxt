@@ -28,7 +28,7 @@
       class="v-profile-catalog-product__undermenu"
     >
       <div class="v-profile-catalog-product__undermenu-main">
-        <slot name="undermenu" />
+        <slot name="undermenu"/>
       </div>
       <span class="v-profile-catalog-product__delete-button">Delete</span>
       <span class="v-profile-catalog-product__text-button">Save</span>
@@ -66,11 +66,14 @@ export default {
   },
   computed: {
     photo () {
-      if (this.product.photo) {
-        return `https://app.finevinume.com/storage/${this.product.photo}`
-      } else {
-        return require('~/assets/images/empty-bottle.png')
+      if (this.product.photo === null || this.product.photo === undefined) {
+        return [require('~/assets/images/empty-bottle.png')]
       }
+      const splited = this.product.photo.split('|')
+      if (splited.length === 1) {
+        return [this.$axios.defaults.baseURL.split('/api')[0] + '/storage/' + splited[0]]
+      }
+      return [...splited.map(el => this.$axios.defaults.baseURL.split('/api')[0] + '/storage/' + el)]
     }
   }
 }
@@ -79,7 +82,7 @@ export default {
 <style lang="scss">
 .v-profile-catalog-product--active {
   box-shadow: 0px -4px 4px rgba(206, 206, 206, 0.1),
-    0px 4px 4px rgba(27, 27, 27, 0.1);
+  0px 4px 4px rgba(27, 27, 27, 0.1);
 }
 
 .v-profile-catalog-product__front {

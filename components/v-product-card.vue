@@ -95,11 +95,10 @@ export default {
       return res
     },
     photo () {
-      if (this.product.photo) {
-        return `http://app.finevinume.com/storage/${this.product.photo}`
-      } else {
+      if (this.product.photo === null) {
         return require('~/assets/images/empty-bottle.png')
       }
+      return this.$axios.defaults.baseURL.split('/api')[0] + `/storage/${this.product.photo.split('|')[0]}`
     }
   },
   methods: {

@@ -5,7 +5,8 @@
         <div class="send-bottle__info">
           <span class="send-bottle__info-title">Send a bottle</span>
           <p class="send-bottle__form-description">
-            To report a wine you can’t find in Winecollection, please fill out the form below. You’ll be informed when the bottle is added
+            To report a wine you can’t find in Winecollection, please fill out the form below. You’ll be informed when
+            the bottle is added
           </p>
           <div class="send-bottle__reminders">
             <span class="send-bottle__info-subtitle">Please remember:</span>
@@ -20,7 +21,7 @@
           </div>
         </div>
         <div class="send-bottle__photo">
-          <v-input-file class="send-bottle__file-input" @recieve-files="form.files = $event" />
+          <v-input-file class="send-bottle__file-input" @recieve-files="form.files = $event"/>
           <div class="send-bottle__photo-requirement">
             <span class="send-bottle__photo-requirement-title">photography requirement</span>
             <p class="send-bottle__photo-requirement-description">
@@ -30,7 +31,10 @@
               to a print that hangs in a home or office.
               It’s always a good idea to compose in a way that would allow so
             </p>
-            <span class="link send-bottle__photo-rules link--primary-color" @click="rulesModal = true">Read the rules</span>
+            <span
+              class="link send-bottle__photo-rules link--primary-color"
+              @click="rulesModal = true"
+            >Read the rules</span>
           </div>
         </div>
         <fieldset class="send-bottle__fieldset">
@@ -61,51 +65,37 @@
             Geography
           </legend>
 
-          <div class="form-field">
+          <label class="form-field">
             <span class="form-field__name">Country</span>
-
-            <v-select
-              v-slot="{ options }"
+            <v-input
+              v-model="form.country"
               name="country"
-              :search-options="selects.countries"
+              class="input"
               :invalid="$v.form.country.$error"
-              @select="form.country = $event"
-            >
-              <v-select-option v-for="(value, id) of options" :key="id" :value="value">
-                {{ value }}
-              </v-select-option>
-            </v-select>
-          </div>
+              placeholder="Unknown"
+            />
+          </label>
 
-          <div class="form-field">
-            <span class="form-field__name">Regions</span>
-            <v-select
-              v-slot="{ options }"
+          <label class="form-field">
+            <span class="form-field__name">Region</span>
+            <v-input
+              v-model="form.region"
               name="region"
-              :search-options="selects.regions"
+              class="input"
               :invalid="$v.form.region.$error"
-              @select="form.region = $event"
-            >
-              <v-select-option v-for="(value, id) of options" :key="id" :value="value">
-                {{ value }}
-              </v-select-option>
-            </v-select>
-          </div>
-
-          <div class="form-field">
-            <span class="form-field__name">Subregions</span>
-            <v-select
-              v-slot="{ options }"
+              placeholder="Unknown"
+            />
+          </label>
+          <label class="form-field">
+            <span class="form-field__name">Subregion</span>
+            <v-input
+              v-model="form.subregion"
               name="subregion"
-              :search-options="selects.subregions"
+              class="input"
               :invalid="$v.form.subregion.$error"
-              @select="form.subregion = $event"
-            >
-              <v-select-option v-for="(value, id) of options" :key="id" :value="value">
-                {{ value }}
-              </v-select-option>
-            </v-select>
-          </div>
+              placeholder="Unknown"
+            />
+          </label>
         </fieldset>
         <fieldset class="send-bottle__fieldset send-bottle__wine-colors">
           <legend class="title title--medium">
@@ -207,7 +197,12 @@
           <legend class="title title--medium">
             Comments for administrator
           </legend>
-          <textarea class="textarea send-bottle__comments-textarea" rows="8" cols="80" placeholder="Write what you would like to tell us ..." />
+          <textarea
+            class="textarea send-bottle__comments-textarea"
+            rows="8"
+            cols="80"
+            placeholder="Write what you would like to tell us ..."
+          />
 
           <div class="buttons-container send-bottle__form-buttons">
             <v-button class="v-button--default v-button--default-secondary" type="reset">
@@ -228,19 +223,35 @@
             <div class="send-bottle__rules-list">
               <div class="send-bottle__rule">
                 <span class="send-bottle__rule-name">number 1</span>
-                <p class="send-bottle__rule-description">My rule for stock photography is to submit photos that I can imagine many uses for! Imagine that the image might be used for anything from a desktop background to a postcard to a print that hangs in a home or office. It’s always a good idea to compose in a way that would allow someone to add text or graphics to your image without detracting too much from the quality.</p>
+                <p class="send-bottle__rule-description">My rule for stock photography is to submit photos that I can
+                  imagine many uses for! Imagine that the image might be used for anything from a desktop background to
+                  a postcard to a print that hangs in a home or office. It’s always a good idea to compose in a way that
+                  would allow someone to add text or graphics to your image without detracting too much from the
+                  quality.</p>
               </div>
               <div class="send-bottle__rule">
                 <span class="send-bottle__rule-name">number 2</span>
-                <p class="send-bottle__rule-description">My rule for stock photography is to submit photos that I can imagine many uses for! Imagine that the image might be used for anything from a desktop background to a postcard to a print that hangs in a home or office. It’s always a good idea to compose in a way that would allow someone to add text or graphics to your image without detracting too much from the quality.</p>
+                <p class="send-bottle__rule-description">My rule for stock photography is to submit photos that I can
+                  imagine many uses for! Imagine that the image might be used for anything from a desktop background to
+                  a postcard to a print that hangs in a home or office. It’s always a good idea to compose in a way that
+                  would allow someone to add text or graphics to your image without detracting too much from the
+                  quality.</p>
               </div>
               <div class="send-bottle__rule">
                 <span class="send-bottle__rule-name">number 3</span>
-                <p class="send-bottle__rule-description">My rule for stock photography is to submit photos that I can imagine many uses for! Imagine that the image might be used for anything from a desktop background to a postcard to a print that hangs in a home or office. It’s always a good idea to compose in a way that would allow someone to add text or graphics to your image without detracting too much from the quality.</p>
+                <p class="send-bottle__rule-description">My rule for stock photography is to submit photos that I can
+                  imagine many uses for! Imagine that the image might be used for anything from a desktop background to
+                  a postcard to a print that hangs in a home or office. It’s always a good idea to compose in a way that
+                  would allow someone to add text or graphics to your image without detracting too much from the
+                  quality.</p>
               </div>
               <div class="send-bottle__rule">
                 <span class="send-bottle__rule-name">number 4</span>
-                <p class="send-bottle__rule-description">My rule for stock photography is to submit photos that I can imagine many uses for! Imagine that the image might be used for anything from a desktop background to a postcard to a print that hangs in a home or office. It’s always a good idea to compose in a way that would allow someone to add text or graphics to your image without detracting too much from the quality.</p>
+                <p class="send-bottle__rule-description">My rule for stock photography is to submit photos that I can
+                  imagine many uses for! Imagine that the image might be used for anything from a desktop background to
+                  a postcard to a print that hangs in a home or office. It’s always a good idea to compose in a way that
+                  would allow someone to add text or graphics to your image without detracting too much from the
+                  quality.</p>
               </div>
             </div>
             <div class="buttons-container send-bottle__rules-buttons">
@@ -259,8 +270,9 @@
         @close="successModal = false"
       >
         <template #main>
-          <p class="v-modal-lightbox__notification-text">In the near future, our specialists will check the information and place your application. Thanks you!</p>
-          <svg-success-arrow class="v-modal-lightbox__success-arrow" />
+          <p class="v-modal-lightbox__notification-text">In the near future, our specialists will check the information
+            and place your application. Thanks you!</p>
+          <svg-success-arrow class="v-modal-lightbox__success-arrow"/>
           <v-button
             class="v-modal-lightbox__notification-button v-button--uppercase"
             default-secondary
@@ -369,39 +381,39 @@ export default {
           'producer №10',
           'producer №11',
           'producer №12'
-        ],
-        countries: [
-          'France',
-          'USA',
-          'Argentina',
-          'Mexico',
-          'Spain',
-          'Chilly',
-          'Brazill',
-          'Australia'
-        ],
-        regions: [
-          'France Region',
-          'USA Region',
-          'Argentina Region',
-          'Mexico Region',
-          'Spain Region',
-          'Georgia Region',
-          'Chilly Region',
-          'Brazill Region',
-          'Australia Region'
-        ],
-        subregions: [
-          'France Region Subregion',
-          'USA Region Subregion',
-          'Argentina Region Subregion',
-          'Mexico Region Subregion',
-          'Spain Region Subregion',
-          'Georgia Region Subregion',
-          'Chilly Region Subregion',
-          'Brazill Region Subregion',
-          'Australia Region Subregion'
         ]
+        // countries: [
+        //   'France',
+        //   'USA',
+        //   'Argentina',
+        //   'Mexico',
+        //   'Spain',
+        //   'Chilly',
+        //   'Brazill',
+        //   'Australia'
+        // ],
+        // regions: [
+        //   'France Region',
+        //   'USA Region',
+        //   'Argentina Region',
+        //   'Mexico Region',
+        //   'Spain Region',
+        //   'Georgia Region',
+        //   'Chilly Region',
+        //   'Brazill Region',
+        //   'Australia Region'
+        // ],
+        // subregions: [
+        //   'France Region Subregion',
+        //   'USA Region Subregion',
+        //   'Argentina Region Subregion',
+        //   'Mexico Region Subregion',
+        //   'Spain Region Subregion',
+        //   'Georgia Region Subregion',
+        //   'Chilly Region Subregion',
+        //   'Brazill Region Subregion',
+        //   'Australia Region Subregion'
+        // ]
       }
     }
   },
@@ -430,7 +442,7 @@ export default {
             requestData.delete('photo')
 
             for (const file of this.form.files) {
-              requestData.append('photo', file, file.name)
+              requestData.append(file.name, file, file.name)
             }
 
             await this.$axios.post('products', requestData)

@@ -1,10 +1,13 @@
 <template>
+<!--  <p v-if="$fetchState.pending">Fetching mountains...</p>-->
+<!--  <p v-else-if="$fetchState.error">An error occurred :(</p>-->
   <v-profile-catalog class="shoplinks-catalog" :properties="properties" :items="products">
-    <v-profile-catalog-product>
-      <span class="v-profile-catalog-product__vintage">1996</span>
-      <span class="v-profile-catalog-product__price">220 €</span>
-      <span class="v-profile-catalog-product__date">2020-08-29 16:04</span>
-      <span class="v-profile-catalog-product__link v-profile-catalog-product__column-span-3">Raremalts_shop.com</span>
+    <v-profile-catalog-product v-for="(item, ind) in products" :key="ind" :product="item">
+      <span>{{ item.wines }}</span>
+      <span>{{ item.country }}</span>
+      <span>{{ item.city }}</span>
+      <span>{{ item.phone }}</span>
+      <span>{{ item.website }}</span>
     </v-profile-catalog-product>
   </v-profile-catalog>
 </template>
@@ -14,13 +17,18 @@ export default {
   data () {
     return {
       properties: [
-        'Vintage',
-        'Price',
-        'Date',
-        'Shop'
+        'Wines',
+        'Country',
+        'City',
+        'Phone',
+        'Website'
       ],
       products: []
     }
+  },
+  async fetch () {
+    const { data } = await this.$axios.get('/user-shoplinks').catch(res => false).then(res => res.data)
+    this.products = data
   }
 }
 </script>

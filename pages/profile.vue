@@ -5,7 +5,7 @@
         <v-avatar
           class="profile__avatar"
           v-if="$auth && $auth.user && $auth.user.photo"
-          :src="'http://app.finevinume.com/storage/' + $auth.user.photo"
+          :src=" $axios.defaults.baseURL.split('/api')[0] + '/storage/' + $auth.user.photo"
           @click.native="editAvatarModal = !editAvatarModal"
         />
         <v-avatar class="profile__avatar" v-else @click.native="editAvatarModal = !editAvatarModal"/>
@@ -45,7 +45,7 @@
         <div class="profile__info-panel">
           <span class="profile__total-wines-title">Total wines - 27</span>
           <div class="profile__info-panel-buttons">
-            <v-button class="profile__info-panel-button" default-secondary>
+            <v-button class="profile__info-panel-button" default-secondary @click.native="shopLinkModal = true">
               +Add a shoplink
             </v-button>
             <nuxt-link to="/send-bottle">
@@ -67,7 +67,7 @@
       </div>
     </section>
     <v-modal-user-edit :active="editProfileModal" @close="closeModalProfile" />
-
+    <v-modal-add-store :active="shopLinkModal" @close="closeModalShoplink" />
     <v-modal class="profile-modal" :active="editAvatarModal">
       <v-modal-lightbox title="Change Avatar" @close="editAvatarModal = false">
         <template #main>
@@ -98,6 +98,7 @@
 export default {
   data () {
     return {
+      shopLinkModal: false,
       editProfileModal: false,
       editAvatarModal: false,
       image: '',
@@ -136,6 +137,9 @@ export default {
     },
     closeModalProfile () {
       this.editProfileModal = false
+    },
+    closeModalShoplink () {
+      this.shopLinkModal = false
     }
   }
 }

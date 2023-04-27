@@ -44,7 +44,7 @@ export default {
       }
       const splited = this.photo.split('|')
       if (splited.length === 1) {
-        return this.$axios.defaults.baseURL.split('/api')[0] + '/storage/' + splited[0]
+        return [this.$axios.defaults.baseURL.split('/api')[0] + '/storage/' + splited[0]]
       }
       return [...splited.map(el => this.$axios.defaults.baseURL.split('/api')[0] + '/storage/' + el)]
     }

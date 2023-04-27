@@ -376,15 +376,6 @@ export default {
       uploaded: true
     }
   },
-  mounted () {
-    if (this.$auth.loggedIn && this.uploaded) {
-      this.syncWishcolls()
-    }
-    if (this.product === undefined) {
-      this.$router.replace('/not-found')
-    }
-  },
-
   computed: {
     rating () {
       let res = 0
@@ -429,6 +420,14 @@ export default {
       } else {
         return 'To big value'
       }
+    }
+  },
+  mounted () {
+    if (this.$auth.loggedIn && this.uploaded) {
+      this.syncWishcolls()
+    }
+    if (this.product === undefined) {
+      this.$router.replace('/not-found')
     }
   },
   methods: {

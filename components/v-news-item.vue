@@ -22,9 +22,9 @@ export default {
   computed: {
     photo () {
       if (this.item.photo) {
-        return `http://app.finevinume.com/img/news/${this.item.photo}`
+        return this.$axios.defaults.baseURL.split('/api')[0] + `/img/news/${this.item.photo}`
       }
-      return 'http://app.finevinume.com/img/news/preview.png'
+      return this.$axios.defaults.baseURL.split('/api')[0] + '/img/news/preview.png'
     }
   }
 }
