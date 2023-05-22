@@ -1,6 +1,6 @@
 <template>
   <main class="producers">
-    <v-banner :src="require('~/assets/images/banner-1.png')"/>
+    <v-banner :src="require('~/assets/images/banner-1.png')" />
     <v-stores-catalog
       :items="items"
       :properties="properties"
@@ -13,14 +13,9 @@
 
 <script>
 export default {
-  mounted () {
-    this.asyncData()
-  },
-  methods: {
-    async asyncData () {
-      const response = await this.$axios.$get('/categories-minified')
-      this.items = response.data
-    }
+  async asyncData ({ $axios }) {
+    const items = await $axios.$get('/categories-minified').then(res => res.data)
+    return { items }
   },
   data () {
     return {
@@ -44,8 +39,7 @@ export default {
           property: 'subregion',
           placeholder: 'Subregion'
         }
-      ],
-      items: []
+      ]
     }
   }
 }
